@@ -6,120 +6,193 @@
   <title>R2LAB · Portal para creadores</title>
   <meta name="description" content="Portal para creadores de TikTok LIVE de la agencia R2LAB.">
   <meta name="theme-color" content="#F7F5F1">
+  <meta property="og:title" content="R2LAB · Portal para creadores">
+  <meta property="og:description" content="Todo lo que necesitas para crecer en TikTok LIVE.">
+  <meta property="og:image" content="https://r2lab-creadores.vercel.app/img/logo-badge.png">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script>document.documentElement.classList.replace("no-js","js")</script>
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
 </head>
 <body>
   <div class="bg" aria-hidden="true">
-    <span class="blob b-mint"></span>
-    <span class="blob b-lav"></span>
-    <span class="blob b-pink"></span>
-    <span class="blob b-cream"></span>
+    <span class="blob b-mint" data-depth="0.6"></span>
+    <span class="blob b-lav" data-depth="1.2"></span>
+    <span class="blob b-pink" data-depth="0.9"></span>
+    <span class="blob b-cream" data-depth="0.4"></span>
+    <div class="grain"></div>
   </div>
 
-  <header class="top wrap reveal">
-    <a class="brand" href="#">
-      <img src="img/logo-badge.png" alt="" width="56" height="56">
+  <!-- NAV -->
+  <header class="nav" data-intro>
+    <a class="brand" href="#top" aria-label="R2LAB inicio">
+      <img src="img/logo-badge.png" alt="" width="44" height="44">
       <span>R2LAB</span>
     </a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#meta">Meta</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#examen">Examen</a>
+    </nav>
     <span class="live"><i></i>LIVE</span>
   </header>
 
-  <section class="hero wrap">
-    <span class="pill-dark reveal">Portal para creadores <b>✦</b></span>
-    <h1 class="reveal" style="--d:.08s">Crece en TikTok <span>LIVE</span> con R2LAB</h1>
-    <p class="reveal" style="--d:.16s">Todo lo que necesitas, en un solo lugar.</p>
-    <ul class="chips reveal" style="--d:.24s">
-      <li><i class="dot teal"></i>Seguro</li>
-      <li><i class="dot coral"></i>Respetuoso</li>
-      <li><i class="dot teal"></i>Positivo</li>
-    </ul>
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <span class="pill-dark" data-intro>Portal para creadores <b>✦</b></span>
+      <h1 class="split">Crece en TikTok <em>LIVE</em> con&nbsp;R2LAB</h1>
+      <p class="lead" data-intro>Normas, videos, soporte y capacitación. Todo en un solo lugar.</p>
+      <div class="ctas" data-intro>
+        <a class="btn btn-dark magnetic" href="#recursos">Empezar <span>→</span></a>
+        <a class="btn btn-ghost magnetic" href="#soporte">Soporte 24/7</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="ph-top">
+            <div class="ph-user">
+              <img src="img/logo-badge.png" alt="" width="34" height="34">
+              <div><b>r2lab.creador</b><small><span class="viewers">1.248</span> viendo</small></div>
+            </div>
+            <span class="ph-live">LIVE</span>
+          </div>
+          <div class="ph-stage">
+            <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+            <img class="ph-avatar" src="img/logo-badge.png" alt="" width="84" height="84">
+          </div>
+          <div class="ph-chat">
+            <p class="msg"><b>ana</b> ¡Hola! Qué buen live 💜</p>
+            <p class="msg"><b>leo.mx</b> envió una rosa 🌹</p>
+            <p class="msg"><b>sofi</b> ¡Te sigo desde hoy! ✨</p>
+          </div>
+          <div class="hearts"></div>
+        </div>
+      </div>
+      <div class="float-chip c1"><b>15</b> días / mes</div>
+      <div class="float-chip c2"><b>1 h</b> continua</div>
+      <div class="float-chip c3"><i class="dot teal"></i> Comunidad positiva</div>
+    </div>
   </section>
 
-  <main class="wrap">
-    <section class="block reveal">
-      <h2 class="label">Tu meta</h2>
-      <div class="goal">
-        <div class="goal-item mint">
-          <strong>15</strong>
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Seguro</span><b>✦</b><span>Respetuoso</span><b>✦</b><span>Positivo</span><b>✦</b><span>15 días al mes</span><b>✦</b><span>1 hora continua</span><b>✦</b>
+      <span>Seguro</span><b>✦</b><span>Respetuoso</span><b>✦</b><span>Positivo</span><b>✦</b><span>15 días al mes</span><b>✦</b><span>1 hora continua</span><b>✦</b>
+    </div>
+  </div>
+
+  <main>
+    <!-- META -->
+    <section class="section" id="meta">
+      <div class="sec-head">
+        <span class="label">01 · Tu meta</span>
+        <h2 class="split">Constancia que se <em>nota</em></h2>
+      </div>
+      <div class="meta-grid">
+        <div class="cal-card">
+          <div class="cal-head">
+            <b>Tu mes ideal</b>
+            <span><strong class="count" data-to="15">15</strong>/30 días</span>
+          </div>
+          <div class="cal" id="cal"></div>
+        </div>
+        <div class="stat mint">
+          <strong><span class="count" data-to="15">15</span></strong>
           <span>días al mes<br>como mínimo</span>
         </div>
-        <div class="goal-item pink">
-          <strong>1 h</strong>
+        <div class="stat pink">
+          <strong><span class="count" data-to="1">1</span> h</strong>
           <span>de Live continua<br>cada día</span>
         </div>
       </div>
     </section>
 
-    <section class="block reveal">
-      <h2 class="label">Recursos</h2>
-      <div class="resources">
-        <a class="res mint reveal" style="--d:0.00s" href="docs/guia-normas-tiktok-live.pdf" target="_blank" rel="noopener">
-          <span class="res-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M8 7h6M8 11h6"/></svg>
-          </span>
-          <span class="res-text"><b>Guía de normas de TikTok</b><small>Por favor leer</small></span>
+    <!-- RECURSOS -->
+    <section class="section" id="recursos">
+      <div class="sec-head">
+        <span class="label">02 · Recursos</span>
+        <h2 class="split">Aprende lo <em>esencial</em></h2>
+      </div>
+      <div class="res-list">
+        <a class="res mint" href="docs/guia-normas-tiktok-live.pdf" target="_blank" rel="noopener">
+          <span class="res-num">01</span>
+          <span class="res-icon"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M8 7h6M8 11h6"/></svg></span>
+          <span class="res-text"><b>Guía de normas de TikTok</b><small>Por favor leer · PDF</small></span>
           <span class="arrow">→</span>
         </a>
-        <a class="res lav reveal" style="--d:0.08s" href="#">
-          <span class="res-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15 9.5c0-1.4-1.3-2-3-2s-3 .8-3 2.2c0 3 6 1.6 6 4.6 0 1.4-1.3 2.2-3 2.2s-3-.7-3-2"/></svg>
-          </span>
+        <a class="res lav" href="#">
+          <span class="res-num">02</span>
+          <span class="res-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5-6-3.5z"/></svg></span>
           <span class="res-text"><b>Video de monetización</b><small>Dar clic para ver</small></span>
           <span class="arrow">▶</span>
         </a>
-        <a class="res cream reveal" style="--d:0.16s" href="#">
-          <span class="res-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-          </span>
+        <a class="res cream" href="#">
+          <span class="res-num">03</span>
+          <span class="res-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
           <span class="res-text"><b>Video de apelación</b><small>Dar clic para ver</small></span>
           <span class="arrow">▶</span>
         </a>
-        <a class="res pink reveal" style="--d:0.24s" href="#">
-          <span class="res-icon">
-            <svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
-          </span>
+        <a class="res pink" href="#">
+          <span class="res-num">04</span>
+          <span class="res-icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
           <span class="res-text"><b>Manual de comunidad y potenciadores</b><small>Por favor leer</small></span>
           <span class="arrow">→</span>
         </a>
       </div>
     </section>
 
-    <section class="block duo reveal">
-      <div class="panel dark">
-        <span class="tag teal">24/7</span>
-        <h3>¿Dudas? Te ayudamos</h3>
-        <p>Soporte por WhatsApp a cualquier hora.</p>
-        <a class="btn btn-teal" href="#">Abrir WhatsApp</a>
+    <!-- EXAMEN -->
+    <section class="section" id="examen">
+      <div class="exam">
+        <div class="exam-copy">
+          <span class="label">03 · Examen final</span>
+          <h2 class="split">Aprueba y <em>avanza</em></h2>
+          <p>Con <b>70% o más</b> accedes a las capacitaciones.</p>
+          <a class="btn btn-coral magnetic" href="#">Presentar examen <span>→</span></a>
+        </div>
+        <div class="gauge" role="img" aria-label="Meta mínima: 70%">
+          <svg viewBox="0 0 200 200">
+            <circle class="g-track" cx="100" cy="100" r="84"/>
+            <circle class="g-bar" cx="100" cy="100" r="84"/>
+          </svg>
+          <div class="g-val"><div><strong class="count" data-to="70">70</strong><span>%</span></div><small>para aprobar</small></div>
+        </div>
       </div>
-      <div class="panel lavender">
-        <span class="tag coral">Examen final</span>
-        <h3>Aprueba con <em>70%</em> o más</h3>
-        <p>y accede a las capacitaciones.</p>
-        <a class="btn btn-coral" href="#">Presentar examen</a>
+    </section>
+
+    <!-- SOPORTE -->
+    <section class="section" id="soporte">
+      <div class="support">
+        <div class="support-copy">
+          <span class="tag">Soporte 24/7</span>
+          <h2 class="split">¿Dudas? <em>Te ayudamos</em></h2>
+          <p>Escríbenos por WhatsApp a cualquier hora.</p>
+          <a class="btn btn-teal magnetic" href="#">Abrir WhatsApp <span>→</span></a>
+        </div>
+        <div class="bubbles" aria-hidden="true">
+          <p class="bubble b-in">Hola, tengo una duda con mi Live 🙋‍♀️</p>
+          <p class="bubble b-out">¡Claro! Cuéntanos, estamos aquí 💚</p>
+          <p class="bubble b-typing"><i></i><i></i><i></i></p>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="wrap reveal">
-    <img src="img/logo-badge.png" alt="Logo de R2LAB" width="104" height="104">
-    <p>Juntos por una comunidad más <span>positiva</span></p>
-    <small>© R2LAB</small>
+  <footer class="footer">
+    <img src="img/logo-badge.png" alt="Logo de R2LAB" width="88" height="88">
+    <p class="big split">Juntos por una comunidad más <em>positiva</em></p>
+    <small>© R2LAB · Agencia de creadores TikTok LIVE</small>
   </footer>
-  <script>
-    (function () {
-      var els = document.querySelectorAll(".reveal");
-      if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-      els.forEach(function (e) { io.observe(e); });
-    })();
-  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 </html>
