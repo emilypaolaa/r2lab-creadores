@@ -203,8 +203,8 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .section-tight { padding-top: 48px; }
 .vip {
   position: relative; overflow: hidden; isolation: isolate;
-  display: grid; gap: 22px; align-items: center;
-  padding: 32px 24px; border-radius: 32px; color: var(--white);
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: center;
+  padding: 30px 20px; border-radius: 32px; color: var(--white);
   background: linear-gradient(125deg, #15151B 0%, #2a1f3d 45%, #F0476B 120%);
   box-shadow: 0 30px 60px -24px rgba(240, 71, 107, .45);
 }
@@ -218,8 +218,41 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .vip h2 em { color: #ff8aa3; }
 .vip p { color: #cfcfd8; margin-top: 10px; font-size: 16px; }
 .vip p b { color: var(--white); }
-.btn-light { background: var(--white); color: var(--text); justify-self: start; }
-.btn-light:hover { box-shadow: 0 12px 28px rgba(255, 255, 255, .25); }
+.vip-cta { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.vip-label { flex: 1; min-width: 0; }
+.vip > * { min-width: 0; }
+.btn-vip {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 10px 10px 10px 12px; border-radius: 999px;
+  color: var(--text);
+  background: linear-gradient(100deg, #ffd27a, #ff9fb3 35%, #9ef0dc 65%, #ffd27a);
+  background-size: 250% 100%;
+  animation: vipFlow 6s linear infinite, vipGlow 2.6s ease-in-out infinite;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .5) inset, 0 14px 34px -8px rgba(255, 159, 179, .65);
+  transition: transform .4s var(--ease);
+  will-change: transform;
+}
+.btn-vip::before { /* destello que cruza el botón */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .85) 50%, transparent 65%);
+  transform: translateX(-120%); animation: vipShine 3.2s ease-in-out infinite;
+}
+@keyframes vipFlow { to { background-position: -250% 0; } }
+@keyframes vipShine { 0%, 55% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+@keyframes vipGlow { 50% { box-shadow: 0 0 0 1px rgba(255, 255, 255, .6) inset, 0 18px 46px -6px rgba(158, 240, 220, .75); } }
+.vip-lock { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--text); flex: none; }
+.vip-lock svg { width: 22px; height: 22px; fill: none; stroke: #ffd27a; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.vip-lock .shackle { transition: transform .45s cubic-bezier(.5, -0.6, .3, 1.6); transform-origin: 16px 11px; }
+.vip-label { display: flex; flex-direction: column; line-height: 1.15; padding-right: 4px; }
+.vip-label b { font-size: clamp(14px, 3.9vw, 18px); white-space: nowrap; font-weight: 700; }
+.vip-label small { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: .65; }
+.vip-arrow { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--white); font-size: 18px; font-weight: 700; flex: none; transition: transform .4s var(--ease); }
+.btn-vip:hover { transform: scale(1.04); }
+.btn-vip:hover .shackle { transform: translate(-1px, -3px) rotate(-28deg); }
+.btn-vip:hover .vip-arrow { transform: translateX(4px) rotate(-45deg); }
+.btn-vip:active { transform: scale(.97); }
+.vip-note { font-size: 12px; color: #cfcfd8; letter-spacing: .3px; padding-left: 8px; }
 
 /* Recursos */
 .res-list { display: grid; gap: 12px; }
@@ -297,6 +330,9 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
   .res-list { grid-template-columns: 1fr 1fr; }
   .exam, .support { grid-template-columns: 1.2fr .8fr; padding: 56px; }
   .vip { grid-template-columns: auto 1fr auto; gap: 32px; padding: 44px 48px; }
+  .vip-cta { align-items: flex-start; }
+  .btn-vip { gap: 14px; padding: 12px 12px 12px 14px; }
+  .vip-lock, .vip-arrow { width: 48px; height: 48px; }
   .section-tight { padding-top: 64px; }
   .section { padding-top: 110px; }
 }
