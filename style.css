@@ -34,15 +34,12 @@ body {
   text-align: center;
 }
 .logo {
-  display: inline-block;
-  background: var(--text);
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 2px;
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 14px;
-  margin-bottom: 16px;
+  display: block;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 18px;
+  border-radius: 28px;
+  box-shadow: 0 8px 24px rgba(21, 21, 27, 0.18);
 }
 .hero h1 { font-size: clamp(28px, 7vw, 44px); font-weight: 700; line-height: 1.15; }
 .hero p { color: var(--muted); margin-top: 10px; font-size: 16px; }
