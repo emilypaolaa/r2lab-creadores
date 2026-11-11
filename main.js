@@ -211,6 +211,11 @@
     }
   });
 
+  /* ---------- Intranet ---------- */
+  gsap.from(".vip", { y: 60, scale: 0.96, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".vip", start: "top 85%" } });
+  gsap.from(".vip-icon", { rotate: -25, scale: 0.4, autoAlpha: 0, duration: 1, ease: "back.out(2.2)", scrollTrigger: { trigger: ".vip", start: "top 80%" } });
+  gsap.to(".vip-icon", { y: -6, duration: 1.8, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
   /* ---------- Recursos ---------- */
   gsap.from(".res", {
     y: 50, autoAlpha: 0, duration: 0.9, stagger: 0.1,

@@ -199,6 +199,28 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .lav { background: var(--lavender); }
 .cream { background: var(--cream); }
 
+/* Intranet (creadores top) */
+.section-tight { padding-top: 48px; }
+.vip {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: grid; gap: 22px; align-items: center;
+  padding: 32px 24px; border-radius: 32px; color: var(--white);
+  background: linear-gradient(125deg, #15151B 0%, #2a1f3d 45%, #F0476B 120%);
+  box-shadow: 0 30px 60px -24px rgba(240, 71, 107, .45);
+}
+.vip-glow { position: absolute; inset: -40%; z-index: -1; background: conic-gradient(from 0deg, transparent 0 60%, rgba(47, 196, 164, .35) 70%, transparent 80%, rgba(240, 71, 107, .4) 90%, transparent); animation: spin 9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.vip::after { content: ""; position: absolute; inset: 1px; z-index: -1; border-radius: 31px; background: linear-gradient(125deg, rgba(21, 21, 27, .96), rgba(42, 31, 61, .94) 55%, rgba(240, 71, 107, .85) 130%); }
+.vip-icon { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18); }
+.vip-icon svg { width: 28px; height: 28px; fill: none; stroke: var(--white); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.vip-tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #ffd27a; }
+.vip h2 { font-size: clamp(28px, 7vw, 46px); margin-top: 8px; }
+.vip h2 em { color: #ff8aa3; }
+.vip p { color: #cfcfd8; margin-top: 10px; font-size: 16px; }
+.vip p b { color: var(--white); }
+.btn-light { background: var(--white); color: var(--text); justify-self: start; }
+.btn-light:hover { box-shadow: 0 12px 28px rgba(255, 255, 255, .25); }
+
 /* Recursos */
 .res-list { display: grid; gap: 12px; }
 .res {
@@ -274,6 +296,8 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
   .stat { display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; }
   .res-list { grid-template-columns: 1fr 1fr; }
   .exam, .support { grid-template-columns: 1.2fr .8fr; padding: 56px; }
+  .vip { grid-template-columns: auto 1fr auto; gap: 32px; padding: 44px 48px; }
+  .section-tight { padding-top: 64px; }
   .section { padding-top: 110px; }
 }
 
