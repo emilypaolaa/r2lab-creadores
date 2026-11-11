@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,71 +10,116 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.replace("no-js","js")</script>
 </head>
 <body>
-  <header class="hero">
-    <img class="logo" src="img/logo-r2lab.jpg" alt="Logo de R2LAB" width="112" height="112">
-    <h1>Portal para creadores</h1>
-    <p>¡Bienvenido! Aquí tienes todo lo que necesitas para crecer en TikTok LIVE.</p>
+  <div class="bg" aria-hidden="true">
+    <span class="blob b-mint"></span>
+    <span class="blob b-lav"></span>
+    <span class="blob b-pink"></span>
+    <span class="blob b-cream"></span>
+  </div>
+
+  <header class="top wrap reveal">
+    <a class="brand" href="#">
+      <img src="img/logo-badge.png" alt="" width="56" height="56">
+      <span>R2LAB</span>
+    </a>
+    <span class="live"><i></i>LIVE</span>
   </header>
 
-  <main>
-    <section class="card meta">
-      <span class="tag">🎯 Tu meta</span>
-      <div class="stats">
-        <div class="stat"><strong>15</strong><span>días al mes mínimo</span></div>
-        <div class="stat"><strong>1 h</strong><span>de Live continua por día</span></div>
+  <section class="hero wrap">
+    <span class="pill-dark reveal">Portal para creadores <b>✦</b></span>
+    <h1 class="reveal" style="--d:.08s">Crece en TikTok <span>LIVE</span> con R2LAB</h1>
+    <p class="reveal" style="--d:.16s">Todo lo que necesitas, en un solo lugar.</p>
+    <ul class="chips reveal" style="--d:.24s">
+      <li><i class="dot teal"></i>Seguro</li>
+      <li><i class="dot coral"></i>Respetuoso</li>
+      <li><i class="dot teal"></i>Positivo</li>
+    </ul>
+  </section>
+
+  <main class="wrap">
+    <section class="block reveal">
+      <h2 class="label">Tu meta</h2>
+      <div class="goal">
+        <div class="goal-item mint">
+          <strong>15</strong>
+          <span>días al mes<br>como mínimo</span>
+        </div>
+        <div class="goal-item pink">
+          <strong>1 h</strong>
+          <span>de Live continua<br>cada día</span>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2>Recursos</h2>
-      <div class="grid">
-        <article class="card mint">
-          <span class="icon">📘</span>
-          <h3>Guía de normas de TikTok</h3>
-          <p>Por favor leer.</p>
-          <a class="btn" href="docs/guia-normas-tiktok-live.pdf" target="_blank" rel="noopener">Leer guía</a>
-        </article>
-        <article class="card lavender">
-          <span class="icon">💰</span>
-          <h3>Video de monetización</h3>
-          <p>Dar clic para ver.</p>
-          <a class="btn" href="#">Ver video</a>
-        </article>
-        <article class="card cream">
-          <span class="icon">🛡️</span>
-          <h3>Video de apelación</h3>
-          <p>Dar clic para ver.</p>
-          <a class="btn" href="#">Ver video</a>
-        </article>
-        <article class="card pink">
-          <span class="icon">🚀</span>
-          <h3>Manual de comunidad y potenciadores</h3>
-          <p>Por favor leer.</p>
-          <a class="btn" href="#">Leer manual</a>
-        </article>
+    <section class="block reveal">
+      <h2 class="label">Recursos</h2>
+      <div class="resources">
+        <a class="res mint reveal" style="--d:0.00s" href="docs/guia-normas-tiktok-live.pdf" target="_blank" rel="noopener">
+          <span class="res-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M8 7h6M8 11h6"/></svg>
+          </span>
+          <span class="res-text"><b>Guía de normas de TikTok</b><small>Por favor leer</small></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="res lav reveal" style="--d:0.08s" href="#">
+          <span class="res-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15 9.5c0-1.4-1.3-2-3-2s-3 .8-3 2.2c0 3 6 1.6 6 4.6 0 1.4-1.3 2.2-3 2.2s-3-.7-3-2"/></svg>
+          </span>
+          <span class="res-text"><b>Video de monetización</b><small>Dar clic para ver</small></span>
+          <span class="arrow">▶</span>
+        </a>
+        <a class="res cream reveal" style="--d:0.16s" href="#">
+          <span class="res-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          <span class="res-text"><b>Video de apelación</b><small>Dar clic para ver</small></span>
+          <span class="arrow">▶</span>
+        </a>
+        <a class="res pink reveal" style="--d:0.24s" href="#">
+          <span class="res-icon">
+            <svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+          </span>
+          <span class="res-text"><b>Manual de comunidad y potenciadores</b><small>Por favor leer</small></span>
+          <span class="arrow">→</span>
+        </a>
       </div>
     </section>
 
-    <section class="card support">
-      <h2>💬 Soporte 24/7</h2>
-      <p>¿Dudas? Escríbenos cuando quieras.</p>
-      <a class="btn btn-teal" href="#">Abrir chat de WhatsApp</a>
-    </section>
-
-    <section class="card exam">
-      <h2>📝 Examen final</h2>
-      <p>Apruébalo con <strong>70% o más</strong> y accede a las capacitaciones.</p>
-      <a class="btn" href="#">Presentar examen</a>
+    <section class="block duo reveal">
+      <div class="panel dark">
+        <span class="tag teal">24/7</span>
+        <h3>¿Dudas? Te ayudamos</h3>
+        <p>Soporte por WhatsApp a cualquier hora.</p>
+        <a class="btn btn-teal" href="#">Abrir WhatsApp</a>
+      </div>
+      <div class="panel lavender">
+        <span class="tag coral">Examen final</span>
+        <h3>Aprueba con <em>70%</em> o más</h3>
+        <p>y accede a las capacitaciones.</p>
+        <a class="btn btn-coral" href="#">Presentar examen</a>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>Juntos por una comunidad más positiva 💛</p>
+  <footer class="wrap reveal">
+    <img src="img/logo-badge.png" alt="Logo de R2LAB" width="104" height="104">
+    <p>Juntos por una comunidad más <span>positiva</span></p>
     <small>© R2LAB</small>
   </footer>
+  <script>
+    (function () {
+      var els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
 </body>
 </html>
