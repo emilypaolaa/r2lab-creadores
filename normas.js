@@ -211,7 +211,6 @@
   cascade(".swap", null, { scale: 0.96 });
   cascade(".tip", ".tips3");
   cascade(".tl-step", ".timeline", { stagger: 0.18 });
-  cascade(".tools .tags li", ".tools", { y: 16, scale: 0.8, stagger: 0.05, ease: "back.out(2)" });
   cascade(".severity");
   cascade(".keys li", ".keys", { stagger: 0.08 });
   cascade(".finish", null, { scale: 0.95 });

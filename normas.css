@@ -164,7 +164,6 @@
 .tl-card ul { list-style: none; display: grid; gap: 6px; }
 .tl-card li { position: relative; padding-left: 18px; font-size: 15px; }
 .tl-card li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--text); opacity: .4; }
-.tools { margin-top: 20px; }
 
 /* 09 · Gravedad */
 .severity { background: var(--white); border-radius: 28px; padding: 24px 22px; box-shadow: 0 24px 50px -28px rgba(21, 21, 27, .25); }
