@@ -18,6 +18,107 @@
     }
   }
 
+  var hasGsap = !!window.gsap && !reduce;
+
+  /* ---------- Menú en celular ---------- */
+  var menuBtn = document.querySelector(".menu-btn");
+  var menu = document.getElementById("mobile-menu");
+  var menuLinks = menu ? menu.querySelectorAll("a") : [];
+  function setMenu(open) {
+    document.body.classList.toggle("menu-open", open);
+    menuBtn.setAttribute("aria-expanded", open);
+    menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    menu.setAttribute("aria-hidden", !open);
+    if (hasGsap) {
+      window.gsap.killTweensOf([menu, menuLinks]);
+      if (open) {
+        window.gsap.to(menu, { autoAlpha: 1, duration: 0.35, ease: "power2.out" });
+        window.gsap.fromTo(menuLinks, { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.06, ease: "expo.out", delay: 0.05 });
+      } else {
+        window.gsap.to(menu, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+      }
+    } else {
+      menu.style.visibility = open ? "visible" : "hidden";
+      menu.style.opacity = open ? "1" : "0";
+    }
+  }
+  if (menuBtn && menu) {
+    menuBtn.addEventListener("click", function () { setMenu(!document.body.classList.contains("menu-open")); });
+    menuLinks.forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && document.body.classList.contains("menu-open")) setMenu(false); });
+    window.addEventListener("resize", function () { if (window.innerWidth >= 860 && document.body.classList.contains("menu-open")) setMenu(false); });
+  }
+
+  /* ---------- Ventana de video ---------- */
+  // Acepta links de YouTube (incl. Shorts), Google Drive, Vimeo y TikTok.
+  function toEmbed(url) {
+    var m;
+    if ((m = url.match(/youtube\.com\/shorts\/([\w-]{6,})/))) return { src: "https://www.youtube.com/embed/" + m[1] + "?autoplay=1&rel=0&playsinline=1", vertical: true };
+    if ((m = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|live\/)|youtu\.be\/)([\w-]{6,})/))) return { src: "https://www.youtube.com/embed/" + m[1] + "?autoplay=1&rel=0&playsinline=1" };
+    if ((m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]{10,})/))) return { src: "https://drive.google.com/file/d/" + m[1] + "/preview" };
+    if ((m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/))) return { src: "https://player.vimeo.com/video/" + m[1] + "?autoplay=1" };
+    if ((m = url.match(/tiktok\.com\/.*\/video\/(\d+)/))) return { src: "https://www.tiktok.com/embed/v2/" + m[1], vertical: true };
+    return null;
+  }
+  var modal = document.getElementById("vmodal");
+  var frame = modal && modal.querySelector(".vm-frame");
+  var lastFocus = null;
+  function openVideo(url, title) {
+    var emb = url ? toEmbed(url) : null;
+    if (url && !emb) { window.open(url, "_blank", "noopener"); return; }
+    lastFocus = document.activeElement;
+    modal.querySelector("#vmodal-title").textContent = title || "Video";
+    frame.classList.toggle("vertical", !!(emb && emb.vertical));
+    frame.innerHTML = emb
+      ? '<iframe src="' + emb.src + '" title="' + (title || "Video") + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'
+      : '<div class="vm-soon"><i>🎬</i><strong>Muy pronto</strong><span>Estamos preparando este video para ti.</span></div>';
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    if (hasGsap) {
+      window.gsap.fromTo(".vm-backdrop", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35 });
+      window.gsap.fromTo(".vm-box", { y: 60, scale: 0.92, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.6, ease: "expo.out" });
+    }
+    modal.querySelector(".vm-close").focus();
+  }
+  function closeVideo() {
+    function done() { modal.hidden = true; frame.innerHTML = ""; document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+    if (hasGsap) {
+      window.gsap.to(".vm-box", { y: 40, scale: 0.95, autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+      window.gsap.to(".vm-backdrop", { autoAlpha: 0, duration: 0.3, onComplete: done });
+    } else { done(); }
+  }
+  if (modal) {
+    document.querySelectorAll(".js-video").forEach(function (a) {
+      a.addEventListener("click", function (e) { e.preventDefault(); openVideo((a.dataset.video || "").trim(), a.dataset.title); });
+    });
+    modal.querySelectorAll("[data-close]").forEach(function (el) { el.addEventListener("click", closeVideo); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closeVideo(); });
+  }
+
+  /* ---------- WhatsApp flotante ---------- */
+  var wa = document.querySelector(".wa-float");
+  if (wa) {
+    var hero = document.querySelector(".hero");
+    var support = document.getElementById("soporte");
+    var supportVisible = false, tipShown = false;
+    if ("IntersectionObserver" in window && support) {
+      new IntersectionObserver(function (en) { supportVisible = en[0].isIntersecting; update(); }, { threshold: 0.25 }).observe(support);
+    }
+    function update() {
+      var pastHero = window.scrollY > hero.offsetHeight * 0.6;
+      var show = pastHero && !supportVisible && !document.body.classList.contains("menu-open");
+      wa.classList.toggle("show", show);
+      if (show && !tipShown) {
+        tipShown = true;
+        setTimeout(function () { wa.classList.add("tip"); }, 600);
+        setTimeout(function () { wa.classList.remove("tip"); }, 3600);
+      }
+    }
+    window.addEventListener("scroll", update, { passive: true });
+    if (menuBtn) menuBtn.addEventListener("click", function () { setTimeout(update, 0); });
+    update();
+  }
+
   /* ---------- Separar títulos en palabras ---------- */
   function splitWords(el) {
     var out = [];

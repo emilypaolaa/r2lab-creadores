@@ -6,9 +6,23 @@
   <title>R2LAB · Portal para creadores</title>
   <meta name="description" content="Portal para creadores de TikTok LIVE de la agencia R2LAB.">
   <meta name="theme-color" content="#F7F5F1">
+  <link rel="canonical" href="https://r2lab-creadores.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="R2LAB">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:url" content="https://r2lab-creadores.vercel.app/">
   <meta property="og:title" content="R2LAB · Portal para creadores">
-  <meta property="og:description" content="Todo lo que necesitas para crecer en TikTok LIVE.">
-  <meta property="og:image" content="https://r2lab-creadores.vercel.app/img/logo-badge.png">
+  <meta property="og:description" content="Crece en TikTok LIVE con R2LAB: normas, videos, soporte 24/7 y capacitación en un solo lugar.">
+  <meta property="og:image" content="https://r2lab-creadores.vercel.app/img/og-image.jpg">
+  <meta property="og:image:secure_url" content="https://r2lab-creadores.vercel.app/img/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="R2LAB · Portal para creadores de TikTok LIVE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="R2LAB · Portal para creadores">
+  <meta name="twitter:description" content="Normas, videos, soporte 24/7 y capacitación en un solo lugar.">
+  <meta name="twitter:image" content="https://r2lab-creadores.vercel.app/img/og-image.jpg">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,12 +48,30 @@
     </a>
     <nav class="nav-links" aria-label="Secciones">
       <a href="#meta">Meta</a>
+      <a href="#intranet">Intranet</a>
       <a href="#recursos">Recursos</a>
       <a href="#examen">Examen</a>
-      <a href="#intranet">Intranet</a>
+      <a href="#soporte">Soporte</a>
     </nav>
-    <span class="live"><i></i>LIVE</span>
+    <div class="nav-right">
+      <span class="live"><i></i>LIVE</span>
+      <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
   </header>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Menú">
+      <a href="#meta"><small>01</small>Tu meta</a>
+      <a href="#intranet"><small>✦</small>Intranet</a>
+      <a href="#recursos"><small>02</small>Recursos</a>
+      <a href="#examen"><small>03</small>Examen final</a>
+      <a href="#soporte"><small>24/7</small>Soporte</a>
+    </nav>
+    <a class="btn btn-teal mm-wa" href="https://wa.me/51998227861?text=Hola%20R2LAB%2C%20tengo%20una%20consulta" target="_blank" rel="noopener">Escríbenos por WhatsApp <span>→</span></a>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="top">
@@ -153,13 +185,13 @@
           <span class="res-text"><b>Guía de normas de TikTok</b><small>Por favor leer · PDF</small></span>
           <span class="arrow">→</span>
         </a>
-        <a class="res lav" href="#">
+        <a class="res lav js-video" href="#" data-video="" data-title="Video de monetización">
           <span class="res-num">02</span>
           <span class="res-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5-6-3.5z"/></svg></span>
           <span class="res-text"><b>Video de monetización</b><small>Dar clic para ver</small></span>
           <span class="arrow">▶</span>
         </a>
-        <a class="res cream" href="#">
+        <a class="res cream js-video" href="#" data-video="" data-title="Video de apelación">
           <span class="res-num">03</span>
           <span class="res-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
           <span class="res-text"><b>Video de apelación</b><small>Dar clic para ver</small></span>
@@ -216,6 +248,24 @@
     <p class="big split">Juntos por una comunidad más <em>positiva</em></p>
     <small>© R2LAB · Agencia de creadores TikTok LIVE</small>
   </footer>
+
+  <!-- VENTANA DE VIDEO -->
+  <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vmodal-title" hidden>
+    <div class="vm-backdrop" data-close></div>
+    <div class="vm-box">
+      <div class="vm-head">
+        <b id="vmodal-title">Video</b>
+        <button class="vm-close" type="button" aria-label="Cerrar video" data-close>✕</button>
+      </div>
+      <div class="vm-frame"></div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP FLOTANTE -->
+  <a class="wa-float" href="https://wa.me/51998227861?text=Hola%20R2LAB%2C%20tengo%20una%20consulta" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.6-5.6C5.2 10 10 5.3 16 5.3S26.8 10 26.8 15.8 22 26.4 16 26.4zm5.9-7.8c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.7c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+    <span class="wa-tip">¿Dudas? Escríbenos</span>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>

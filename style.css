@@ -71,6 +71,39 @@ img { display: block; }
 .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--white); animation: blink 1.4s infinite; }
 @keyframes blink { 50% { opacity: .25; } }
 
+.nav-right { display: flex; align-items: center; gap: 8px; }
+
+/* Botón menú (celular) */
+.menu-btn {
+  position: relative; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--text); display: grid; place-items: center;
+}
+.menu-btn span { position: absolute; left: 13px; right: 13px; height: 2px; border-radius: 2px; background: var(--white); transition: transform .4s var(--ease), top .4s var(--ease); }
+.menu-btn span:first-child { top: 17px; }
+.menu-btn span:last-child { top: 25px; }
+.menu-open .menu-btn span:first-child { top: 21px; transform: rotate(45deg); }
+.menu-open .menu-btn span:last-child { top: 21px; transform: rotate(-45deg); }
+
+/* Panel del menú (celular) */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 40;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 28px;
+  padding: 110px 24px 36px;
+  background: rgba(247, 245, 241, .82);
+  backdrop-filter: blur(22px) saturate(1.4); -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  visibility: hidden; opacity: 0;
+}
+.mobile-menu nav { display: flex; flex-direction: column; }
+.mobile-menu nav a {
+  display: flex; align-items: baseline; gap: 14px;
+  font-size: clamp(34px, 10vw, 46px); font-weight: 800; letter-spacing: -.03em; line-height: 1.25;
+  padding: 6px 0; border-bottom: 1px solid var(--line);
+}
+.mobile-menu nav a small { font-size: 12px; font-weight: 700; color: var(--coral); letter-spacing: 1px; min-width: 34px; }
+.mobile-menu .mm-wa { width: 100%; }
+.no-js .mobile-menu { display: none; }
+body.menu-open { overflow: hidden; }
+
 /* ---------- Hero ---------- */
 .hero {
   max-width: 1120px; margin: 0 auto;
@@ -311,6 +344,47 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .footer .big { font-size: clamp(32px, 8vw, 72px); font-weight: 800; line-height: 1.02; letter-spacing: -.035em; margin: 26px auto 18px; max-width: 14ch; }
 .footer small { color: var(--muted); }
 
+/* ---------- Ventana de video ---------- */
+.vmodal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; }
+.vmodal[hidden] { display: none; }
+.vm-backdrop { position: absolute; inset: 0; background: rgba(21, 21, 27, .72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.vm-box { position: relative; width: min(920px, 100%); background: var(--text); border-radius: 26px; padding: 14px; box-shadow: 0 40px 80px rgba(0, 0, 0, .4); }
+.vm-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--white); padding: 4px 6px 12px 10px; }
+.vm-head b { font-size: 16px; font-weight: 600; }
+.vm-close { width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; background: rgba(255, 255, 255, .12); color: var(--white); font-size: 16px; transition: background .25s, transform .3s var(--ease); }
+.vm-close:hover { background: var(--coral); transform: rotate(90deg); }
+.vm-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000; }
+.vm-frame.vertical { aspect-ratio: 9 / 16; max-height: 78vh; margin: 0 auto; }
+.vm-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vm-soon { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; text-align: center; color: var(--white); padding: 24px;
+  background: radial-gradient(60% 80% at 20% 20%, rgba(240, 71, 107, .35), transparent 60%), radial-gradient(60% 80% at 80% 80%, rgba(47, 196, 164, .35), transparent 60%), #1c1c24; }
+.vm-soon strong { font-size: clamp(24px, 6vw, 36px); font-weight: 800; letter-spacing: -.02em; }
+.vm-soon span { color: #b9b9c3; font-size: 15px; }
+.vm-soon i { font-style: normal; font-size: 40px; }
+
+/* ---------- WhatsApp flotante ---------- */
+.wa-float {
+  position: fixed; right: 18px; bottom: 18px; z-index: 60;
+  display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%;
+  background: #25D366; color: var(--white);
+  box-shadow: 0 14px 30px -6px rgba(37, 211, 102, .6);
+  transition: transform .35s var(--ease);
+}
+.wa-float::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #25D366; z-index: -1; animation: waPing 2.4s cubic-bezier(0, 0, .2, 1) infinite; }
+@keyframes waPing { 70%, 100% { transform: scale(1.6); opacity: 0; } 0% { opacity: .5; } }
+.wa-float svg { width: 32px; height: 32px; fill: currentColor; }
+.wa-float:hover { transform: scale(1.08); }
+.wa-tip {
+  position: absolute; right: 72px; white-space: nowrap;
+  background: var(--text); color: var(--white); font-size: 13px; font-weight: 600;
+  padding: 8px 14px; border-radius: 999px; pointer-events: none;
+  opacity: 0; transform: translateX(8px); transition: opacity .3s, transform .3s var(--ease);
+}
+.wa-float:hover .wa-tip, .wa-float.tip .wa-tip { opacity: 1; transform: none; }
+.js .wa-float { opacity: 0; visibility: hidden; transform: scale(.6); }
+.js .wa-float.show { opacity: 1; visibility: visible; transform: none; transition: opacity .4s, transform .5s cubic-bezier(.3, 1.6, .5, 1), visibility 0s; }
+.js .wa-float.show:hover { transform: scale(1.08); }
+
 /* Estado inicial (solo con JS, evita parpadeo) */
 .js [data-intro], .js .hero-visual, .js .hero h1 { visibility: hidden; }
 
@@ -318,6 +392,7 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 @media (min-width: 860px) {
   :root { --pad: 32px; }
   .nav-links { display: flex; }
+  .menu-btn, .mobile-menu { display: none; }
   .hero { grid-template-columns: 1.15fr .85fr; padding-top: 80px; min-height: calc(100vh - 80px); }
   .lead { font-size: 19px; }
   .phone { width: 290px; }
