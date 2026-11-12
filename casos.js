@@ -126,13 +126,14 @@
     gsap.to(b, { yPercent: -22 * depth, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 1 } });
   });
 
-  /* ---------- Manifiesto: el texto se "llena" al leer ---------- */
-  var scrubWords = splitWords(document.querySelector(".scrub"));
-  gsap.fromTo(scrubWords, { opacity: 0.12 }, {
-    opacity: 1, ease: "none", stagger: 0.1,
-    scrollTrigger: { trigger: ".scrub", start: "top 80%", end: "bottom 45%", scrub: 1 }
-  });
-  gsap.from(".manifesto .label, .manifesto-sub", { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.2, scrollTrigger: { trigger: ".manifesto", start: "top 80%" } });
+  /* ---------- Manifiesto ---------- */
+  var mTitle = splitWords(document.querySelector(".m-title"));
+  gsap.from(mTitle, { yPercent: 115, rotate: 3, duration: 1, stagger: 0.06, ease: "expo.out", scrollTrigger: { trigger: ".m-title", start: "top 88%" } });
+  gsap.from(".manifesto .label", { y: 16, autoAlpha: 0, duration: 0.7, scrollTrigger: { trigger: ".manifesto", start: "top 85%" } });
+  gsap.from(".m-start li", { y: 24, autoAlpha: 0, duration: 0.7, stagger: 0.12, scrollTrigger: { trigger: ".m-start", start: "top 88%" } });
+  // la frase final se "llena" de color mientras lees
+  var diffWords = splitWords(document.querySelector(".m-diff"));
+  gsap.fromTo(diffWords, { opacity: 0.15 }, { opacity: 1, stagger: 0.12, ease: "none", scrollTrigger: { trigger: ".m-diff", start: "top 85%", end: "top 55%", scrub: 1 } });
 
   /* ---------- Historias ---------- */
   var tint = document.querySelector(".tint");
