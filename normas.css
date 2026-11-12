@@ -17,37 +17,10 @@
 .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .chips li { display: inline-flex; align-items: center; gap: 10px; background: var(--white); border: 1px solid #ebe8e2; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 999px; }
 .dot.coral { background: var(--coral); box-shadow: 0 0 0 4px rgba(240, 71, 107, .18); }
-.n-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 22px; font-size: 13px; font-weight: 600; color: var(--muted); }
-.n-meta a { color: var(--coral); }
-.scroll-cue { display: block; width: 26px; height: 42px; border: 2px solid rgba(21, 21, 27, .25); border-radius: 14px; margin-top: 36px; position: relative; }
-.scroll-cue span { position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--coral); animation: cue 1.6s ease-in-out infinite; }
-@keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
-
-/* ---------- Índice de capítulos (fijo) ---------- */
-.chapters {
-  position: sticky; top: 78px; z-index: 30;
-  max-width: 1120px; margin: 0 auto; padding: 0 var(--pad);
-}
-.chapters-track {
-  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
-  padding: 6px; border-radius: 999px;
-  background: rgba(255, 255, 255, .82); border: 1px solid rgba(255, 255, 255, .9);
-  backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: 0 8px 24px rgba(21, 21, 27, .05);
-  scroll-behavior: smooth;
-}
-.chapters-track::-webkit-scrollbar { display: none; }
-.chapters a {
-  flex: none; font-size: 13px; font-weight: 600; white-space: nowrap;
-  padding: 8px 14px; border-radius: 999px; color: var(--muted);
-  transition: background .3s var(--ease), color .3s;
-}
-.chapters a:hover { color: var(--text); }
-.chapters a.active { background: var(--text); color: var(--white); }
 
 /* ---------- Capítulos ---------- */
 .n-main { max-width: 1120px; margin: 0 auto; padding: 0 var(--pad); }
-.chapter { padding: 84px 0 8px; scroll-margin-top: 130px; }
+.chapter { padding: 84px 0 8px; scroll-margin-top: 90px; }
 .ch-head { display: grid; gap: 6px; margin-bottom: 28px; }
 .ch-num {
   font-size: clamp(64px, 18vw, 140px); font-weight: 800; line-height: .8; letter-spacing: -.06em;
@@ -250,10 +223,6 @@
 /* ---------- Escritorio ---------- */
 @media (min-width: 860px) {
   .n-hero { padding-top: 64px; padding-bottom: 56px; }
-  .chapters { top: 84px; }
-  .chapters a { font-size: 12.5px; padding: 8px 11px; }
-  .chapters-track > :first-child { margin-left: auto; }
-  .chapters-track > :last-child { margin-right: auto; }
   .chapter { padding-top: 120px; }
   .ch-head { grid-template-columns: auto 1fr; gap: 28px; align-items: end; }
   .pillars { grid-template-columns: repeat(3, 1fr); }

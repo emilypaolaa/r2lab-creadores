@@ -63,26 +63,6 @@
   window.addEventListener("scroll", updateProgress, { passive: true });
   updateProgress(); updateWa();
 
-  /* ---------- Capítulo activo en el índice ---------- */
-  var chapterLinks = Array.prototype.slice.call(document.querySelectorAll(".chapters a"));
-  var track = document.querySelector(".chapters-track");
-  function setActive(id) {
-    chapterLinks.forEach(function (a) {
-      var on = a.getAttribute("href") === "#" + id;
-      a.classList.toggle("active", on);
-      if (on && track) {
-        var left = a.offsetLeft - track.clientWidth / 2 + a.clientWidth / 2;
-        track.scrollTo({ left: left, behavior: "smooth" });
-      }
-    });
-  }
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) setActive(en.target.id); });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    document.querySelectorAll(".chapter").forEach(function (s) { io.observe(s); });
-  }
-
   /* ---------- Palabras borrosas: toca para ver ---------- */
   var words = document.querySelectorAll(".words li");
   words.forEach(function (w) {
@@ -186,8 +166,7 @@
     .from(heroWords, { yPercent: 115, rotate: 4, duration: 1.1, stagger: 0.07, ease: "expo.out" }, "-=0.4")
     .from(".n-hero .lead", { y: 24, autoAlpha: 0, duration: 0.8 }, "-=0.7")
     .from(".n-hero .chips li", { scale: 0.6, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: "back.out(2)" }, "-=0.5")
-    .from(".n-meta, .scroll-cue", { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.1 }, "-=0.3")
-    .from(".chapters", { y: 20, autoAlpha: 0, duration: 0.7 }, "-=0.4");
+    ;
 
   // fondo con parallax
   gsap.utils.toArray(".blob").forEach(function (b) {
