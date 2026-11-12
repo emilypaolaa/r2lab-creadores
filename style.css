@@ -102,13 +102,15 @@ img { display: block; }
 .mobile-menu nav a small { font-size: 12px; font-weight: 700; color: var(--coral); letter-spacing: 1px; min-width: 34px; }
 .mobile-menu .mm-wa { width: 100%; }
 .no-js .mobile-menu { display: none; }
-body.menu-open { overflow: hidden; }
+html.scroll-lock { overflow: hidden; overscroll-behavior: none; }
+.mobile-menu { overscroll-behavior: contain; touch-action: none; }
+.menu-btn { touch-action: manipulation; }
 
 /* ---------- Hero ---------- */
 .hero {
   max-width: 1120px; margin: 0 auto;
   padding: 56px var(--pad) 40px;
-  display: grid; gap: 48px; align-items: center;
+  display: grid; gap: 64px; align-items: center;
 }
 .pill-dark {
   display: inline-flex; align-items: center; gap: 12px;

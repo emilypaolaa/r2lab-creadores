@@ -20,12 +20,21 @@
 
   var hasGsap = !!window.gsap && !reduce;
 
+  /* ---------- Bloqueo de scroll (menú y video) ---------- */
+  var locks = 0;
+  function lockScroll(on) {
+    locks = Math.max(0, locks + (on ? 1 : -1));
+    root.classList.toggle("scroll-lock", locks > 0);
+  }
+  function blockTouch(e) { if (root.classList.contains("scroll-lock")) e.preventDefault(); }
+
   /* ---------- Menú en celular ---------- */
   var menuBtn = document.querySelector(".menu-btn");
   var menu = document.getElementById("mobile-menu");
   var menuLinks = menu ? menu.querySelectorAll("a") : [];
   function setMenu(open) {
-    document.body.classList.toggle("menu-open", open);
+    root.classList.toggle("menu-open", open);
+    lockScroll(open);
     menuBtn.setAttribute("aria-expanded", open);
     menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
     menu.setAttribute("aria-hidden", !open);
@@ -43,10 +52,11 @@
     }
   }
   if (menuBtn && menu) {
-    menuBtn.addEventListener("click", function () { setMenu(!document.body.classList.contains("menu-open")); });
+    menu.addEventListener("touchmove", blockTouch, { passive: false });
+    menuBtn.addEventListener("click", function () { setMenu(!root.classList.contains("menu-open")); });
     menuLinks.forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && document.body.classList.contains("menu-open")) setMenu(false); });
-    window.addEventListener("resize", function () { if (window.innerWidth >= 860 && document.body.classList.contains("menu-open")) setMenu(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && root.classList.contains("menu-open")) setMenu(false); });
+    window.addEventListener("resize", function () { if (window.innerWidth >= 860 && root.classList.contains("menu-open")) setMenu(false); });
   }
 
   /* ---------- Ventana de video ---------- */
@@ -73,7 +83,7 @@
       ? '<iframe src="' + emb.src + '" title="' + (title || "Video") + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'
       : '<div class="vm-soon"><i>🎬</i><strong>Muy pronto</strong><span>Estamos preparando este video para ti.</span></div>';
     modal.hidden = false;
-    document.body.style.overflow = "hidden";
+    lockScroll(true);
     if (hasGsap) {
       window.gsap.fromTo(".vm-backdrop", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35 });
       window.gsap.fromTo(".vm-box", { y: 60, scale: 0.92, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.6, ease: "expo.out" });
@@ -81,7 +91,7 @@
     modal.querySelector(".vm-close").focus();
   }
   function closeVideo() {
-    function done() { modal.hidden = true; frame.innerHTML = ""; document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+    function done() { modal.hidden = true; frame.innerHTML = ""; lockScroll(false); if (lastFocus) lastFocus.focus(); }
     if (hasGsap) {
       window.gsap.to(".vm-box", { y: 40, scale: 0.95, autoAlpha: 0, duration: 0.3, ease: "power2.in" });
       window.gsap.to(".vm-backdrop", { autoAlpha: 0, duration: 0.3, onComplete: done });
@@ -91,6 +101,7 @@
     document.querySelectorAll(".js-video").forEach(function (a) {
       a.addEventListener("click", function (e) { e.preventDefault(); openVideo((a.dataset.video || "").trim(), a.dataset.title); });
     });
+    modal.querySelector(".vm-backdrop").addEventListener("touchmove", blockTouch, { passive: false });
     modal.querySelectorAll("[data-close]").forEach(function (el) { el.addEventListener("click", closeVideo); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closeVideo(); });
   }
@@ -106,7 +117,7 @@
     }
     function update() {
       var pastHero = window.scrollY > hero.offsetHeight * 0.6;
-      var show = pastHero && !supportVisible && !document.body.classList.contains("menu-open");
+      var show = pastHero && !supportVisible && !root.classList.contains("menu-open");
       wa.classList.toggle("show", show);
       if (show && !tipShown) {
         tipShown = true;
@@ -241,7 +252,10 @@
     var depth = parseFloat(b.dataset.depth) || 1;
     gsap.to(b, { yPercent: -18 * depth, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 1 } });
   });
-  gsap.to(".hero-visual", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 } });
+  // Parallax del teléfono solo en escritorio (en celular taparía los botones)
+  gsap.matchMedia().add("(min-width: 860px)", function () {
+    gsap.to(".hero-visual", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 } });
+  });
 
   /* ---------- Interacción con el mouse (solo escritorio) ---------- */
   if (finePointer) {
