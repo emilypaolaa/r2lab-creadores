@@ -6,7 +6,7 @@
   var curtain = document.createElement("div");
   curtain.className = "page-curtain";
   curtain.setAttribute("aria-hidden", "true");
-  curtain.innerHTML = '<div class="pc-layer pc-a"></div><div class="pc-layer pc-b"><div class="pc-mark"><img src="img/logo-badge.png" alt="" width="64" height="64"><i></i></div></div>';
+  curtain.innerHTML = '<div class="pc-layer pc-a"><div class="pc-mark"><img src="img/logo-badge.png" alt="" width="64" height="64"><i></i></div></div>';
   document.body.appendChild(curtain);
 
   function snap(fn) { // cambia de estado sin animación (para no cruzar la pantalla)

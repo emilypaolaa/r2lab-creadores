@@ -392,34 +392,27 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .footer small { font-size: 12px; color: var(--muted); }
 
 /* ---------- Transición entre páginas ---------- */
-/* Dos capas: un velo coral y encima uno crema con el logo. Suben al salir y se van hacia arriba al llegar. */
+/* Una sola capa azul con el logo: sube al salir y se va hacia arriba al llegar. */
 .page-curtain { position: fixed; inset: 0; z-index: 200; pointer-events: none; overflow: hidden; }
 .pc-layer { position: absolute; inset: 0; transform: translateY(101%); transition: transform .75s cubic-bezier(.76, 0, .24, 1); will-change: transform; }
-.pc-a { background: #A3B8F3; }
-.pc-b { display: grid; place-items: center; background: var(--bg); transition-delay: .09s; }
-.pc-b::before { /* luz suave en los colores de la marca */
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(40% 35% at 30% 30%, rgba(232, 229, 246, .95), transparent 70%), radial-gradient(45% 40% at 75% 70%, rgba(226, 245, 238, .95), transparent 70%);
-}
+.pc-a { display: grid; place-items: center; background: #A3B8F3; }
 .pc-mark { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; opacity: 0; transform: translateY(14px); transition: opacity .35s ease .35s, transform .6s cubic-bezier(.2, .7, .2, 1) .35s; }
 .pc-mark img { width: 64px; height: 64px; border-radius: 18px; box-shadow: 0 12px 30px rgba(21, 21, 27, .12); }
-.pc-mark i { display: block; width: 64px; height: 3px; border-radius: 3px; background: rgba(21, 21, 27, .1); overflow: hidden; position: relative; }
-.pc-mark i::after { content: ""; position: absolute; inset: 0; background: #A3B8F3; transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.65, 0, .35, 1) .4s; }
+.pc-mark i { display: block; width: 64px; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .35); overflow: hidden; position: relative; }
+.pc-mark i::after { content: ""; position: absolute; inset: 0; background: var(--white); transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.65, 0, .35, 1) .4s; }
 
 .page-curtain.is-covering { pointer-events: auto; }
 .page-curtain.is-covering .pc-layer { transform: translateY(0); }
 .page-curtain.is-covering .pc-mark { opacity: 1; transform: none; }
 .page-curtain.is-covering .pc-mark i::after { transform: scaleX(1); }
 .page-curtain.is-leaving .pc-layer { transform: translateY(-101%); }
-.page-curtain.is-leaving .pc-a { transition-delay: .09s; }
-.page-curtain.is-leaving .pc-b { transition-delay: 0s; }
 .page-curtain.is-leaving .pc-mark { opacity: 0; transform: translateY(-14px); transition-delay: 0s; }
 .page-curtain.no-anim, .page-curtain.no-anim * { transition: none !important; }
 
-/* Mientras carga la página nueva: crema con el logo desde el primer instante (sin destello) */
+/* Mientras carga la página nueva: azul con el logo desde el primer instante (sin destello) */
 html.pc-arrive::after {
   content: ""; position: fixed; inset: 0; z-index: 199;
-  background: url("img/logo-badge.png") 50% calc(50% - 8.5px) / 64px 64px no-repeat, var(--bg);
+  background: url("img/logo-badge.png") 50% calc(50% - 8.5px) / 64px 64px no-repeat, #A3B8F3;
   animation: pcSafety .4s ease 3s forwards;
 }
 @keyframes pcSafety { to { opacity: 0; visibility: hidden; } }
