@@ -83,15 +83,6 @@
     });
   });
 
-  /* ---------- Tarjetas que giran ---------- */
-  document.querySelectorAll(".flip").forEach(function (f) {
-    f.addEventListener("click", function () {
-      var on = !f.classList.contains("on");
-      f.classList.toggle("on", on);
-      f.setAttribute("aria-pressed", on);
-    });
-  });
-
   /* ---------- Frases que se intercambian (06) ---------- */
   var swapWord = document.querySelector(".swap-word");
   var swapItems = Array.prototype.slice.call(document.querySelectorAll(".swap-list li"));
@@ -219,7 +210,6 @@
   gsap.from(".dark-foot", { autoAlpha: 0, y: 10, duration: 0.8, scrollTrigger: { trigger: ".dark-foot", start: "top 95%" } });
   cascade(".swap", null, { scale: 0.96 });
   cascade(".tip", ".tips3");
-  cascade(".flip", ".flips", { y: 40, rotateY: -50, stagger: 0.06 });
   cascade(".tl-step", ".timeline", { stagger: 0.18 });
   cascade(".tools .tags li", ".tools", { y: 16, scale: 0.8, stagger: 0.05, ease: "back.out(2)" });
   cascade(".severity");
@@ -235,16 +225,6 @@
       if (!demo) return;
       gsap.delayedCall(1, function () { demo.classList.add("on"); });
       gsap.delayedCall(2.6, function () { if (allBtn.getAttribute("aria-pressed") !== "true") demo.classList.remove("on"); });
-    }
-  });
-
-  // frases: la primera tarjeta gira sola una vez
-  ScrollTrigger.create({
-    trigger: ".flips", start: "top 65%", once: true,
-    onEnter: function () {
-      var f = document.querySelector(".flip");
-      gsap.delayedCall(1.1, function () { f.classList.add("on"); });
-      gsap.delayedCall(2.8, function () { f.classList.remove("on"); });
     }
   });
 

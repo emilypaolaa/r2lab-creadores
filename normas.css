@@ -148,23 +148,6 @@
 .tip b { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--coral); color: var(--white); font-weight: 800; }
 .tip p { font-size: 15px; font-weight: 500; }
 
-/* 07 · Tarjetas que giran */
-.flips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.flip { border: 0; padding: 0; background: none; cursor: pointer; font: inherit; color: inherit; text-align: left; perspective: 900px; min-height: 150px; }
-.f-in { position: relative; display: block; width: 100%; height: 100%; min-height: 150px; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3, 1.3, .4, 1); }
-.flip.on .f-in { transform: rotateY(180deg); }
-.f-front, .f-back {
-  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
-  border-radius: 22px; padding: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-}
-.f-front { background: rgba(255, 255, 255, .85); border: 1px solid rgba(255, 255, 255, .95); font-size: 16px; font-weight: 700; line-height: 1.25; }
-.f-front small { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--coral); }
-.f-front i { font-style: normal; align-self: flex-end; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--text); color: var(--white); font-size: 14px; }
-.f-back { transform: rotateY(180deg); justify-content: center; background: var(--teal); color: var(--text); font-size: 17px; font-weight: 700; line-height: 1.3; }
-.flip:nth-child(4n+2) .f-back { background: var(--coral); color: var(--white); }
-.flip:nth-child(4n+3) .f-back { background: #b9aef0; }
-.flip:nth-child(4n) .f-back { background: #f6c76a; }
-
 /* 08 · Línea de tiempo */
 .timeline { position: relative; display: grid; gap: 14px; padding-left: 34px; }
 .tl-line { position: absolute; left: 15px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: rgba(21, 21, 27, .08); }
@@ -232,9 +215,6 @@
   .duo-cards { grid-template-columns: 1fr 1fr; }
   .swap { padding: 44px; }
   .tips3 { grid-template-columns: repeat(3, 1fr); }
-  .flips { grid-template-columns: repeat(4, 1fr); }
-  .flip, .f-in { min-height: 180px; }
-  .f-front, .f-back { padding: 20px; }
   .timeline { grid-template-columns: repeat(3, 1fr); padding-left: 0; padding-top: 54px; gap: 16px; }
   .tl-line { left: 17px; right: 17px; top: 16px; bottom: auto; width: auto; height: 3px; }
   .tl-line span { transform-origin: left; transform: scaleX(0); }
