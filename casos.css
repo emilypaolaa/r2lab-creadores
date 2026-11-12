@@ -96,8 +96,8 @@ html:not(.js) .f3 { transform: translate(-2%, -46%) rotate(10deg); }
 .g-row:last-of-type b { color: var(--tone); }
 .g-note { display: block; margin-top: 10px; font-size: 13px; font-weight: 600; }
 
-.s-quote { position: relative; margin-top: 24px; padding: 22px 22px 22px 26px; border-radius: 22px; background: var(--text); color: var(--white); font-size: 18px; font-weight: 700; line-height: 1.4; }
-.s-quote::before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 4px; border-radius: 4px; background: var(--tone); }
+.s-quote { position: relative; margin-top: 24px; padding: 54px 24px 24px; border-radius: 22px; background: var(--text); color: var(--white); font-size: 18px; font-weight: 700; line-height: 1.4; }
+.s-quote::before { content: "“"; position: absolute; left: 20px; top: 2px; font-size: 72px; font-weight: 800; line-height: 1; color: var(--tone); }
 
 .disclaimer { font-size: 12px; color: var(--muted); padding: 10px 0 0; max-width: 70ch; }
 

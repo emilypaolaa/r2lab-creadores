@@ -219,10 +219,25 @@
   cascade(".vocab-card", null, { scale: 0.96 });
   cascade(".words li", ".words", { y: 20, scale: 0.6, stagger: 0.03, duration: 0.6, ease: "back.out(2)" });
   cascade(".sensitive");
-  cascade("#otros-temas .rule", "#otros-temas .grid6");
   cascade(".dcard", ".duo-cards", { x: function (i) { return i ? 60 : -60; }, y: 0 });
   cascade(".checks li", ".duo-cards", { x: -20, y: 0, stagger: 0.06, duration: 0.6 });
-  cascade("#riesgo .rule", "#riesgo .grid6", { scale: 0.9 });
+  // listas editoriales: línea que se dibuja + íconos que se trazan
+  gsap.utils.toArray(".rk-list").forEach(function (list) {
+    var items = list.querySelectorAll(".rk");
+    items.forEach(function (rk, i) {
+      var shapes = rk.querySelectorAll(".rk-ic path, .rk-ic rect, .rk-ic circle:not([r='.9'])");
+      shapes.forEach(function (sh) { sh.setAttribute("pathLength", "1"); });
+      var tl = gsap.timeline({ scrollTrigger: { trigger: rk, start: "top 88%" } });
+      tl.from(rk.querySelector(".rk-n"), { y: 20, autoAlpha: 0, duration: 0.6 }, 0)
+        .from(rk.querySelector("h3"), { y: 30, autoAlpha: 0, duration: 0.8, ease: "expo.out" }, 0.05)
+        .from(rk.querySelector("p"), { y: 20, autoAlpha: 0, duration: 0.8 }, 0.15)
+        .from(rk.querySelector(".rk-ic"), { scale: 0.4, rotate: -40, autoAlpha: 0, duration: 0.8, ease: "back.out(2)" }, 0.1)
+        .fromTo(shapes, { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.1, stagger: 0.08, ease: "power2.inOut" }, 0.25)
+        .fromTo(rk, { borderTopColor: "rgba(0,0,0,0)" }, { borderTopColor: "", duration: 0.8, clearProps: "borderTopColor" }, 0);
+    });
+  });
+  gsap.from(".dark-panel", { y: 60, scale: 0.97, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".dark-panel", start: "top 85%" } });
+  gsap.from(".dark-foot", { autoAlpha: 0, y: 10, duration: 0.8, scrollTrigger: { trigger: ".dark-foot", start: "top 95%" } });
   cascade(".swap", null, { scale: 0.96 });
   cascade(".tip", ".tips3");
   cascade(".flip", ".flips", { y: 40, rotateY: -50, stagger: 0.06 });

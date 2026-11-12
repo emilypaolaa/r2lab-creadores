@@ -81,7 +81,7 @@
     frame.classList.toggle("vertical", !!(emb && emb.vertical));
     frame.innerHTML = emb
       ? '<iframe src="' + emb.src + '" title="' + (title || "Video") + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'
-      : '<div class="vm-soon"><i>🎬</i><strong>Muy pronto</strong><span>Estamos preparando este video para ti.</span></div>';
+      : '<div class="vm-soon"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8.5v7l6-3.5-6-3.5z"/></svg></i><strong>Muy pronto</strong><span>Estamos preparando este video para ti.</span></div>';
     modal.hidden = false;
     lockScroll(true);
     if (hasGsap) {
@@ -196,12 +196,13 @@
 
   /* ---------- Corazones del live ---------- */
   var hearts = document.querySelector(".hearts");
-  var EMOJIS = ["💖", "💚", "💜", "🌹", "✨", "💗"];
+  var HEART_COLORS = ["#F0476B", "#2FC4A4", "#B9AEF0", "#FF8AA3", "#F6C76A"];
   function spawnHeart() {
     if (document.hidden) return;
     var h = document.createElement("span");
     h.className = "heart";
-    h.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    h.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.3 3.2 4.5 6.9 4.5c2.1 0 3.6 1.1 5.1 3 1.5-1.9 3-3 5.1-3 3.7 0 6 3.8 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg>';
+    h.style.color = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
     hearts.appendChild(h);
     var dur = gsap.utils.random(2.2, 3.2);
     gsap.fromTo(h,
@@ -220,8 +221,8 @@
 
   // chat que rota
   var CHAT = [
-    ["ana", "¡Hola! Qué buen live 💜"], ["leo.mx", "envió una rosa 🌹"], ["sofi", "¡Te sigo desde hoy! ✨"],
-    ["marce", "Saludos desde Lima 👋"], ["dani.r", "envió un regalo 🎁"], ["vale", "Me encanta tu energía 💚"]
+    ["ana", "¡Hola! Qué buen live"], ["leo.mx", "envió una rosa"], ["sofi", "¡Te sigo desde hoy!"],
+    ["marce", "Saludos desde Lima"], ["dani.r", "envió un regalo"], ["vale", "Me encanta tu energía"]
   ];
   var chatBox = document.querySelector(".ph-chat");
   var chatIdx = 3;
