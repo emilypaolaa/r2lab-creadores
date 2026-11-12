@@ -162,7 +162,7 @@
     gsap.from(chars, { yPercent: 110, rotate: 12, autoAlpha: 0, duration: 1, stagger: 0.04, ease: "expo.out", scrollTrigger: { trigger: name, start: "top 88%" } });
 
     // contenido en cascada
-    var parts = story.querySelectorAll(".s-kicker, .s-handle, .s-tag, .s-block, .s-stats > div, .growth, .s-quote");
+    var parts = story.querySelectorAll(".s-kicker, .s-handle, .s-tag, .s-stats > div, .growth, .s-quote");
     gsap.from(parts, { y: 40, autoAlpha: 0, duration: 0.9, stagger: 0.09, scrollTrigger: { trigger: story.querySelector(".story-body"), start: "top 80%" } });
 
     // contadores y barras de crecimiento
@@ -190,21 +190,13 @@
   });
 
   // al salir de la última historia, el fondo vuelve a su color
-  ScrollTrigger.create({ trigger: ".path", start: "top 60%", onEnter: function () { gsap.to(tint, { backgroundColor: "rgba(0,0,0,0)", duration: 0.8 }); } });
-
-  /* ---------- Camino ---------- */
-  document.querySelectorAll(".path .split, .turn .split, .footer .split").forEach(function (el) {
-    var ws = splitWords(el);
-    gsap.from(ws, { yPercent: 115, rotate: 3, duration: 1, stagger: 0.05, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } });
-  });
-  gsap.from(".pstep", { y: 60, autoAlpha: 0, duration: 1, stagger: 0.15, ease: "expo.out", scrollTrigger: { trigger: ".path-steps", start: "top 85%" } });
-  gsap.fromTo(".path-line span", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: ".path-steps", start: "top 85%", end: "top 45%", scrub: 1 } });
+  ScrollTrigger.create({ trigger: ".disclaimer", start: "top 70%", onEnter: function () { gsap.to(tint, { backgroundColor: "rgba(0,0,0,0)", duration: 0.8 }); } });
   gsap.from(".disclaimer", { autoAlpha: 0, duration: 1, scrollTrigger: { trigger: ".disclaimer", start: "top 95%" } });
-
-  /* ---------- Tu turno ---------- */
-  gsap.from(".turn-card", { y: 80, scale: 0.94, autoAlpha: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".turn", start: "top 85%" } });
-  gsap.from(".turn-card .vip-tag, .turn-card p, .turn-ctas .btn", { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.12, delay: 0.3, scrollTrigger: { trigger: ".turn", start: "top 80%" } });
-  gsap.from(".footer img", { scale: 0.5, rotate: -20, autoAlpha: 0, duration: 1.2, ease: "elastic.out(1, .6)", scrollTrigger: { trigger: ".footer", start: "top 85%" } });
+  document.querySelectorAll(".footer .split").forEach(function (el) {
+    var ws = splitWords(el);
+    gsap.from(ws, { yPercent: 115, rotate: 3, duration: 1, stagger: 0.05, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } });
+  });
+  gsap.from(".footer img", { scale: 0.5, rotate: -20, autoAlpha: 0, duration: 1.2, ease: "elastic.out(1, .6)", scrollTrigger: { trigger: ".footer", start: "top 90%" } });
 
   /* ---------- Interacción con el mouse (escritorio) ---------- */
   if (finePointer) {
