@@ -6,7 +6,7 @@
   var curtain = document.createElement("div");
   curtain.className = "page-curtain";
   curtain.setAttribute("aria-hidden", "true");
-  curtain.innerHTML = '<div class="pc-layer pc-a"><div class="pc-mark"><img src="img/logo-badge.png" alt="" width="64" height="64"><i></i></div></div>';
+  curtain.innerHTML = '<div class="pc-layer"><div class="pc-mark"><img src="img/logo-badge.png" alt="" width="64" height="64"><i></i></div></div>';
   document.body.appendChild(curtain);
 
   function snap(fn) { // cambia de estado sin animación (para no cruzar la pantalla)
@@ -18,15 +18,15 @@
   function reveal() {
     curtain.classList.remove("is-covering");
     curtain.classList.add("is-leaving");
-    setTimeout(function () { snap(function () { curtain.classList.remove("is-leaving"); }); }, 950);
+    setTimeout(function () { snap(function () { curtain.classList.remove("is-leaving"); }); }, 400);
   }
   if (root.classList.contains("pc-arrive")) {
     sessionStorageSet("r2-curtain", "");
     snap(function () { curtain.classList.add("is-covering"); });
     root.classList.remove("pc-arrive");
-    var go = function () { setTimeout(reveal, 120); };
+    var go = function () { setTimeout(reveal, 40); };
     if (reduce) { snap(function () { curtain.classList.remove("is-covering"); }); }
-    else if (document.fonts && document.fonts.ready) { var done = false; var once = function () { if (!done) { done = true; go(); } }; document.fonts.ready.then(once); setTimeout(once, 700); }
+    else if (document.fonts && document.fonts.ready) { var done = false; var once = function () { if (!done) { done = true; go(); } }; document.fonts.ready.then(once); setTimeout(once, 350); }
     else go();
   }
   // enlaces directos a una sección (p. ej. /#examen): bajar a ella cuando la página ya cargó
@@ -59,7 +59,7 @@
     e.preventDefault();
     sessionStorageSet("r2-curtain", "1");
     curtain.classList.add("is-covering");
-    setTimeout(function () { location.href = url.href; }, 820);
+    setTimeout(function () { location.href = url.href; }, 300);
   });
 
   function sessionStorageGet(k) { try { return sessionStorage.getItem(k); } catch (err) { return null; } }
