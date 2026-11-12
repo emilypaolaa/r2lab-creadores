@@ -377,10 +377,18 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-5px); opacity: 1; } }
 
 /* Footer */
-.footer { text-align: center; padding: 80px var(--pad) 40px; max-width: 1120px; margin: 0 auto; }
-.footer img { width: 64px; height: 64px; border-radius: 20px; margin: 0 auto; border: 3px solid var(--white); box-shadow: 0 16px 40px rgba(21, 21, 27, .12); }
-.footer .big { font-size: clamp(22px, 5.2vw, 34px); font-weight: 800; line-height: 1.12; letter-spacing: -.025em; margin: 20px auto 12px; max-width: 18ch; }
-.footer small { color: var(--muted); }
+.footer { max-width: 1120px; margin: 0 auto; padding: 90px var(--pad) 100px; }
+.f-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding-bottom: 22px; border-bottom: 1px solid rgba(21, 21, 27, .12); }
+.f-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .5px; }
+.f-brand img { width: 40px; height: 40px; border-radius: 12px; }
+.f-motto { font-size: 15px; color: var(--muted); }
+.f-motto em { font-weight: 600; }
+.f-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 18px; }
+.f-links { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.f-links a { font-size: 14px; font-weight: 500; position: relative; }
+.f-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease); }
+.f-links a:hover::after { transform: scaleX(1); }
+.footer small { font-size: 12px; color: var(--muted); }
 
 /* ---------- Transición entre páginas ---------- */
 .page-curtain {
@@ -462,6 +470,7 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
   
   .steps { grid-template-columns: repeat(3, 1fr); }
   .t2 { grid-template-columns: .8fr 1.2fr; gap: 48px; }
+  .footer { padding-bottom: 40px; }
   .t2-people { gap: 14px; }
   .p-info { left: 16px; bottom: 16px; }
   .p-info small { font-size: 12px; }

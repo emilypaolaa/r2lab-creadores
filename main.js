@@ -381,5 +381,5 @@
   });
 
   /* ---------- Footer ---------- */
-  gsap.from(".footer img", { scale: 0.5, rotate: -20, autoAlpha: 0, duration: 1.2, ease: "elastic.out(1, .6)", scrollTrigger: { trigger: ".footer", start: "top 85%" } });
+  gsap.from(".f-top > *, .f-bottom > *", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.08, scrollTrigger: { trigger: ".footer", start: "top 92%" } });
 })();

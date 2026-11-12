@@ -176,7 +176,6 @@
 .sev-list li:nth-child(3) b { background: var(--coral); }
 .sev-list li:nth-child(4) b { background: #b3123c; }
 
-.footer small a { color: var(--coral); font-weight: 600; }
 
 /* Estado inicial (solo con JS) */
 .js .n-hero h1 { visibility: hidden; }

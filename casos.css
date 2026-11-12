@@ -15,7 +15,6 @@
 @keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
 .btn-ghost-dark { color: var(--white); border: 1px solid rgba(255, 255, 255, .3); }
 .btn-ghost-dark:hover { background: rgba(255, 255, 255, .1); }
-.footer small a { color: var(--coral); font-weight: 600; }
 
 /* ---------- Hero ---------- */
 .c-hero { max-width: 1120px; margin: 0 auto; padding: 40px var(--pad) 40px; display: grid; gap: 40px; align-items: center; }
