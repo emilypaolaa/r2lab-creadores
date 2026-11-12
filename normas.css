@@ -71,29 +71,27 @@
 .tags li { background: var(--white); font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; }
 .tags.outline li { background: transparent; border: 1px solid rgba(21, 21, 27, .18); font-weight: 500; }
 
-/* 03 y 05 · Lista editorial */
-.rk-list { list-style: none; counter-reset: none; }
+/* 03 y 05 · Cuadrícula compacta */
+.rk-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(21, 21, 27, .14); border-left: 1px solid rgba(21, 21, 27, .14); }
 .rk {
   position: relative;
-  display: grid; grid-template-columns: 44px 1fr auto; grid-template-areas: "n t ic" "d d d";
-  column-gap: 12px; row-gap: 8px; align-items: center;
-  padding: 22px 4px;
-  border-top: 1px solid rgba(21, 21, 27, .14);
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 20px 16px 22px;
+  border-right: 1px solid rgba(21, 21, 27, .14); border-bottom: 1px solid rgba(21, 21, 27, .14);
   transition: background .5s var(--ease);
 }
-.rk:last-child { border-bottom: 1px solid rgba(21, 21, 27, .14); }
-.rk::after { /* línea que se dibuja al entrar */
-  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px;
+.rk::after { /* línea que se dibuja al pasar el mouse */
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px;
   background: var(--text); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease);
 }
 .rk:hover::after { transform: scaleX(1); }
-.rk-n { grid-area: n; font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.rk h3 { grid-area: t; font-size: clamp(19px, 5vw, 24px); font-weight: 700; letter-spacing: -.02em; line-height: 1.2; transition: translate .5s var(--ease); }
-.rk p { grid-area: d; font-size: 15px; color: var(--muted); max-width: 52ch; }
-.rk-ic { grid-area: ic; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(21, 21, 27, .2); transition: background .4s var(--ease), border-color .4s, color .4s, rotate .6s var(--ease); }
-.rk-ic svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.rk-n { position: absolute; top: 16px; right: 14px; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rk h3 { font-size: clamp(15px, 4.2vw, 19px); font-weight: 700; letter-spacing: -.015em; line-height: 1.2; margin-top: 10px; transition: translate .5s var(--ease); }
+.rk p { font-size: 13px; color: var(--muted); line-height: 1.4; }
+.rk-ic { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(21, 21, 27, .2); transition: background .4s var(--ease), border-color .4s, color .4s, rotate .6s var(--ease); }
+.rk-ic svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .rk-ic svg circle[r=".9"] { fill: currentColor; }
-.rk:hover h3 { translate: 6px 0; }
+.rk:hover h3 { translate: 3px 0; }
 .rk:hover .rk-ic { background: var(--text); color: var(--white); border-color: var(--text); rotate: -8deg; }
 
 /* Variante oscura (alto riesgo) */
@@ -111,14 +109,14 @@
 .dark-panel .label { color: rgba(255, 255, 255, .55); }
 .dark-panel h2 em { color: #ff8aa3; }
 .dark-panel .ch-lead { color: #a9a9b4; }
-.rk-list.dark .rk { border-color: rgba(255, 255, 255, .16); }
+.rk-list.dark { border-color: rgba(255, 255, 255, .14); }
+.rk-list.dark .rk { border-color: rgba(255, 255, 255, .14); }
 .rk-list.dark .rk::after { background: #ff8aa3; }
 .rk-list.dark .rk-n { color: rgba(255, 255, 255, .4); }
 .rk-list.dark .rk p { color: #a9a9b4; }
 .rk-list.dark .rk-ic { border-color: rgba(255, 255, 255, .28); color: var(--white); }
 .rk-list.dark .rk:hover { background: rgba(255, 255, 255, .03); }
 .rk-list.dark .rk:hover .rk-ic { background: var(--coral); border-color: var(--coral); }
-.dark-foot { margin-top: 22px; font-size: 13px; color: rgba(255, 255, 255, .5); letter-spacing: .3px; }
 
 /* 04 · Imagen */
 .duo-cards { display: grid; gap: 12px; }
@@ -189,8 +187,10 @@
   .chapter { padding-top: 120px; }
   .ch-head { grid-template-columns: auto 1fr; gap: 28px; align-items: end; }
   .pillars { grid-template-columns: repeat(3, 1fr); }
-  .rk { grid-template-columns: 70px 56px minmax(0, 1fr) minmax(0, 1.25fr); grid-template-areas: "n ic t d"; column-gap: 20px; padding: 28px 8px; }
-  .rk p { max-width: none; }
+  .rk-list { grid-template-columns: repeat(3, 1fr); }
+  .rk { padding: 30px 26px 32px; gap: 8px; }
+  .rk h3 { font-size: 20px; }
+  .rk p { font-size: 14px; }
   .dark-panel { padding: 64px 56px 44px; }
   .duo-cards { grid-template-columns: 1fr 1fr; }
   .swap { padding: 44px; }

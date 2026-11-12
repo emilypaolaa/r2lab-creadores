@@ -207,7 +207,6 @@
     });
   });
   gsap.from(".dark-panel", { y: 60, scale: 0.97, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".dark-panel", start: "top 85%" } });
-  gsap.from(".dark-foot", { autoAlpha: 0, y: 10, duration: 0.8, scrollTrigger: { trigger: ".dark-foot", start: "top 95%" } });
   cascade(".swap", null, { scale: 0.96 });
   cascade(".tip", ".tips3");
   cascade(".tl-step", ".timeline", { stagger: 0.18 });
