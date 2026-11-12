@@ -400,11 +400,16 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .pc-mark i { display: block; width: 56px; height: 3px; border-radius: 3px; background: rgba(21, 21, 27, .08); overflow: hidden; position: relative; }
 .pc-mark i::after { content: ""; position: absolute; inset: 0; background: #A3B8F3; transform: scaleX(0); transform-origin: left; transition: transform .35s ease .05s; }
 
+/* Franja azul que cruza la pantalla una sola vez (por encima del velo) */
+.pc-band { position: absolute; z-index: 1; left: 0; right: 0; top: 50%; height: 22vh; margin-top: -11vh; background: #A3B8F3; transform: translateY(75vh); transition: transform .5s cubic-bezier(.65, 0, .35, 1); will-change: transform; }
+
 .page-curtain.is-covering { pointer-events: auto; }
-.page-curtain.is-covering .pc-layer { opacity: 1; }
+.page-curtain.is-covering .pc-layer { opacity: 1; transition-delay: .1s; }
+.page-curtain.is-covering .pc-band { transform: translateY(-75vh); }
 .page-curtain.is-covering .pc-mark { transform: none; }
 .page-curtain.is-covering .pc-mark i::after { transform: scaleX(1); }
 .page-curtain.is-leaving .pc-layer { opacity: 0; transition-duration: .35s; }
+.page-curtain.is-leaving .pc-band { transform: translateY(-75vh); transition: none; }
 .page-curtain.no-anim, .page-curtain.no-anim * { transition: none !important; }
 
 /* Mientras carga la página nueva: el mismo velo desde el primer instante (sin destello) */

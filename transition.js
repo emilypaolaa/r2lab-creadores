@@ -6,7 +6,7 @@
   var curtain = document.createElement("div");
   curtain.className = "page-curtain";
   curtain.setAttribute("aria-hidden", "true");
-  curtain.innerHTML = '<div class="pc-layer"><div class="pc-mark"><img src="img/logo-badge.png" alt="" width="64" height="64"><i></i></div></div>';
+  curtain.innerHTML = '<div class="pc-band"></div><div class="pc-layer"><div class="pc-mark"><img src="img/logo-badge.png" alt="" width="64" height="64"><i></i></div></div>';
   document.body.appendChild(curtain);
 
   function snap(fn) { // cambia de estado sin animación (para no cruzar la pantalla)
@@ -18,7 +18,7 @@
   function reveal() {
     curtain.classList.remove("is-covering");
     curtain.classList.add("is-leaving");
-    setTimeout(function () { snap(function () { curtain.classList.remove("is-leaving"); }); }, 400);
+    setTimeout(function () { snap(function () { curtain.classList.remove("is-leaving"); }); }, 500);
   }
   if (root.classList.contains("pc-arrive")) {
     sessionStorageSet("r2-curtain", "");
@@ -59,7 +59,7 @@
     e.preventDefault();
     sessionStorageSet("r2-curtain", "1");
     curtain.classList.add("is-covering");
-    setTimeout(function () { location.href = url.href; }, 300);
+    setTimeout(function () { location.href = url.href; }, 380);
   });
 
   function sessionStorageGet(k) { try { return sessionStorage.getItem(k); } catch (err) { return null; } }
