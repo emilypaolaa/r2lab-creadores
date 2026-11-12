@@ -162,6 +162,9 @@
 
   var gsap = window.gsap;
   gsap.registerPlugin(window.ScrollTrigger);
+  // recalcular posiciones cuando terminen de cargar tipografía e imágenes
+  window.addEventListener("load", function () { window.ScrollTrigger.refresh(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { window.ScrollTrigger.refresh(); });
   gsap.defaults({ ease: "power3.out", duration: 1 });
 
   var splits = {};
