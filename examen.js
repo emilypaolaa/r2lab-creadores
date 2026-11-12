@@ -5,6 +5,7 @@
   var PASS = 70;          // % mínimo para aprobar
   var MAX_ATTEMPTS = 2;   // intentos por usuario (en este dispositivo)
   var WA_NUMBER = "51998227861";
+  var TIME_LIMIT = 4 * 60;  // segundos para todo el examen
 
   // Preguntas basadas en la guía de normas y en la meta del portal.
   // "a" = índice de la respuesta correcta dentro de "o".
@@ -79,12 +80,14 @@
     $("q-user").textContent = "@" + user;
     renderQuestion();
     show($("s-quiz"));
+    startTimer();
   });
 
   /* ---------- Preguntas ---------- */
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   var LETTERS = ["A", "B", "C", "D"];
   function renderQuestion() {
+    state.answered = false;
     var Q = QUESTIONS[state.order[state.i]];
     $("q-num").textContent = state.i + 1;
     $("q-bar").style.transform = "scaleX(" + (state.i / QUESTIONS.length) + ")";
@@ -116,6 +119,8 @@
       else if (b === btn) b.classList.add("is-wrong");
       else b.classList.add("dim");
     });
+    if (state.done) return;
+    state.answered = true;
     if (right) state.correct++; else state.wrong.push({ q: Q.q, a: Q.o[Q.a] });
     $("q-explain").innerHTML = (right ? "<b>¡Correcto!</b> " : "<b>No exactamente.</b> ") + Q.e;
     $("q-next").innerHTML = (state.i === QUESTIONS.length - 1 ? "Ver mi resultado" : "Siguiente") + " <span>→</span>";
@@ -135,6 +140,35 @@
     } else finish();
   });
 
+  /* ---------- Temporizador (4 minutos para todo el examen) ---------- */
+  var timerId = null;
+  function fmtTime(s) { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
+  function startTimer() {
+    stopTimer();
+    var el = $("q-timer");
+    state.deadline = Date.now() + TIME_LIMIT * 1000;
+    el.classList.remove("low"); el.textContent = fmtTime(TIME_LIMIT);
+    timerId = setInterval(function () {
+      var left = (state.deadline - Date.now()) / 1000;
+      el.textContent = fmtTime(left);
+      el.classList.toggle("low", left <= 30);
+      if (left <= 0) timeUp();
+    }, 250);
+  }
+  function stopTimer() { if (timerId) { clearInterval(timerId); timerId = null; } }
+  function timeUp() {
+    stopTimer();
+    if (state.done) return;
+    state.timedOut = true;
+    // las preguntas sin responder cuentan como incorrectas
+    var from = state.answered ? state.i + 1 : state.i;
+    for (var k = from; k < QUESTIONS.length; k++) {
+      var Q = QUESTIONS[state.order[k]];
+      state.wrong.push({ q: Q.q, a: Q.o[Q.a] });
+    }
+    finish();
+  }
+
   /* ---------- Resultado ---------- */
   function waLink(text) { return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text); }
   function btn(html, href, cls, blank) {
@@ -143,6 +177,9 @@
     return a;
   }
   function finish() {
+    if (state.done) return;
+    state.done = true;
+    stopTimer();
     var score = Math.round(state.correct / QUESTIONS.length * 100);
     var passed = score >= PASS;
     var rec = state.rec;
@@ -156,20 +193,20 @@
     $("r-correct").textContent = state.correct + " de " + QUESTIONS.length + " correctas";
     $("r-badge").textContent = passed ? "Aprobado" : "No aprobado";
     $("r-title").textContent = passed ? "¡Felicidades, @" + state.user + "!" : (score >= 50 ? "Casi lo logras" : "Sigue practicando");
-    $("r-msg").textContent = passed
+    $("r-msg").textContent = (state.timedOut ? "Se acabó el tiempo. " : "") + (passed
       ? "Aprobaste el examen final. Envíanos tu resultado para activar tu acceso a las capacitaciones."
       : rec.best >= PASS ? "Esta vez no alcanzaste el " + PASS + "%, pero ya aprobaste antes con " + rec.best + "%. Envíanos tu resultado."
       : left > 0 ? "Necesitas " + PASS + "% para aprobar. Repasa la guía y vuelve a intentarlo: te queda " + left + " intento."
-      : "Necesitas " + PASS + "% para aprobar. Ya usaste tus intentos: escríbenos y te ayudamos.";
+      : "Necesitas " + PASS + "% para aprobar. Ya usaste tus intentos: escríbenos y te ayudamos.");
 
-    var msg = "Hola R2LAB, terminé el examen final.\nUsuario: @" + state.user + "\nCorreo: " + state.mail + "\nResultado: " + score + "% (" + (passed ? "Aprobado" : "No aprobado") + ")\nIntento " + rec.attempts + " de " + MAX_ATTEMPTS + (rec.attempts > 1 ? "\nMejor resultado: " + rec.best + "%" : "");
+    var msg = "Hola R2LAB, terminé el examen final.\nUsuario: @" + state.user + "\nCorreo: " + state.mail + "\nResultado: " + score + "% (" + (passed ? "Aprobado" : "No aprobado") + ")" + (state.timedOut ? " · tiempo agotado" : "") + "\nIntento " + rec.attempts + " de " + MAX_ATTEMPTS + (rec.attempts > 1 ? "\nMejor resultado: " + rec.best + "%" : "");
     var actions = $("r-actions"); actions.innerHTML = "";
     actions.appendChild(btn("Enviar mi resultado por WhatsApp <span>→</span>", waLink(msg), "btn-wa", true));
     if (!passed && left > 0) {
       var retry = document.createElement("button"); retry.type = "button"; retry.className = "btn btn-line"; retry.textContent = "Intentar de nuevo";
       retry.addEventListener("click", function () {
         state = { user: state.user, mail: state.mail, key: state.key, rec: load(state.key), i: 0, correct: 0, wrong: [], order: shuffle(QUESTIONS.map(function (_, i) { return i; })) };
-        renderQuestion(); show($("s-quiz"));
+        renderQuestion(); show($("s-quiz")); startTimer();
       });
       actions.appendChild(retry);
       actions.appendChild(btn("Repasar la guía", "normas.html", "btn-line"));
