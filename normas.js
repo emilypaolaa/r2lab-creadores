@@ -83,6 +83,20 @@
     });
   });
 
+  /* ---------- Checklist de moderación ---------- */
+  var clItems = Array.prototype.slice.call(document.querySelectorAll(".cl-item"));
+  var clCount = document.querySelector(".cl-count");
+  function updateCount() {
+    var n = clItems.filter(function (b) { return b.getAttribute("aria-pressed") === "true"; }).length;
+    if (clCount) { clCount.textContent = n + "/" + clItems.length; clCount.classList.toggle("done", n === clItems.length); }
+  }
+  clItems.forEach(function (b) {
+    b.addEventListener("click", function () {
+      b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      updateCount();
+    });
+  });
+
   /* ---------- Frases que se intercambian (06) ---------- */
   var swapWord = document.querySelector(".swap-word");
   var swapItems = Array.prototype.slice.call(document.querySelectorAll(".swap-list li"));
@@ -114,7 +128,7 @@
   /* ---------- Sin GSAP: mostrar todo en su estado final ---------- */
   if (!hasGsap) {
     root.classList.remove("js");
-    document.querySelectorAll(".tl-line span, .sev-bar span").forEach(function (el) { el.style.transform = "none"; });
+    document.querySelectorAll(".sev-bar span").forEach(function (el) { el.style.transform = "none"; });
     return;
   }
 
@@ -209,7 +223,10 @@
   gsap.from(".dark-panel", { y: 60, scale: 0.97, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".dark-panel", start: "top 85%" } });
   cascade(".swap", null, { scale: 0.96 });
   cascade(".tip", ".tips3");
-  cascade(".tl-step", ".timeline", { stagger: 0.18 });
+  cascade(".checklist", null, { scale: 0.97 });
+  cascade(".cl-col", ".cl-cols", { stagger: 0.12 });
+  cascade(".cl-item", ".cl-cols", { y: 14, stagger: 0.04, duration: 0.6 });
+  cascade(".cl-tip", null);
   cascade(".severity");
   gsap.from(".f-top > *, .f-bottom > *", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.08, scrollTrigger: { trigger: ".footer", start: "top 92%" } });
 
@@ -222,15 +239,6 @@
       gsap.delayedCall(1, function () { demo.classList.add("on"); });
       gsap.delayedCall(2.6, function () { if (allBtn.getAttribute("aria-pressed") !== "true") demo.classList.remove("on"); });
     }
-  });
-
-  // línea de tiempo que se dibuja
-  var mm = gsap.matchMedia();
-  mm.add("(min-width: 860px)", function () {
-    gsap.fromTo(".tl-line span", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: ".timeline", start: "top 75%", end: "top 30%", scrub: 1 } });
-  });
-  mm.add("(max-width: 859px)", function () {
-    gsap.fromTo(".tl-line span", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ".timeline", start: "top 70%", end: "bottom 60%", scrub: 1 } });
   });
 
   // medidor de gravedad
