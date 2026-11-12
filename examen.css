@@ -74,11 +74,16 @@
 .opt:hover:not(:disabled) { border-color: var(--text); translate: 3px 0; }
 .opt .key { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; background: var(--bg); font-size: 13px; font-weight: 700; transition: background .25s, color .25s; }
 .opt:disabled { cursor: default; }
+.opt.is-picked { border-color: var(--text); background: var(--text); color: var(--white); }
+.opt.is-picked .key { background: var(--white); color: var(--text); }
 .opt.is-right { border-color: var(--teal); background: var(--mint); }
 .opt.is-right .key { background: var(--teal); color: var(--white); }
 .opt.is-wrong { border-color: var(--coral); background: var(--pink); }
 .opt.is-wrong .key { background: var(--coral); color: var(--white); }
 .opt.dim { opacity: .5; }
+.q-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(21, 21, 27, .1); }
+.q-hint { font-size: 14px; color: var(--muted); }
+#q-next:disabled { opacity: .35; cursor: not-allowed; box-shadow: none; }
 .q-feedback { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(21, 21, 27, .1); }
 .q-feedback[hidden] { display: none; }
 .q-feedback p { flex: 1 1 260px; font-size: 15px; color: var(--muted); line-height: 1.45; }
@@ -113,6 +118,8 @@
 .review h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
 .review ol { list-style: none; border-top: 1px solid rgba(21, 21, 27, .12); }
 .review li { padding: 14px 2px; border-bottom: 1px solid rgba(21, 21, 27, .12); }
+.review ol { display: flex; flex-wrap: wrap; gap: 8px; border-top: 0; }
+.review li { padding: 8px 14px; border: 1px solid rgba(21, 21, 27, .16); border-radius: 999px; font-size: 14px; font-weight: 600; }
 .review li b { display: block; font-size: 15px; }
 .review li span { display: block; font-size: 14px; color: var(--muted); margin-top: 4px; }
 .review li em { font-style: normal; color: #13876c; font-weight: 600; }
