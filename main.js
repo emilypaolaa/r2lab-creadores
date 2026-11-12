@@ -348,22 +348,21 @@
     scrollTrigger: { trigger: ".res-list", start: "top 85%" }
   });
 
-  /* ---------- Examen: el 70% se "llena" de color ---------- */
-  gsap.from(".exam2", { autoAlpha: 0, duration: 0.8, scrollTrigger: { trigger: ".exam2", start: "top 85%" } });
-  gsap.from(".e2-copy > p, .e2-facts, .e2-ctas", { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.08, scrollTrigger: { trigger: ".exam2", start: "top 80%" } });
-  gsap.from(".e2-facts dd", { y: 14, autoAlpha: 0, duration: 0.6, stagger: 0.08, delay: 0.3, ease: "back.out(2)", scrollTrigger: { trigger: ".e2-facts", start: "top 90%" } });
+  /* ---------- Examen: medidor ---------- */
+  var bar = document.querySelector(".g-bar");
+  var C = 2 * Math.PI * 84;
+  gsap.set(bar, { strokeDasharray: C, strokeDashoffset: C });
+  gsap.from(".exam", { y: 60, autoAlpha: 0, duration: 1, scrollTrigger: { trigger: ".exam", start: "top 85%" } });
   ScrollTrigger.create({
-    trigger: ".e2-num", start: "top 80%", once: true,
+    trigger: ".gauge", start: "top 80%", once: true,
     onEnter: function () {
-      var nums = document.querySelectorAll(".e2-n"), o = { v: 0 };
-      gsap.fromTo(".e2-fill", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(30% 0 0 0)", duration: 1.8, ease: "power3.inOut" });
-      gsap.to(o, { v: 70, duration: 1.8, ease: "power3.inOut", onUpdate: function () { nums.forEach(function (n) { n.textContent = Math.round(o.v); }); } });
-      gsap.from(".e2-num small", { y: 10, autoAlpha: 0, duration: 0.6, delay: 1.2 });
+      gsap.to(bar, { strokeDashoffset: C * 0.3, duration: 1.8, ease: "power3.inOut" });
+      countUp(document.querySelector(".gauge .count"), 0);
     }
   });
 
   /* ---------- Casos de éxito (adelanto) ---------- */
-  gsap.from(".t2-sub, .t2 .t2-link", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.12, scrollTrigger: { trigger: ".t2", start: "top 82%" } });
+  gsap.from(".t2-sub, .t2-link", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.12, scrollTrigger: { trigger: ".t2", start: "top 82%" } });
   gsap.from(".person", {
     y: 80, rotate: function (i) { return [-6, 0, 6][i]; }, autoAlpha: 0, duration: 1.1, stagger: 0.12, ease: "expo.out", clearProps: "transform",
     scrollTrigger: { trigger: ".t2-people", start: "top 85%" }
