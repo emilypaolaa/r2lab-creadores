@@ -395,7 +395,7 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 /* Dos capas: un velo coral y encima uno crema con el logo. Suben al salir y se van hacia arriba al llegar. */
 .page-curtain { position: fixed; inset: 0; z-index: 200; pointer-events: none; overflow: hidden; }
 .pc-layer { position: absolute; inset: 0; transform: translateY(101%); transition: transform .75s cubic-bezier(.76, 0, .24, 1); will-change: transform; }
-.pc-a { background: #2E4A7D; }
+.pc-a { background: #A3B8F3; }
 .pc-b { display: grid; place-items: center; background: var(--bg); transition-delay: .09s; }
 .pc-b::before { /* luz suave en los colores de la marca */
   content: ""; position: absolute; inset: 0;
@@ -404,7 +404,7 @@ h2 { font-size: clamp(32px, 8vw, 60px); font-weight: 800; line-height: 1.02; let
 .pc-mark { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; opacity: 0; transform: translateY(14px); transition: opacity .35s ease .35s, transform .6s cubic-bezier(.2, .7, .2, 1) .35s; }
 .pc-mark img { width: 64px; height: 64px; border-radius: 18px; box-shadow: 0 12px 30px rgba(21, 21, 27, .12); }
 .pc-mark i { display: block; width: 64px; height: 3px; border-radius: 3px; background: rgba(21, 21, 27, .1); overflow: hidden; position: relative; }
-.pc-mark i::after { content: ""; position: absolute; inset: 0; background: #2E4A7D; transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.65, 0, .35, 1) .4s; }
+.pc-mark i::after { content: ""; position: absolute; inset: 0; background: #A3B8F3; transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.65, 0, .35, 1) .4s; }
 
 .page-curtain.is-covering { pointer-events: auto; }
 .page-curtain.is-covering .pc-layer { transform: translateY(0); }
