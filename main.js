@@ -360,16 +360,11 @@
     }
   });
 
-  /* ---------- Casos de éxito ---------- */
-  gsap.from(".case", {
-    y: 80, rotate: function (i) { return [-3, 0, 3][i % 3]; }, autoAlpha: 0, duration: 1.1, stagger: 0.14, ease: "expo.out", clearProps: "transform",
-    scrollTrigger: { trigger: ".cases", start: "top 85%" }
-  });
-  gsap.utils.toArray(".case-photo img").forEach(function (img) {
-    gsap.fromTo(img, { yPercent: -10 }, { yPercent: 0, ease: "none", scrollTrigger: { trigger: img.parentNode, start: "top bottom", end: "bottom top", scrub: true } });
-  });
+  /* ---------- Casos de éxito (adelanto) ---------- */
+  gsap.from(".teaser", { y: 60, scale: 0.97, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".teaser", start: "top 85%" } });
+  gsap.from(".faces img", { x: -30, scale: 0.4, autoAlpha: 0, duration: 0.9, stagger: 0.12, ease: "back.out(2)", scrollTrigger: { trigger: ".teaser-faces", start: "top 88%" } });
   gsap.from(".step", { y: 40, autoAlpha: 0, duration: 0.8, stagger: 0.12, scrollTrigger: { trigger: ".steps", start: "top 88%" } });
-  gsap.from(".cases-end > *", { y: 30, autoAlpha: 0, duration: 0.9, stagger: 0.15, scrollTrigger: { trigger: ".cases-end", start: "top 90%" } });
+  gsap.from(".cases-quote", { y: 30, autoAlpha: 0, duration: 0.9, scrollTrigger: { trigger: ".cases-quote", start: "top 92%" } });
 
   /* ---------- Soporte: chat ---------- */
   gsap.from(".support", { y: 60, autoAlpha: 0, duration: 1, scrollTrigger: { trigger: ".support", start: "top 85%" } });
