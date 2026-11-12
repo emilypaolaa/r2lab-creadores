@@ -22,6 +22,19 @@
       requestAnimationFrame(reveal);
     });
   }
+  // enlaces directos a una sección (p. ej. /#examen): bajar a ella cuando la página ya cargó
+  if (location.hash.length > 1) {
+    window.addEventListener("load", function () {
+      var target = null;
+      try { target = document.querySelector(decodeURIComponent(location.hash)); } catch (err) { /* hash inválido */ }
+      if (!target) return;
+      setTimeout(function () {
+        target.scrollIntoView({ block: "start" }); // respeta scroll-margin-top de cada sección
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      }, 120);
+    });
+  }
+
   // al volver con el botón "atrás" (caché del navegador)
   window.addEventListener("pageshow", function (e) { if (e.persisted) curtain.classList.remove("is-covering", "is-leaving"); });
 
