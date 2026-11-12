@@ -199,12 +199,14 @@
     gsap.from(items, Object.assign({ y: 50, autoAlpha: 0, duration: 0.9, stagger: 0.09, clearProps: "transform", scrollTrigger: { trigger: trigger || items[0], start: "top 86%" } }, vars || {}));
   }
   cascade(".pillar", ".pillars", { rotate: function (i) { return [-3, 0, 3][i % 3]; } });
-  cascade(".callout");
+  document.querySelectorAll(".callout").forEach(function (c) { gsap.from(c, { y: 50, autoAlpha: 0, duration: 0.9, clearProps: "transform", scrollTrigger: { trigger: c, start: "top 86%" } }); });
   cascade(".vocab-card", null, { scale: 0.96 });
   cascade(".words li", ".words", { y: 20, scale: 0.6, stagger: 0.03, duration: 0.6, ease: "back.out(2)" });
   cascade(".sensitive");
-  cascade(".dcard", ".duo-cards", { x: function (i) { return i ? 60 : -60; }, y: 0 });
-  cascade(".checks li", ".duo-cards", { x: -20, y: 0, stagger: 0.06, duration: 0.6 });
+  document.querySelectorAll(".duo-cards").forEach(function (g) { // cada grupo anima al llegar a él
+    gsap.from(g.querySelectorAll(".dcard"), { x: function (i) { return i ? 60 : -60; }, autoAlpha: 0, duration: 0.9, stagger: 0.09, clearProps: "transform", scrollTrigger: { trigger: g, start: "top 86%" } });
+    gsap.from(g.querySelectorAll(".checks li"), { x: -20, autoAlpha: 0, duration: 0.6, stagger: 0.06, clearProps: "transform", scrollTrigger: { trigger: g, start: "top 86%" } });
+  });
   // listas editoriales: línea que se dibuja + íconos que se trazan
   gsap.utils.toArray(".rk-list").forEach(function (list) {
     var items = list.querySelectorAll(".rk");
