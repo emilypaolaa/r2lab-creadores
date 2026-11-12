@@ -189,7 +189,7 @@
     $("r-badge").textContent = passed ? "Aprobado" : "No aprobado";
     $("r-title").textContent = passed ? "¡Felicidades, @" + state.user + "!" : (score >= 50 ? "Casi lo logras" : "Sigue practicando");
     $("r-msg").textContent = (state.timedOut ? "Se acabó el tiempo. " : "") + (passed
-      ? "Aprobaste el examen final. Envíanos tu resultado para activar tu acceso a las capacitaciones."
+      ? "Aprobaste el examen final y desbloqueaste beneficios exclusivos: edición de videos y mucho más. Envíanos tu resultado para activarlos."
       : rec.best >= PASS ? "Esta vez no alcanzaste el " + PASS + "%, pero ya aprobaste antes con " + rec.best + "%. Envíanos tu resultado."
       : left > 0 ? "Necesitas " + PASS + "% para aprobar. Repasa la guía y vuelve a intentarlo: te queda " + left + " intento con preguntas distintas."
       : "Necesitas " + PASS + "% para aprobar. Ya usaste tus intentos: escríbenos y te ayudamos.");
