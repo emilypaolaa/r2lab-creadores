@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examen final · R2LAB</title>
+  <meta name="description" content="Examen final para creadores R2LAB: 10 preguntas sobre normas de TikTok LIVE. Apruébalo con 70% o más y accede a las capacitaciones.">
+  <meta name="theme-color" content="#F7F5F1">
+  <link rel="canonical" href="https://r2lab-creadores.vercel.app/examen">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="R2LAB">
+  <meta property="og:url" content="https://r2lab-creadores.vercel.app/examen">
+  <meta property="og:title" content="Examen final · R2LAB">
+  <meta property="og:description" content="10 preguntas. Apruébalo con 70% o más y accede a las capacitaciones.">
+  <meta property="og:image" content="https://r2lab-creadores.vercel.app/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="examen.css">
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
+</head>
+<body class="page-examen">
+  <div class="bg" aria-hidden="true">
+    <span class="blob b-mint" data-depth="0.6"></span>
+    <span class="blob b-lav" data-depth="1.2"></span>
+    <span class="blob b-pink" data-depth="0.9"></span>
+    <span class="blob b-cream" data-depth="0.4"></span>
+    <div class="grain"></div>
+  </div>
+
+  <header class="nav">
+    <a class="brand" href="index.html" aria-label="Volver al portal R2LAB">
+      <img src="img/logo-badge.png" alt="" width="44" height="44">
+      <span>R2LAB</span>
+    </a>
+    <nav class="nav-links" aria-label="Portal">
+      <a href="index.html">Portal</a>
+      <a href="normas.html">Normas</a>
+      <a href="casos.html">Casos</a>
+    </nav>
+    <div class="nav-right">
+      <span class="live"><i></i>LIVE</span>
+    </div>
+  </header>
+
+  <main class="exam-wrap">
+
+    <!-- 1 · PRESENTACIÓN Y REGISTRO -->
+    <section class="screen" id="s-intro" aria-labelledby="t-intro">
+      <div class="intro-grid">
+        <div class="intro-copy">
+          <a class="back-link" href="index.html#examen"><span>←</span> Volver al portal</a>
+          <span class="label">Examen final</span>
+          <h1 id="t-intro">Demuestra lo que <em>sabes</em></h1>
+          <p class="lead">10 preguntas sobre las normas de TikTok LIVE. Apruébalo con 70% o más y accede a las capacitaciones de R2LAB.</p>
+
+          <dl class="facts">
+            <div><dt>Preguntas</dt><dd>10</dd></div>
+            <div><dt>Tiempo aprox.</dt><dd>5 min</dd></div>
+            <div><dt>Para aprobar</dt><dd>70%</dd></div>
+            <div><dt>Intentos</dt><dd>2</dd></div>
+          </dl>
+
+          <div class="topics">
+            <span class="t-k">Lo que evaluamos</span>
+            <ul>
+              <li>Tu meta del mes</li><li>Vocabulario</li><li>Conductas de riesgo</li><li>Imagen y dinámica</li><li>Moderación</li><li>Consecuencias</li>
+            </ul>
+            <a class="t-link" href="normas.html">¿Necesitas repasar? Lee la guía <span>→</span></a>
+          </div>
+        </div>
+
+        <form class="card start-form" id="start-form" novalidate>
+          <h2>Antes de empezar</h2>
+          <p class="f-sub">Así sabremos quién presentó el examen.</p>
+          <label class="field">
+            <span>Usuario de TikTok</span>
+            <div class="input at"><b>@</b><input id="f-user" name="usuario" type="text" autocomplete="username" placeholder="tu.usuario" required maxlength="40" spellcheck="false" autocapitalize="off"></div>
+            <small class="err" id="e-user"></small>
+          </label>
+          <label class="field">
+            <span>Correo electrónico</span>
+            <div class="input"><input id="f-mail" name="correo" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required maxlength="80"></div>
+            <small class="err" id="e-mail"></small>
+          </label>
+          <label class="check">
+            <input id="f-ok" type="checkbox" required>
+            <span>Acepto que R2LAB use estos datos solo para registrar mi resultado.</span>
+          </label>
+          <small class="err" id="e-ok"></small>
+          <button class="btn btn-coral start-btn" type="submit">Comenzar examen <span>→</span></button>
+          <p class="f-note">Tienes 2 intentos en este dispositivo. Tus datos no se envían a ningún lado hasta que tú compartas tu resultado.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2 · PREGUNTAS -->
+    <section class="screen" id="s-quiz" hidden aria-live="polite">
+      <div class="quiz-top">
+        <span class="q-count"><b id="q-num">1</b> / <span id="q-total">10</span></span>
+        <div class="q-bar" aria-hidden="true"><span id="q-bar"></span></div>
+        <span class="q-user" id="q-user"></span>
+      </div>
+      <div class="card q-card" id="q-card">
+        <span class="q-topic" id="q-topic"></span>
+        <h2 class="q-text" id="q-text"></h2>
+        <div class="q-opts" id="q-opts" role="group"></div>
+        <div class="q-feedback" id="q-feedback" hidden>
+          <p id="q-explain"></p>
+          <button class="btn btn-dark" id="q-next" type="button">Siguiente <span>→</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · RESULTADO -->
+    <section class="screen" id="s-result" hidden>
+      <div class="card result">
+        <div class="r-gauge" aria-hidden="true">
+          <svg viewBox="0 0 200 200"><circle class="g-track" cx="100" cy="100" r="84"/><circle class="g-bar" id="r-bar" cx="100" cy="100" r="84"/></svg>
+          <div class="r-val"><div><strong id="r-score">0</strong><span>%</span></div><small id="r-correct"></small></div>
+        </div>
+        <div class="r-copy">
+          <span class="r-badge" id="r-badge"></span>
+          <h2 id="r-title"></h2>
+          <p id="r-msg"></p>
+          <div class="r-actions" id="r-actions"></div>
+          <p class="r-meta" id="r-meta"></p>
+        </div>
+      </div>
+      <div class="review" id="review" hidden>
+        <h3>Repasa estas preguntas</h3>
+        <ol id="review-list"></ol>
+      </div>
+    </section>
+
+    <!-- 4 · SIN INTENTOS -->
+    <section class="screen" id="s-blocked" hidden>
+      <div class="card result blocked">
+        <div class="r-copy">
+          <span class="r-badge muted">Intentos agotados</span>
+          <h2>Ya usaste tus 2 intentos</h2>
+          <p id="b-msg"></p>
+          <div class="r-actions" id="b-actions"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="f-top">
+      <a class="f-brand" href="index.html" aria-label="R2LAB inicio">
+        <img src="img/logo-badge.png" alt="" width="40" height="40">
+        <span>R2LAB</span>
+      </a>
+      <p class="f-motto">Juntos por una comunidad más <em>positiva</em>.</p>
+    </div>
+    <div class="f-bottom">
+      <nav class="f-links" aria-label="Pie de página">
+        <a href="index.html">Portal</a>
+        <a href="normas.html">Normas</a>
+        <a href="casos.html">Casos</a>
+        <a href="https://wa.me/51998227861?text=Hola%20R2LAB%2C%20tengo%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
+      </nav>
+      <small>© 2026 R2LAB · Agencia de creadores TikTok LIVE</small>
+    </div>
+  </footer>
+
+  <script src="transition.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="examen.js" defer></script>
+</body>
+</html>
