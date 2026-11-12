@@ -59,7 +59,7 @@
     e.preventDefault();
     sessionStorageSet("r2-curtain", "1");
     curtain.classList.add("is-covering");
-    setTimeout(function () { location.href = url.href; }, 380);
+    setTimeout(function () { location.href = url.href; }, 680);
   });
 
   function sessionStorageGet(k) { try { return sessionStorage.getItem(k); } catch (err) { return null; } }
