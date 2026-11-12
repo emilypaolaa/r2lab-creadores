@@ -212,8 +212,6 @@
   cascade(".tip", ".tips3");
   cascade(".tl-step", ".timeline", { stagger: 0.18 });
   cascade(".severity");
-  cascade(".keys li", ".keys", { stagger: 0.08 });
-  cascade(".finish", null, { scale: 0.95 });
   gsap.from(".footer img", { scale: 0.5, rotate: -20, autoAlpha: 0, duration: 1.2, ease: "elastic.out(1, .6)", scrollTrigger: { trigger: ".footer", start: "top 85%" } });
 
   // vocabulario: algunas palabras se revelan solas para enseñar el gesto
