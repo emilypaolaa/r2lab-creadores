@@ -308,41 +308,47 @@
         <div>
           <span class="label">Potenciadores</span>
           <h2 class="split">Conoce tus <em>potenciadores</em></h2>
-          <p class="ch-lead">Entiende qué hace cada uno y coordina su uso con tu comunidad.</p>
+          <p class="ch-lead">Así se ven en una batalla. Toca cada uno para ver qué hace.</p>
         </div>
       </div>
-      <ul class="powers">
-        <li class="power">
-          <span class="pw-img"><img src="img/manual/guante.jpg" alt="" width="420" height="530" loading="lazy"></span>
-          <span class="pw-tag">×5</span>
-          <h3>Guante</h3>
-          <p>Multiplica por cinco el valor de los regalos durante 30 s.</p>
-        </li>
-        <li class="power">
-          <span class="pw-img"><img src="img/manual/rayo.jpg" alt="" width="420" height="530" loading="lazy"></span>
-          <span class="pw-tag">×2</span>
-          <h3>Rayo</h3>
-          <p>Duplica los puntos o da un remate en el momento clave.</p>
-        </li>
-        <li class="power">
-          <span class="pw-img"><img src="img/manual/neblina.jpg" alt="" width="420" height="530" loading="lazy"></span>
-          <span class="pw-tag">30 s</span>
-          <h3>Neblina</h3>
-          <p>Oculta tu ventaja: el rival no ve cuánto le llevas.</p>
-        </li>
-        <li class="power">
-          <span class="pw-img"><img src="img/manual/martillo.jpg" alt="" width="420" height="530" loading="lazy"></span>
-          <span class="pw-tag">Bloqueo</span>
-          <h3>Martillo</h3>
-          <p>Bloquea un potenciador activado por el rival.</p>
-        </li>
-        <li class="power">
-          <span class="pw-img"><img src="img/manual/cronometro.jpg" alt="" width="420" height="530" loading="lazy"></span>
-          <span class="pw-tag">+ tiempo</span>
-          <h3>Cronómetro</h3>
-          <p>Suma tiempo extra para intentar remontar.</p>
-        </li>
-      </ul>
+      <div class="pk-wrap">
+        <div class="pk" aria-hidden="true">
+          <div class="pk-bar">
+            <span class="pk-me"><b class="pk-sme">0</b></span>
+            <span class="pk-them"><b class="pk-sthem">0</b></span>
+            <i class="pk-fog"><em>???</em></i>
+          </div>
+          <div class="pk-timer"><b>PK</b><span class="pk-t">1:00</span><em class="pk-plus">+10 s</em></div>
+          <div class="pk-side pk-l">
+            <div class="pk-cam"><span class="gl-person"></span></div>
+            <span class="pk-name">tú</span>
+            <span class="pk-badge pk-mybadge"></span>
+            <div class="pk-gifts"></div>
+          </div>
+          <div class="pk-side pk-r">
+            <div class="pk-cam"><span class="gl-person"></span></div>
+            <span class="pk-name">rival</span>
+            <span class="pk-badge pk-rbadge">×2</span>
+          </div>
+          <div class="pk-pop"><img src="img/manual/guante.jpg" alt=""></div>
+          <div class="pk-clouds"><i></i><i></i><i></i></div>
+        </div>
+        <div class="pw-panel">
+          <p class="pw-hint">Toca un potenciador y mira su efecto en la batalla.</p>
+          <div class="pw-chips">
+          <button type="button" class="pw-chip" data-p="guante" aria-pressed="false"><img src="img/manual/guante.jpg" alt="" width="420" height="530" loading="lazy"><span>Guante</span></button>
+          <button type="button" class="pw-chip" data-p="rayo" aria-pressed="false"><img src="img/manual/rayo.jpg" alt="" width="420" height="530" loading="lazy"><span>Rayo</span></button>
+          <button type="button" class="pw-chip" data-p="neblina" aria-pressed="false"><img src="img/manual/neblina.jpg" alt="" width="420" height="530" loading="lazy"><span>Neblina</span></button>
+          <button type="button" class="pw-chip" data-p="martillo" aria-pressed="false"><img src="img/manual/martillo.jpg" alt="" width="420" height="530" loading="lazy"><span>Martillo</span></button>
+          <button type="button" class="pw-chip" data-p="cronometro" aria-pressed="false"><img src="img/manual/cronometro.jpg" alt="" width="420" height="530" loading="lazy"><span>Cronómetro</span></button>
+          </div>
+          <div class="pw-info" data-p="guante" hidden><span class="pw-tag2">×5 por 30 s</span><b>Guante</b><p>Multiplica por cinco el valor de los regalos durante 30 segundos.</p><small>Coordina con tu comunidad: es el momento de los regalos grandes.</small></div>
+          <div class="pw-info" data-p="rayo" hidden><span class="pw-tag2">×2 / remate</span><b>Rayo</b><p>Duplica los puntos o da un impulso rápido en el momento clave.</p><small>Guárdalo para los últimos segundos.</small></div>
+          <div class="pw-info" data-p="neblina" hidden><span class="pw-tag2">Oculta 30 s</span><b>Neblina</b><p>Esconde tu puntaje: tu comunidad lo ve, pero el rival no sabe cuánto le llevas.</p><small>Úsalo cuando vas ganando por poco.</small></div>
+          <div class="pw-info" data-p="martillo" hidden><span class="pw-tag2">Bloqueo</span><b>Martillo</b><p>Bloquea un potenciador que activó el rival.</p><small>Ideal si el rival activa un multiplicador.</small></div>
+          <div class="pw-info" data-p="cronometro" hidden><span class="pw-tag2">+ tiempo</span><b>Cronómetro</b><p>Añade tiempo extra a la batalla para intentar remontar.</p><small>Úsalo si vas perdiendo y tu comunidad sigue activa.</small></div>
+        </div>
+      </div>
       <p class="fine">Ningún potenciador garantiza ganar. Apoyar siempre es voluntario. Los efectos pueden variar según la modalidad.</p>
     </section>
 

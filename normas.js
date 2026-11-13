@@ -266,7 +266,8 @@
     gsap.from(ph, { y: 80, rotate: 4, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ph, start: "top 85%" } });
   });
   cascade(".m-quote", null, { y: 30 });
-  cascade(".power", ".powers", { y: 40, rotate: function (i) { return [-4, 2, -2, 3, -3][i % 5]; }, stagger: 0.08 });
+  cascade(".pk", null, { y: 50, scale: 0.96 });
+  cascade(".pw-chip", ".pw-chips", { y: 24, scale: 0.8, stagger: 0.07, duration: 0.6, ease: "back.out(2)" });
   cascade(".m-steps li", ".m-steps", { y: 40, stagger: 0.08 });
   cascade(".m-tabs", null, { y: 30 });
   gsap.from(".f-top > *, .f-bottom > *", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.08, scrollTrigger: { trigger: ".footer", start: "top 92%" } });

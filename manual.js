@@ -380,3 +380,113 @@
     show();
   });
 })();
+
+/* R2LAB · Manual: batalla PK con potenciadores */
+(function () {
+  "use strict";
+  var pk = document.querySelector(".pk");
+  if (!pk) return;
+  var g = window.gsap;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".pw-chip"));
+  var infos = Array.prototype.slice.call(document.querySelectorAll(".pw-info"));
+  function q(x) { return pk.querySelector(x); }
+  var el = { me: q(".pk-me"), sme: q(".pk-sme"), sthem: q(".pk-sthem"), t: q(".pk-t"), plus: q(".pk-plus"),
+    mybadge: q(".pk-mybadge"), rbadge: q(".pk-rbadge"), gifts: q(".pk-gifts"), pop: q(".pk-pop"), popImg: q(".pk-pop img"), clouds: q(".pk-clouds") };
+  function info(p) {
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", c.dataset.p === p); });
+    infos.forEach(function (x) { x.hidden = x.dataset.p !== p; });
+  }
+  if (!g || reduce) {
+    chips.forEach(function (c) { c.addEventListener("click", function () { info(c.dataset.p); }); });
+    info("guante");
+    return;
+  }
+  var me = 1200, them = 1350, time = 60, mult = 1, timers = [];
+  function render() {
+    el.sme.textContent = me.toLocaleString("es");
+    el.sthem.textContent = them.toLocaleString("es");
+    el.me.style.width = Math.max(18, Math.min(82, me / (me + them) * 100)) + "%";
+    var m = Math.floor(time / 60), s = time % 60;
+    el.t.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function giftFx(v) {
+    var sp = document.createElement("span");
+    sp.textContent = "+" + v;
+    if (mult > 1) sp.className = "big";
+    sp.style.left = (15 + Math.random() * 60) + "%";
+    el.gifts.appendChild(sp);
+    g.fromTo(sp, { y: 0, opacity: 0, scale: .6 }, { y: -90 - Math.random() * 40, opacity: 1, scale: 1, duration: 1.1, ease: "power2.out", onComplete: function () { g.to(sp, { opacity: 0, duration: .3, onComplete: function () { sp.remove(); } }); } });
+  }
+  var visible = true;
+  // regalos y reloj
+  setInterval(function () {
+    if (!visible || document.hidden) return;
+    var mine = [1, 5, 10, 20][Math.floor(Math.random() * 4)];
+    me += mine * mult; giftFx(mine * mult);
+    if (Math.random() < .7) them += [1, 5, 10, 30][Math.floor(Math.random() * 4)];
+    render();
+  }, 700);
+  setInterval(function () {
+    if (!visible || document.hidden) return;
+    time = time > 1 ? time - 1 : 60;
+    if (time === 60) { me = 1200; them = 1350; }
+    render();
+  }, 1000);
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    mult = 1; pk.classList.remove("fog");
+    g.killTweensOf([el.pop, el.mybadge, el.clouds, el.plus, el.rbadge]);
+    g.set([el.pop, el.mybadge, el.clouds, el.plus], { opacity: 0 });
+    g.set(el.rbadge, { opacity: 0, rotate: 0, scale: 1 }); el.rbadge.classList.remove("broken");
+  }
+  function pop(p) {
+    el.popImg.src = "img/manual/" + p + ".jpg";
+    el.pop.style.left = p === "martillo" ? "75%" : "25%"; // el martillo cae sobre el rival
+    g.fromTo(el.pop, { opacity: 0, scale: .3, rotate: -12 }, { opacity: 1, scale: 1, rotate: 0, duration: .5, ease: "back.out(2)" });
+    g.to(el.pop, { opacity: 0, scale: .8, duration: .35, delay: 2 });
+  }
+  function badge(text) {
+    el.mybadge.textContent = text;
+    g.fromTo(el.mybadge, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: .4, delay: .5 });
+  }
+  var FX = {
+    guante: function () { pop("guante"); badge("×5 · 30 s"); later(function () { mult = 5; }, 500); later(function () { mult = 1; g.to(el.mybadge, { opacity: 0 }); }, 5200); },
+    rayo: function () { pop("rayo"); badge("×2"); later(function () { mult = 2; me += 300; render(); giftFx(300); }, 500); later(function () { mult = 1; g.to(el.mybadge, { opacity: 0 }); }, 4200); },
+    neblina: function () {
+      pop("neblina");
+      later(function () { pk.classList.add("fog"); g.fromTo(el.clouds, { opacity: 0 }, { opacity: 1, duration: .6 }); }, 600);
+      later(function () { pk.classList.remove("fog"); g.to(el.clouds, { opacity: 0, duration: .6 }); }, 5200);
+    },
+    martillo: function () {
+      g.fromTo(el.rbadge, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: .4 });
+      later(function () { pop("martillo"); }, 900);
+      later(function () {
+        el.rbadge.classList.add("broken");
+        g.fromTo(el.rbadge, { rotate: -14, scale: 1.3 }, { rotate: 6, scale: 1, duration: .5, ease: "elastic.out(1, .4)" });
+        g.fromTo(pk, { x: -6 }, { x: 0, duration: .5, ease: "elastic.out(1.2, .2)" });
+      }, 1500);
+      later(function () { g.to(el.rbadge, { opacity: 0 }); }, 4600);
+    },
+    cronometro: function () {
+      pop("cronometro");
+      later(function () {
+        time += 10; render();
+        g.fromTo(el.plus, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .35 });
+        g.to(el.plus, { opacity: 0, duration: .4, delay: 1.6 });
+        g.fromTo(q(".pk-timer"), { scale: 1.25 }, { scale: 1, duration: .5, ease: "back.out(2)" });
+      }, 700);
+    }
+  };
+  var order = ["guante", "rayo", "neblina", "martillo", "cronometro"], idx = 0, auto = null;
+  function run(p) { reset(); info(p); FX[p](); idx = order.indexOf(p); }
+  function cycle() { clearTimeout(auto); auto = setTimeout(function () { if (visible) run(order[(idx + 1) % order.length]); cycle(); }, 6500); }
+  chips.forEach(function (c) { c.addEventListener("click", function () { run(c.dataset.p); cycle(); }); });
+  if ("IntersectionObserver" in window) {
+    visible = false;
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: .3 }).observe(pk);
+  }
+  render(); run("guante"); cycle();
+})();
+
