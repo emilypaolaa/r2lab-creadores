@@ -93,30 +93,61 @@
         <div>
           <span class="label">Inicio de LIVE</span>
           <h2 class="split">Cómo iniciar un <em>LIVE</em></h2>
-          <p class="ch-lead">Toca cada paso y míralo en la pantalla.</p>
+          <p class="ch-lead">Mira el tutorial o toca un paso para verlo.</p>
         </div>
       </div>
       <div class="golive">
         <div class="gl-phone" aria-hidden="true">
           <div class="gl-screen">
             <div class="gl-cam" data-s="3"><span class="gl-person"></span></div>
-            <div class="gl-top">
-              <div class="gl-cover" data-s="2"><span></span></div>
-              <div class="gl-title" data-s="1"><b>Hoy respondemos tus preguntas</b><small>Añade un tema</small></div>
-              <i class="gl-x">✕</i>
+            <div class="gl-ui">
+              <div class="gl-top">
+                <div class="gl-cover" data-s="2"><span></span></div>
+                <div class="gl-title" data-s="1"><b class="gl-t">Hoy respondemos tus preguntas</b><i class="gl-caret"></i><small>Añade un tema</small></div>
+                <i class="gl-x">✕</i>
+              </div>
+              <div class="gl-side">
+                <span class="gl-flip" data-s="3"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M6 21v-4h4"/></svg>Voltear</span>
+                <span class="gl-fil" data-s="4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg>Filtros</span>
+                <span><svg viewBox="0 0 24 24"><path d="M12 3l2.2 5.2L20 9l-4.4 3.8L17 18.5 12 15.6 7 18.5l1.4-5.7L4 9l5.8-.8L12 3z"/></svg>Efectos</span>
+                <span class="gl-set" data-s="5"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Ajustes</span>
+              </div>
+              <div class="gl-bottom">
+                <span class="gl-go" data-s="6">Emitir LIVE</span>
+                <div class="gl-tabs"><span>Publicar</span><b>LIVE</b><span>Plantillas</span></div>
+              </div>
             </div>
-            <div class="gl-side">
-              <span><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M6 21v-4h4"/></svg>Voltear</span>
-              <span data-s="4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg>Filtros</span>
-              <span><svg viewBox="0 0 24 24"><path d="M12 3l2.2 5.2L20 9l-4.4 3.8L17 18.5 12 15.6 7 18.5l1.4-5.7L4 9l5.8-.8L12 3z"/></svg>Efectos</span>
-              <span data-s="5"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Ajustes</span>
+
+            <!-- hojas que aparecen en el tutorial -->
+            <div class="gl-sheet gl-kbd">
+              <div class="kb-row"><i>q</i><i>w</i><i>e</i><i>r</i><i>t</i><i>y</i><i>u</i><i>i</i><i>o</i><i>p</i></div>
+              <div class="kb-row"><i>a</i><i>s</i><i>d</i><i>f</i><i>g</i><i>h</i><i>j</i><i>k</i><i>l</i><i>ñ</i></div>
+              <div class="kb-row"><i class="w2">⇧</i><i>z</i><i>x</i><i>c</i><i>v</i><i>b</i><i>n</i><i>m</i><i class="w2">⌫</i></div>
+              <div class="kb-row"><i class="w2">123</i><i class="sp">espacio</i><i class="w2 ok">Listo</i></div>
             </div>
-            <div class="gl-bottom">
-              <span class="gl-go" data-s="6">Emitir LIVE</span>
-              <div class="gl-tabs"><span>Publicar</span><b>LIVE</b><span>Plantillas</span></div>
+            <div class="gl-sheet gl-gal">
+              <b>Elige tu portada</b>
+              <div class="gal-grid"><i></i><i class="pick"></i><i></i><i></i><i></i><i></i></div>
             </div>
+            <div class="gl-sheet gl-filters">
+              <b>Filtros</b>
+              <div class="fil-row"><span><i class="f0"></i>Ninguno</span><span class="pick"><i class="f1"></i>Natural</span><span><i class="f2"></i>Cálido</span><span><i class="f3"></i>Brillo</span></div>
+            </div>
+            <div class="gl-sheet gl-settings">
+              <b>Ajustes del LIVE</b>
+              <div class="set-row"><span>Comentarios</span><i class="tg"></i></div>
+              <div class="set-row"><span>Invitados</span><i class="tg"></i></div>
+              <div class="set-row"><span>Micrófono</span><i class="tg"></i></div>
+            </div>
+            <div class="gl-flash"></div>
+            <div class="gl-count">3</div>
+            <div class="gl-live"><span class="lv">LIVE</span><span class="vw">0 viendo</span></div>
+            <div class="gl-chat"><span><b>sofi.rx</b> ¡Hola!</span><span><b>marco_22</b> desde Lima</span></div>
+            <div class="gl-finger"></div>
           </div>
         </div>
+        <div class="gl-side-col">
+          <p class="gl-cap" aria-live="polite">Toca el título y escribe de qué tratará tu LIVE.</p>
         <ol class="gl-steps">
           <li><button type="button" data-step="1" aria-pressed="true"><b>1</b><span><strong>Título</strong>Explica el tema o la dinámica.</span></button></li>
           <li><button type="button" data-step="2" aria-pressed="false"><b>2</b><span><strong>Portada</strong>Una foto nítida si no sales en cámara.</span></button></li>
@@ -125,6 +156,7 @@
           <li><button type="button" data-step="5" aria-pressed="false"><b>5</b><span><strong>Ajustes</strong>Revisa audio, comentarios e invitados.</span></button></li>
           <li><button type="button" data-step="6" aria-pressed="false"><b>6</b><span><strong>Emitir</strong>Pulsa “Emitir LIVE” y saluda.</span></button></li>
         </ol>
+        </div>
       </div>
       <div class="callout teal-c">
         <b>Checklist rápido</b>
@@ -372,5 +404,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
   <script src="normas.js" defer></script>
+  <script src="manual.js" defer></script>
 </body>
 </html>

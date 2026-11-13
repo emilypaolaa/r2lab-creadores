@@ -147,24 +147,6 @@
     });
   });
 
-  /* ---------- Celular: pasos para iniciar un LIVE (manual) ---------- */
-  var glBtns = Array.prototype.slice.call(document.querySelectorAll(".gl-steps button"));
-  if (glBtns.length) {
-    var glCur = 1, glAuto = true;
-    var setStep = function (n) {
-      glCur = n;
-      glBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.step == n); });
-      document.querySelectorAll(".gl-screen [data-s]").forEach(function (el) { el.classList.toggle("on", el.dataset.s == n); });
-    };
-    glBtns.forEach(function (b) { b.addEventListener("click", function () { glAuto = false; setStep(+b.dataset.step); }); });
-    setStep(1);
-    if (!reduce) {
-      var tick = function () { if (glAuto && !document.hidden) setStep(glCur % glBtns.length + 1); };
-      if (hasGsap) (function loop() { gsap.delayedCall(2.4, function () { tick(); if (glAuto) loop(); }); })();
-      else setInterval(tick, 2400);
-    }
-  }
-
   /* ---------- Sin GSAP: mostrar todo en su estado final ---------- */
   if (!hasGsap) {
     root.classList.remove("js");
