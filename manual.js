@@ -593,3 +593,89 @@
   play(1);
 })();
 
+/* R2LAB · Manual: tipos de batalla (1 vs 1, 3, cuarteto, 4 individual) */
+(function () {
+  "use strict";
+  var scr = document.querySelector(".bm-screen");
+  if (!scr) return;
+  var g = window.gsap;
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".bm-tabs .tab"));
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".bm-panel"));
+  var grid = scr.querySelector(".bm-grid"), tiles = Array.prototype.slice.call(scr.querySelectorAll(".bm-tile"));
+  var barA = scr.querySelector(".bb-a"), barB = scr.querySelector(".bb-b"), timer = scr.querySelector(".bm-t"), result = scr.querySelector(".bm-result"), resB = result.querySelector("b");
+  var MODES = ["1", "3", "q", "4"];
+  function select(m) {
+    tabs.forEach(function (t) { var on = t.dataset.mode === m; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
+    panels.forEach(function (p) { p.hidden = p.dataset.mode !== m; });
+    grid.dataset.mode = m;
+    scr.classList.toggle("no-bar", m === "3" || m === "4");
+  }
+  function steps(m) { return Array.prototype.slice.call(document.querySelectorAll('.bm-panel[data-mode="' + m + '"] .bm-steps li')); }
+  if (!g || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    tabs.forEach(function (t) { t.addEventListener("click", function () { select(t.dataset.mode); }); });
+    return;
+  }
+  var FINAL = { "1": [820, 610], "3": [540, 910, 380], "q": [520, 430, 380, 300], "4": [260, 720, 450, 590] };
+  var tl = null, next = null, run = 0, visible = true;
+  function fmt(n) { return Math.round(n).toLocaleString("es"); }
+  function play(m) {
+    if (tl) tl.kill(); if (next) next.kill();
+    var id = ++run;
+    select(m);
+    var lis = steps(m), n = m === "1" ? 2 : m === "3" ? 3 : 4, fin = FINAL[m];
+    lis.forEach(function (li) { li.classList.remove("on", "done"); });
+    tiles.forEach(function (t) { t.querySelector(".bm-sc").textContent = "0"; t.querySelector(".bm-rank").textContent = ""; });
+    g.set(scr.querySelectorAll(".bm-rank, .bm-crown"), { opacity: 0 });
+    g.set(result, { opacity: 0 });
+    barA.textContent = "0"; barB.textContent = "0"; barA.style.width = "50%"; timer.textContent = "1:00";
+    tl = g.timeline({ delay: 0.2, paused: !visible, onComplete: function () { next = g.delayedCall(2.2, function () { if (id === run) play(MODES[(MODES.indexOf(m) + 1) % MODES.length]); }); } });
+    tl.fromTo(tiles.slice(0, n), { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.45, stagger: 0.1, ease: "back.out(1.6)" });
+    // los pasos se van marcando mientras sube el marcador
+    var o = { p: 0 };
+    tl.to(o, { p: 1, duration: 4.2, ease: "power1.inOut", onUpdate: function () {
+      var k = Math.min(lis.length - 1, Math.floor(o.p * lis.length));
+      lis.forEach(function (li, i) { li.classList.toggle("on", i === k); li.classList.toggle("done", i < k); });
+      var vals = fin.slice(0, n).map(function (v) { return v * o.p; });
+      tiles.forEach(function (t, i) { if (i < n) t.querySelector(".bm-sc").textContent = fmt(vals[i]); });
+      var a, b;
+      if (m === "q") { a = vals[0] + vals[1]; b = vals[2] + vals[3]; } else { a = vals[0]; b = vals[1] || 0; }
+      barA.textContent = fmt(a); barB.textContent = fmt(b);
+      barA.style.width = (a + b ? Math.max(20, Math.min(80, a / (a + b) * 100)) : 50) + "%";
+      var sec = Math.round(60 - 58 * o.p); timer.textContent = "0:" + (sec < 10 ? "0" : "") + sec;
+      if (sec === 60) timer.textContent = "1:00";
+    } });
+    tl.add(function () {
+      lis.forEach(function (li) { li.classList.remove("on"); li.classList.add("done"); });
+      var order = fin.slice(0, n).map(function (v, i) { return { v: v, i: i }; }).sort(function (x, y) { return y.v - x.v; });
+      if (m === "q") {
+        resB.textContent = "¡Gana el equipo rojo!";
+      } else {
+        order.forEach(function (o2, pos) {
+          var r = tiles[o2.i].querySelector(".bm-rank");
+          r.textContent = n === 2 ? (pos === 0 ? "WIN" : "") : (pos + 1) + ".º";
+          r.className = "bm-rank" + (pos === 0 ? " r1" : "");
+        });
+        resB.textContent = n === 2 ? "¡Ganaste la batalla!" : "Gana el 1.º lugar";
+      }
+      var w = m === "q" ? [tiles[0], tiles[1]] : [tiles[order[0].i]];
+      w.forEach(function (t) { g.fromTo(t.querySelector(".bm-crown"), { opacity: 0, y: -10, scale: 0.5 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(2)" }); });
+      if (m !== "q") g.to(scr.querySelectorAll(".bm-rank"), { opacity: function (i, el) { return el.textContent ? 1 : 0; }, duration: 0.4, stagger: 0.08 });
+    });
+    tl.fromTo(result, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, "+=0.3")
+      .to({}, { duration: 1.4 })
+      .to(result, { opacity: 0, duration: 0.3 });
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () {
+      play(t.dataset.mode);
+      var r = scr.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > window.innerHeight) scr.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+  if ("IntersectionObserver" in window) {
+    visible = false;
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (tl) { if (visible) tl.play(); else tl.pause(); } }, { threshold: 0.35 }).observe(scr);
+  }
+  play("1");
+})();
+

@@ -269,7 +269,6 @@
   cascade(".pk", null, { y: 50, scale: 0.96 });
   cascade(".pw-chip", ".pw-chips", { y: 24, scale: 0.8, stagger: 0.07, duration: 0.6, ease: "back.out(2)" });
   cascade(".m-steps li", ".m-steps", { y: 40, stagger: 0.08 });
-  cascade(".m-tabs", null, { y: 30 });
   gsap.from(".f-top > *, .f-bottom > *", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.08, scrollTrigger: { trigger: ".footer", start: "top 92%" } });
 
   // vocabulario: algunas palabras se revelan solas para enseñar el gesto
