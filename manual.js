@@ -22,8 +22,9 @@
   var el = {
     t: q(".gl-t"), title: q(".gl-title"), cover: q(".gl-cover"), cam: q(".gl-cam"), person: q(".gl-person"),
     ui: q(".gl-ui"), kbd: q(".gl-kbd"), gal: q(".gl-gal"), fil: q(".gl-filters"), set: q(".gl-settings"),
-    flash: q(".gl-flash"), count: q(".gl-count"), live: q(".gl-live"), vw: q(".gl-live .vw"),
-    chat: screen.querySelectorAll(".gl-chat span"), finger: q(".gl-finger"),
+    flash: q(".gl-flash"), count: q(".gl-count"), room: q(".gl-room"), vw: q(".gl-room .vw"),
+    chat: screen.querySelectorAll(".rm-chat span"), gift: q(".rm-gift"), hearts: screen.querySelectorAll(".rm-hearts svg"),
+    roomTop: screen.querySelectorAll(".rm-top, .rm-chips, .rm-bar"), finger: q(".gl-finger"),
     go: q(".gl-go"), flip: q(".gl-flip"), filBtn: q(".gl-fil"), setBtn: q(".gl-set"),
     photo: q(".gal-grid .pick"), filPick: q(".fil-row .pick"), ok: q(".kb-row .ok"),
     keys: screen.querySelectorAll(".kb-row i:not(.w2):not(.sp)"), tgs: screen.querySelectorAll(".tg")
@@ -47,9 +48,9 @@
     if (!animated) return;
     g.set(sheets, { yPercent: 105, visibility: "hidden" });
     g.set(el.ui, { autoAlpha: 1 });
-    g.set([el.flash, el.count, el.live, el.chat, el.finger], { opacity: 0 });
+    g.set([el.flash, el.count, el.room, el.chat, el.gift, el.hearts, el.finger], { opacity: 0 });
     g.set(el.person, { scaleX: 1, y: 0 });
-    el.vw.textContent = "0 viendo";
+    el.vw.textContent = "0";
   }
 
   // ----- sin animación: solo resaltar el paso -----
@@ -99,7 +100,7 @@
       tl.add(function () { el.photo.classList.add("sel"); }).to({}, { duration: 0.35 });
       sheetOut(tl, el.gal);
       tl.add(function () { el.cover.classList.add("has-photo"); });
-      tl.from(el.cover, { scale: 0.6, duration: 0.5, ease: "back.out(2)" }, "<");
+      tl.fromTo(el.cover, { scale: 0.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, "<");
       fingerOff(tl);
     },
     3: function (tl) {
@@ -139,10 +140,18 @@
           .fromTo(el.count, { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" })
           .to(el.count, { opacity: 0, duration: 0.25, delay: 0.3 });
       });
-      tl.fromTo(el.live, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4 });
+      // sala de TikTok LIVE
+      tl.set(el.room, { opacity: 1 })
+        .from(el.roomTop, { opacity: 0, y: function (i) { return i === 2 ? 20 : -14; }, duration: 0.45, stagger: 0.08 });
       var v = { n: 0 };
-      tl.to(v, { n: 128, duration: 1.4, ease: "power2.out", onUpdate: function () { el.vw.textContent = Math.round(v.n) + " viendo"; } }, "<");
-      tl.fromTo(el.chat, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.5 }, "<0.3");
+      tl.to(v, { n: 128, duration: 1.6, ease: "power2.out", onUpdate: function () { el.vw.textContent = Math.round(v.n); } }, "<");
+      tl.fromTo(el.chat, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.55 }, "<0.3");
+      tl.fromTo(el.gift, { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.5, ease: "back.out(1.6)" }, "-=0.6");
+      Array.prototype.forEach.call(el.hearts, function (h, i) {
+        tl.fromTo(h, { opacity: 0, y: 0, x: 0, scale: 0.6, rotate: 0 },
+          { keyframes: [{ opacity: 1, scale: 1, duration: 0.2 }, { y: -170 - Math.random() * 60, x: (Math.random() - 0.5) * 50, rotate: (Math.random() - 0.5) * 40, opacity: 0, duration: 1.6, ease: "power1.out" }] },
+          (i === 0 ? "<" : "<0.18"));
+      });
     }
   };
 

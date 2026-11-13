@@ -154,3 +154,54 @@
 @media (min-width: 860px) {
   .gl-steps { grid-template-columns: 1fr 1fr; }
 }
+
+/* ---------- Aspecto TikTok LIVE ---------- */
+.gl-status { position: absolute; z-index: 6; top: 14px; left: 26px; right: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #fff; pointer-events: none; }
+.gl-status span { display: flex; gap: 2px; align-items: flex-end; }
+.gl-status i { width: 3px; background: #fff; border-radius: 1px; }
+.gl-status i:nth-child(1) { height: 4px; } .gl-status i:nth-child(2) { height: 6px; } .gl-status i:nth-child(3) { height: 8px; }
+.gl-status em { width: 18px; height: 8px; margin-left: 4px; border: 1.2px solid #fff; border-radius: 3px; background: linear-gradient(90deg, #fff 70%, transparent 70%) content-box; padding: 1px; }
+.gl-go { background: #FE2C55; }
+.gl-tabs b { position: relative; }
+.gl-tabs b::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: #fff; }
+
+.gl-room { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; }
+.av { flex: none; display: block; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, .85); background: linear-gradient(135deg, #25F4EE, #FE2C55); }
+.av.a1 { background: linear-gradient(135deg, #fbe2e6, #f0476b); }
+.av.a2 { background: linear-gradient(135deg, #e2f5ee, #2fc4a4); }
+.av.a3 { background: linear-gradient(135deg, #e8e5f6, #8e7fe0); }
+.rm-top { position: absolute; top: 40px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.rm-host { display: flex; align-items: center; gap: 6px; padding: 3px 4px 3px 3px; border-radius: 99px; background: rgba(0, 0, 0, .35); }
+.rm-host span { display: grid; line-height: 1.15; }
+.rm-host b { font-size: 10.5px; }
+.rm-host small { font-size: 8.5px; opacity: .8; }
+.rm-host em { font-style: normal; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #FE2C55; font-weight: 800; font-size: 14px; }
+.rm-viewers { display: flex; align-items: center; }
+.rm-viewers .av { width: 22px; height: 22px; margin-left: -7px; }
+.rm-viewers b { font-size: 10px; margin-left: 5px; padding: 3px 7px; border-radius: 99px; background: rgba(0, 0, 0, .35); }
+.rm-x { margin-left: 6px; font-size: 12px; }
+.rm-chips { position: absolute; top: 76px; left: 10px; display: flex; gap: 4px; }
+.rm-chips span { font-size: 9px; font-weight: 600; padding: 3px 7px; border-radius: 6px; background: rgba(0, 0, 0, .3); }
+.rm-chips .hot { background: #FE2C55; font-weight: 800; }
+.rm-gift { position: absolute; left: 0; bottom: 150px; display: flex; align-items: center; gap: 6px; padding: 3px 12px 3px 4px; border-radius: 0 99px 99px 0; background: linear-gradient(90deg, rgba(254, 44, 85, .85), rgba(254, 44, 85, .25)); }
+.rm-gift span { display: grid; line-height: 1.1; }
+.rm-gift b { font-size: 10px; }
+.rm-gift small { font-size: 9px; opacity: .9; }
+.rm-gift .rose { width: 22px; height: 22px; fill: #ff6b8a; stroke: #2fc4a4; stroke-width: 1.6; stroke-linecap: round; }
+.rm-gift .rose circle { stroke: none; }
+.rm-gift .x { font-size: 14px; font-weight: 800; font-style: italic; color: #ffe27a; }
+.rm-chat { position: absolute; left: 10px; right: 64px; bottom: 50px; display: grid; gap: 5px; }
+.rm-chat span { display: flex; align-items: center; gap: 5px; font-size: 10px; line-height: 1.2; }
+.rm-chat .av { width: 18px; height: 18px; border-width: 1px; }
+.rm-chat b { opacity: .75; font-weight: 600; }
+.rm-bar { position: absolute; left: 10px; right: 10px; bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.rm-input { flex: 1; font-size: 10.5px; padding: 8px 12px; border-radius: 99px; background: rgba(0, 0, 0, .35); opacity: .85; }
+.rm-bar i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: rgba(0, 0, 0, .35); }
+.rm-bar svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round; }
+.rm-bar .lk svg { fill: #FE2C55; stroke: none; }
+.rm-hearts { position: absolute; right: 14px; bottom: 44px; width: 30px; height: 30px; }
+.rm-hearts svg { position: absolute; left: 0; bottom: 0; width: 24px; height: 24px; fill: #FE2C55; opacity: 0; }
+.rm-hearts svg:nth-child(3n) { fill: #25F4EE; }
+.rm-hearts svg:nth-child(3n+1) { fill: #ff8aa3; }
+.gl-room, .gl-ui { text-shadow: 0 1px 3px rgba(0, 0, 0, .45); }
+.rm-host em { text-shadow: none; }
