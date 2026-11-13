@@ -210,3 +210,7 @@
   .sev-list { grid-template-columns: repeat(4, 1fr); }
   .sev-list li { flex-direction: column; align-items: flex-start; }
 }
+
+@media (max-width: 859px) {
+  .callout.teal-c { flex-direction: column; gap: 2px; }
+}

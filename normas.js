@@ -125,6 +125,28 @@
     }
   }
 
+  /* ---------- Pestañas (manual: tipos de batalla) ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function selectTab(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute("aria-controls"));
+      panel.hidden = !on;
+      if (on && hasGsap) gsap.from(panel.querySelectorAll("li"), { x: -14, autoAlpha: 0, duration: 0.45, stagger: 0.05, ease: "power3.out", clearProps: "transform" });
+    });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { selectTab(t); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      var next = tabs[(i + d + tabs.length) % tabs.length];
+      next.focus(); selectTab(next);
+    });
+  });
+
   /* ---------- Sin GSAP: mostrar todo en su estado final ---------- */
   if (!hasGsap) {
     root.classList.remove("js");
@@ -222,7 +244,7 @@
         .fromTo(rk, { borderTopColor: "rgba(0,0,0,0)" }, { borderTopColor: "", duration: 0.8, clearProps: "borderTopColor" }, 0);
     });
   });
-  gsap.from(".dark-panel", { y: 60, scale: 0.97, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".dark-panel", start: "top 85%" } });
+  if (document.querySelector(".dark-panel")) gsap.from(".dark-panel", { y: 60, scale: 0.97, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".dark-panel", start: "top 85%" } });
   cascade(".swap", null, { scale: 0.96 });
   cascade(".tip", ".tips3");
   cascade(".checklist", null, { scale: 0.97 });
@@ -230,10 +252,15 @@
   cascade(".cl-item", ".cl-cols", { y: 14, stagger: 0.04, duration: 0.6 });
   cascade(".cl-tip", null);
   cascade(".severity");
+  cascade(".m-tiles li", ".m-tiles", { y: 30, stagger: 0.08 });
+  cascade(".m-quote", null, { y: 30 });
+  cascade(".power", ".powers", { y: 40, rotate: function (i) { return [-4, 2, -2, 3, -3][i % 5]; }, stagger: 0.08 });
+  cascade(".m-steps li", ".m-steps", { y: 40, stagger: 0.08 });
+  cascade(".m-tabs", null, { y: 30 });
   gsap.from(".f-top > *, .f-bottom > *", { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.08, scrollTrigger: { trigger: ".footer", start: "top 92%" } });
 
   // vocabulario: algunas palabras se revelan solas para enseñar el gesto
-  ScrollTrigger.create({
+  if (words.length) ScrollTrigger.create({
     trigger: ".words", start: "top 70%", once: true,
     onEnter: function () {
       var demo = words[2];
@@ -244,7 +271,7 @@
   });
 
   // medidor de gravedad
-  ScrollTrigger.create({
+  if (document.querySelector(".severity")) ScrollTrigger.create({
     trigger: ".severity", start: "top 75%", once: true,
     onEnter: function () {
       gsap.fromTo(".sev-bar span", { scaleX: 0 }, { scaleX: 1, duration: 1.8, ease: "power2.inOut" });
