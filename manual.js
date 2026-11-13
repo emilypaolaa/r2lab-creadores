@@ -480,40 +480,33 @@
     }
   };
   var order = ["guante", "rayo", "neblina", "martillo", "cronometro"], idx = 0, auto = null;
-  // video vertical: títulos, subtítulos palabra por palabra y barra de progreso
+  // pantalla LIVE: aviso del potenciador y chat
   var rl = document.querySelector(".rl"), capT = [];
-  var CAP = {
-    guante: ["Guante", "tus regalos valen *×5*", "solo por *30 segundos*"],
-    rayo: ["Rayo", "duplica tus puntos *×2*", "guárdalo para *el final*"],
-    neblina: ["Neblina", "el rival *no ve* tu puntaje", "úsala si ganas *por poco*"],
-    martillo: ["Martillo", "*bloquea* el potenciador del rival", "ideal contra un *×2*"],
-    cronometro: ["Cronómetro", "suma *tiempo extra*", "para *remontar* al final"]
+  var BOOST = { guante: ["×5 puntos de regalo", "30 s"], rayo: ["×2 puntos", "20 s"], neblina: ["Puntaje oculto al rival", "30 s"], martillo: ["Potenciador del rival bloqueado", ""], cronometro: ["+10 s de batalla", ""] };
+  var CHAT = {
+    guante: [["sofi.rx", "activó Guante 🥊"], ["ana.live", "¡ahora valen ×5!"], ["marco_22", "envió Rosa", "×10"]],
+    rayo: [["sofi.rx", "activó Rayo ⚡"], ["luz.v", "¡vamos que se puede!"], ["ana.live", "envió Corona", "×1"]],
+    neblina: [["sofi.rx", "activó Neblina ☁️"], ["marco_22", "el rival no ve el puntaje"], ["luz.v", "envió Rosa", "×5"]],
+    martillo: [["ana.live", "activó Martillo 🔨"], ["sofi.rx", "¡le quitamos el ×2!"], ["marco_22", "envió Rosa", "×3"]],
+    cronometro: [["luz.v", "activó Cronómetro ⏱️"], ["ana.live", "¡+10 segundos!"], ["sofi.rx", "envió Corona", "×2"]]
   };
-  function words(line) {
-    return line.split(/(\*[^*]+\*)/).filter(Boolean).map(function (part) {
-      if (part.charAt(0) === "*") return '<span><mark>' + part.slice(1, -1) + '</mark></span>';
-      return part.trim().split(/\s+/).map(function (w) { return "<span>" + w + "</span>"; }).join("");
-    }).join("");
-  }
   function captions(p) {
     if (!rl) return;
     capT.forEach(clearTimeout); capT = [];
-    var c = CAP[p], sub = rl.querySelector(".rl-sub"), l2 = rl.querySelector(".rl-l2"), l1 = rl.querySelector(".rl-l1");
-    l1.textContent = p === "neblina" ? "Así funciona la" : "Así funciona el";
-    l2.textContent = c[0];
-    g.fromTo(rl.querySelector(".rl-cap"), { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: "power3.out" });
-    g.fromTo(l2, { scale: .4, rotate: -14 }, { scale: 1, rotate: -2, duration: .6, ease: "back.out(2.4)", delay: .1 });
-    g.fromTo(rl.querySelector(".pk"), { y: 40, opacity: .2 }, { y: 0, opacity: 1, duration: .5, ease: "power3.out" });
-    sub.innerHTML = "";
-    [1, 2].forEach(function (n, i) {
+    var boost = rl.querySelector(".rl-boost"), chat = rl.querySelector(".rl-chat");
+    boost.querySelector("img").src = "img/manual/" + p + ".jpg";
+    boost.querySelector(".rl-bd").textContent = BOOST[p][0];
+    var bs = boost.querySelector(".rl-bs"); bs.textContent = BOOST[p][1]; bs.hidden = !BOOST[p][1];
+    g.fromTo(boost, { opacity: 0, y: 10, scale: .8 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: "back.out(2)", delay: .5 });
+    chat.innerHTML = "";
+    CHAT[p].forEach(function (m, i) {
       capT.push(setTimeout(function () {
-        sub.innerHTML = words(c[n]);
-        g.fromTo(sub.children, { opacity: 0, y: 8, scale: .7 }, { opacity: 1, y: 0, scale: 1, duration: .25, stagger: .16, ease: "back.out(2)" });
-      }, 900 + i * 2600));
+        var sp = document.createElement("span");
+        sp.innerHTML = '<i class="av a' + (i % 3 + 1) + '"></i><b>' + m[0] + "</b> " + m[1] + (m[2] ? ' <em>' + m[2] + "</em>" : "");
+        chat.appendChild(sp);
+        g.fromTo(sp, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
+      }, 700 + i * 1300));
     });
-    var bar = rl.querySelector(".rl-prog b");
-    g.killTweensOf(bar);
-    g.fromTo(bar, { width: "0%" }, { width: "100%", duration: 6.5, ease: "none" });
   }
   function run(p) { reset(); info(p); FX[p](); captions(p); idx = order.indexOf(p); }
   function cycle() { clearTimeout(auto); auto = setTimeout(function () { if (visible) run(order[(idx + 1) % order.length]); cycle(); }, 6500); }
