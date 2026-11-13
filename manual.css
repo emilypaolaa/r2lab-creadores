@@ -673,3 +673,73 @@
   .pk-wrap { grid-template-columns: 360px 1fr; gap: 48px; }
 }
 @media (prefers-reduced-motion: reduce) { .rl-music em { animation: none; } }
+
+/* ---------- 01 · Pantalla "Iniciar LIVE" igual a TikTok ---------- */
+#inicio .li-ui { font-size: 11px; }
+#inicio .li-ui svg { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+#inicio .li-x { position: absolute; top: 46px; left: 14px; width: 22px; height: 22px; opacity: 1; }
+#inicio .li-x svg { width: 100%; height: 100%; stroke-width: 2.2; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4)); }
+#inicio .li-center { position: absolute; top: 44px; right: 10px; display: flex; align-items: center; gap: 5px; padding: 5px 10px 5px 8px; border-radius: 999px; background: rgba(60, 60, 60, .55); font-size: 10.5px; font-weight: 600; }
+#inicio .li-center svg { width: 14px; height: 14px; }
+#inicio .li-prep { position: absolute; top: 84px; left: 16px; right: 16px; }
+#inicio .li-prep b { display: block; font-size: 11.5px; font-weight: 700; line-height: 1.4; }
+#inicio .li-prep span { display: inline-block; margin-top: 10px; padding: 5px 12px; border: 1.5px solid rgba(255, 255, 255, .85); border-radius: 999px; font-size: 10.5px; font-weight: 700; }
+#inicio .li-tools { position: absolute; left: 6px; right: 6px; bottom: 156px; display: grid; grid-template-columns: repeat(5, 1fr); row-gap: 10px; }
+#inicio .li-tools span { display: grid; justify-items: center; gap: 4px; padding: 3px 0; border-radius: 10px; font-size: 8.5px; font-weight: 600; text-align: center; white-space: nowrap; }
+#inicio .li-tools svg { width: 22px; height: 22px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .35)); }
+#inicio .li-tools em { font-style: normal; font-size: 7px; max-width: 54px; overflow: hidden; text-overflow: ellipsis; }
+#inicio .li-eff { display: block; width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid #fff; background: url("img/live/host.jpg") center 25% / cover, #9a7; }
+#inicio .li-card { position: absolute; left: 8px; right: 8px; bottom: 50px; padding: 8px 10px 10px; border-radius: 12px; background: rgba(70, 70, 70, .6); backdrop-filter: blur(8px); display: grid; gap: 8px; transition: translate .4s cubic-bezier(.2, .8, .2, 1); }
+#inicio .li-row { display: flex; align-items: center; gap: 7px; min-height: 22px; }
+#inicio .li-card .gl-cover { width: 18px; height: 18px; border-radius: 5px; flex: none; background: url("img/live/host.jpg") center 25% / cover, #777; }
+#inicio .li-card .gl-cover span { display: none; }
+#inicio .li-card .gl-cover.has-photo { background: url("img/live/sofi.jpg") center 25% / cover, #777; }
+#inicio .li-card .gl-title { flex: 1; padding: 2px 3px; }
+#inicio .li-card .gl-title b { font-size: 11px; font-weight: 600; }
+#inicio .gl-t:empty::before { content: "Agrega un título"; opacity: .55; font-weight: 500; }
+#inicio .li-card .gl-go { width: 100%; padding: 9px 0; border-radius: 999px; font-size: 11.5px; font-weight: 700; background: #FE2C55; text-shadow: none; }
+#inicio .li-src { position: absolute; left: 0; right: 0; bottom: 30px; display: flex; justify-content: center; gap: 12px; font-size: 9.5px; font-weight: 700; white-space: nowrap; }
+#inicio .li-src b, #inicio .li-src span { display: flex; align-items: center; gap: 4px; }
+#inicio .li-src span { opacity: .55; color: #fff; }
+#inicio .li-src svg { width: 12px; height: 12px; }
+#inicio .li-tabs { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; display: flex; justify-content: flex-end; align-items: center; gap: 16px; padding-right: 20px; background: #000; font-size: 9.5px; font-weight: 700; letter-spacing: .02em; opacity: 1; text-shadow: none; }
+#inicio .li-tabs span { opacity: .5; }
+#inicio .li-tabs b::after { display: none; }
+#inicio .gl-screen:has(.gl-title.typing) .li-card { translate: 0 -112px; }
+#inicio .gl-screen:has(.gl-title.typing) .li-tools, #inicio .gl-screen:has(.gl-title.typing) .li-src { opacity: 0; }
+#inicio .li-tools, #inicio .li-src { transition: opacity .3s; }
+#inicio .gal-grid i { background-size: cover; background-position: center 25%; }
+#inicio .gal-grid i:nth-child(1) { background-image: url("img/live/host.jpg"); }
+#inicio .gal-grid i:nth-child(2) { background-image: url("img/live/sofi.jpg"); }
+#inicio .gal-grid i:nth-child(3) { background-image: url("img/live/ana.jpg"); }
+#inicio .gal-grid i:nth-child(4) { background-image: url("img/live/estudio.jpg"); }
+#inicio .gal-grid i:nth-child(5) { background-image: url("img/live/marco.jpg"); }
+#inicio .gal-grid i:nth-child(6) { background-image: url("img/live/rival.jpg"); }
+/* sala LIVE (vista del creador) igual a TikTok */
+#inicio .li-room .rm-top { top: 40px; }
+#inicio .li-room .rm-host { padding: 3px 12px 3px 3px; background: rgba(40, 40, 40, .45); }
+#inicio .li-room .rm-host b { font-size: 11px; }
+#inicio .li-room .rm-host small { font-size: 9px; }
+#inicio .li-room .rm-host em.vw { font-style: normal; display: inline; width: auto; height: auto; background: none; font-size: 9px; font-weight: 600; }
+#inicio .li-av { width: 28px; height: 28px; border: 0; background: url("img/live/host.jpg") center 25% / cover, #777; }
+#inicio .li-room .rm-viewers .av { width: 20px; height: 20px; }
+#inicio .li-pow { display: grid; place-items: center; width: 24px; height: 24px; margin-left: 8px; }
+#inicio .li-pow svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+#inicio .li-room .rm-chips { top: 76px; left: auto; right: 10px; }
+#inicio .li-room .rm-chips span { display: flex; align-items: center; gap: 4px; padding: 4px 7px; border-radius: 8px; background: rgba(60, 60, 60, .5); font-size: 8px; }
+#inicio .li-room .rm-chips i { width: 5px; height: 5px; border-radius: 50%; background: #3ddc84; }
+#inicio .li-room .rm-chips svg { width: 12px; height: 12px; }
+#inicio .li-room .rm-chat { bottom: 46px; right: 40px; gap: 6px; }
+#inicio .li-room .rm-chat span { align-items: flex-start; }
+#inicio .li-sys em { font-style: normal; font-size: 9.5px; line-height: 1.3; }
+#inicio .li-tt { flex: none; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: rgba(60, 60, 60, .6); }
+#inicio .li-tt svg { width: 10px; height: 10px; }
+#inicio .li-room .rm-gift { bottom: 140px; }
+#inicio .li-room .rm-bar { left: 0; right: 0; bottom: 0; gap: 6px; padding: 6px 8px 8px; background: #000; }
+#inicio .li-room .rm-bar i { width: 26px; height: 26px; background: rgba(255, 255, 255, .14); }
+#inicio .li-room .rm-bar svg { width: 15px; height: 15px; }
+#inicio .li-gap { flex: 1; }
+#inicio .li-fx { background: url("img/live/host.jpg") center 25% / cover !important; border-radius: 7px !important; }
+#inicio .li-room .rm-hearts { bottom: 40px; right: 10px; }
+#inicio .gl-screen em { color: #fff; }
+#inicio .li-room .rm-gift { bottom: 176px; }

@@ -26,12 +26,12 @@
   var cap = document.querySelector("#inicio .gl-cap");
   var TITLE = "Hoy respondemos tus preguntas";
   var CAPS = {
-    1: "Toca el título y escribe de qué tratará tu LIVE.",
-    2: "Toca la portada y elige una foto nítida.",
-    3: "Voltea la cámara y ubícala a la altura de tus ojos.",
-    4: "Abre Filtros y elige uno natural.",
+    1: "Toca “Agrega un título” y escribe de qué tratará tu LIVE.",
+    2: "Toca tu foto junto al título y elige una portada nítida.",
+    3: "Toca “Girar” y ubica la cámara a la altura de tus ojos.",
+    4: "Toca “Mejorar” y elige un look natural.",
     5: "En Ajustes, activa comentarios, invitados y micrófono.",
-    6: "Pulsa “Emitir LIVE” y saluda a tu comunidad."
+    6: "Pulsa “Iniciar LIVE” y saluda a tu comunidad."
   };
   function q(s) { return screen.querySelector(s); }
   var el = {
