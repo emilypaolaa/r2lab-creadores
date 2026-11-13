@@ -22,8 +22,8 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var animated = !!g && !reduce;
 
-  var btns = Array.prototype.slice.call(document.querySelectorAll(".gl-steps button"));
-  var cap = document.querySelector(".gl-cap");
+  var btns = Array.prototype.slice.call(document.querySelectorAll("#inicio .gl-steps button"));
+  var cap = document.querySelector("#inicio .gl-cap");
   var TITLE = "Hoy respondemos tus preguntas";
   var CAPS = {
     1: "Toca el título y escribe de qué tratará tu LIVE.",
@@ -488,5 +488,108 @@
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: .3 }).observe(pk);
   }
   render(); run("guante"); cycle();
+})();
+
+/* R2LAB · Manual: tutorial "Inicia tu batalla" */
+(function () {
+  "use strict";
+  var scr = document.querySelector(".bt-screen");
+  var g = window.gsap;
+  if (!scr) return;
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".bt-steps button"));
+  var cap = document.querySelector(".bt-cap");
+  var CAPS = {
+    1: "Entra a tu LIVE como siempre.",
+    2: "Toca Multi-invitado (el ícono de personas).",
+    3: "En Invitaciones rápidas, toca “Invitar” y espera unos segundos.",
+    4: "Cuando aparezca la batalla, toca “Aceptar”.",
+    5: "¡Listo! Ya estás en tu batalla de TikTok LIVE."
+  };
+  function mark(n) {
+    btns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.step == n); });
+    if (cap) cap.textContent = CAPS[n];
+  }
+  if (!g || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    btns.forEach(function (b) { b.addEventListener("click", function () { mark(+b.dataset.step); }); });
+    mark(1); return;
+  }
+  function q(x) { return scr.querySelector(x); }
+  var el = { room: q(".bt-room"), multi: q(".bt-multi"), sheet: q(".bt-sheet"), quick: q(".bt-quick"), qbtn: q(".bq-btn"), qs: q(".bq-s"),
+    dialog: q(".bt-dialog"), ok: q(".bd-ok"), battle: q(".bt-battle"), me: q(".bb-me"), them: q(".bb-them"), done: q(".bb-done"), finger: q(".gl-finger") };
+  function pos(t) { var r = t.getBoundingClientRect(), s = scr.getBoundingClientRect(); return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2 }; }
+  function tap(tl, t) {
+    tl.to(el.finger, { x: function () { return pos(t).x; }, y: function () { return pos(t).y; }, opacity: 1, duration: 0.6, ease: "power2.inOut" })
+      .to(el.finger, { scale: 0.7, duration: 0.12 }).to(el.finger, { scale: 1, duration: 0.2, ease: "back.out(3)" });
+  }
+  function base(n) {
+    el.multi.classList.remove("on"); el.quick.classList.remove("waiting"); el.qs.textContent = "15";
+    el.me.textContent = "0"; el.them.textContent = "0"; el.me.style.width = "50%";
+    g.set(el.sheet, { yPercent: n === 3 ? 0 : 105, visibility: n === 3 ? "visible" : "hidden" });
+    g.set(el.dialog, { opacity: n === 4 ? 1 : 0, visibility: n === 4 ? "visible" : "hidden", scale: 1 });
+    g.set(el.battle, { opacity: n === 5 ? 1 : 0, visibility: n === 5 ? "visible" : "hidden" });
+    g.set([el.finger, el.done], { opacity: 0 });
+    g.set(el.room, { opacity: 1 });
+  }
+  var STEPS = {
+    1: function (tl) {
+      tl.fromTo(el.room, { opacity: 0 }, { opacity: 1, duration: 0.5 })
+        .fromTo(q(".rm-chips .hot"), { scale: 1 }, { scale: 1.25, duration: 0.25, yoyo: true, repeat: 3 })
+        .to({}, { duration: 0.8 });
+    },
+    2: function (tl) {
+      tap(tl, el.multi);
+      tl.add(function () { el.multi.classList.add("on"); })
+        .to(el.sheet, { yPercent: 0, visibility: "visible", duration: 0.5, ease: "expo.out" })
+        .to(el.finger, { opacity: 0, duration: 0.2 })
+        .to({}, { duration: 1 });
+    },
+    3: function (tl) {
+      tap(tl, el.qbtn);
+      tl.add(function () { el.quick.classList.add("waiting"); }).to(el.finger, { opacity: 0, duration: 0.2 });
+      var o = { v: 15 };
+      tl.to(o, { v: 3, duration: 2.2, ease: "none", onUpdate: function () { el.qs.textContent = Math.round(o.v); } });
+    },
+    4: function (tl) {
+      tl.to(el.sheet, { yPercent: 105, duration: 0.35, ease: "power2.in" }).set(el.sheet, { visibility: "hidden" })
+        .fromTo(el.dialog, { opacity: 0, scale: 0.8, visibility: "visible" }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" })
+        .to({}, { duration: 0.9 });
+      tap(tl, el.ok);
+      tl.to(el.ok, { scale: 0.92, duration: 0.1, yoyo: true, repeat: 1 }).to({}, { duration: 0.4 });
+      tl.to(el.dialog, { opacity: 0, scale: 0.9, duration: 0.3 }).set(el.dialog, { visibility: "hidden" }).to(el.finger, { opacity: 0, duration: 0.2 }, "<");
+    },
+    5: function (tl) {
+      tl.fromTo(el.battle, { opacity: 0, visibility: "visible" }, { opacity: 1, duration: 0.5 })
+        .fromTo(q(".bb-l"), { xPercent: -100 }, { xPercent: 0, duration: 0.5, ease: "expo.out" }, "<")
+        .fromTo(q(".bb-r"), { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: "expo.out" }, "<");
+      var o = { a: 0, b: 0 };
+      tl.to(o, { a: 640, b: 420, duration: 2, ease: "power1.out", onUpdate: function () {
+        el.me.textContent = Math.round(o.a); el.them.textContent = Math.round(o.b);
+        el.me.style.width = (o.a + o.b ? Math.max(20, Math.min(80, o.a / (o.a + o.b) * 100)) : 50) + "%";
+      } });
+      tl.fromTo(el.done, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, "-=1.2")
+        .fromTo(q(".bb-trophy"), { rotate: -15 }, { rotate: 0, duration: 0.8, ease: "elastic.out(1.2, .3)" }, "<0.2")
+        .to({}, { duration: 1 });
+    }
+  };
+  var tl = null, next = null, run = 0, visible = true;
+  function play(n) {
+    if (tl) tl.kill(); if (next) next.kill();
+    var id = ++run;
+    base(n); mark(n);
+    tl = g.timeline({ delay: 0.3, paused: !visible, onComplete: function () { next = g.delayedCall(n === 5 ? 2 : 0.6, function () { if (id === run) play(n % 5 + 1); }); } });
+    STEPS[n](tl);
+  }
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      play(+b.dataset.step);
+      var r = scr.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > window.innerHeight) scr.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+  if ("IntersectionObserver" in window) {
+    visible = false;
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (tl) { if (visible) tl.play(); else tl.pause(); } }, { threshold: 0.35 }).observe(scr);
+  }
+  play(1);
 })();
 
