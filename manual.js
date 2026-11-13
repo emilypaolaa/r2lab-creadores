@@ -321,3 +321,62 @@
   }
   play(1);
 })();
+
+/* R2LAB · Manual: juego "¿Qué haría tu moderador?" */
+(function () {
+  "use strict";
+  var game = document.querySelector(".mod-game");
+  if (!game) return;
+  var g = window.gsap;
+  var Q = [
+    { who: "ana.live", av: "a1", text: "se unió al LIVE", a: "hola", ok: "¡Bien! Saludar a quien llega hace que se quede.", no: "Aquí tocaba dar la bienvenida: es alguien nuevo." },
+    { who: "promo_777", av: "a3", text: "Gana dinero fácil, escríbeme al privado", a: "ocultar", ok: "¡Exacto! Es spam: se oculta y se filtra la palabra.", no: "Es spam: lo correcto es ocultarlo." },
+    { who: "troll_99", av: "a2", text: "Eres lo peor, ****** (insulto)", a: "silenciar", ok: "¡Correcto! Se silencia sin discutir en vivo.", no: "Es un insulto: se silencia, sin responderle." },
+    { who: "sofi.rx", av: "a1", text: "Me siento muy mal hoy, ¿alguien me ayuda?", a: "avisar", ok: "¡Muy bien! Es delicado: el host debe enterarse.", no: "Es un tema delicado: hay que avisar al host." }
+  ];
+  var i = 0, score = 0, locked = false;
+  var el = {
+    i: game.querySelector(".mg-i"), score: game.querySelector(".mg-score b"), msg: game.querySelector(".mg-msg"),
+    av: game.querySelector(".mg-msg .av"), who: game.querySelector(".mg-who"), text: game.querySelector(".mg-text"),
+    feed: game.querySelector(".mg-feed"), btns: Array.prototype.slice.call(game.querySelectorAll(".mg-actions button")),
+    end: game.querySelector(".mg-end"), final: game.querySelector(".mg-final"), again: game.querySelector(".mg-again"),
+    stage: game.querySelector(".mg-stage"), acts: game.querySelector(".mg-actions"), top: game.querySelector(".mg-top")
+  };
+  function show() {
+    var q = Q[i];
+    el.i.textContent = i + 1;
+    el.av.className = "av " + q.av; el.who.textContent = q.who; el.text.textContent = q.text;
+    el.msg.className = "mg-msg"; el.feed.textContent = ""; el.feed.className = "mg-feed";
+    el.btns.forEach(function (b) { b.className = ""; b.disabled = false; });
+    locked = false;
+    if (g) g.fromTo(el.msg, { y: 24, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" });
+  }
+  function pick(b) {
+    if (locked) return; locked = true;
+    var q = Q[i], right = b.dataset.a === q.a;
+    if (right) score++;
+    el.score.textContent = score;
+    el.btns.forEach(function (x) { x.disabled = true; if (x.dataset.a === q.a) x.className = "right"; });
+    if (!right) b.className = "wrong";
+    el.msg.className = "mg-msg " + (q.a === "hola" ? "is-hola" : q.a === "avisar" ? "is-avisar" : "is-hidden");
+    el.feed.textContent = right ? q.ok : q.no;
+    el.feed.className = "mg-feed " + (right ? "good" : "bad");
+    if (g) g.fromTo(el.feed, { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35 });
+    setTimeout(function () {
+      i++;
+      if (i < Q.length) show(); else finish();
+    }, 2200);
+  }
+  function finish() {
+    el.stage.hidden = true; el.acts.hidden = true; el.feed.textContent = ""; el.top.hidden = true;
+    el.final.textContent = score + " de " + Q.length + (score === Q.length ? " · ¡Eres un gran moderador!" : " · ¡Sigue practicando!");
+    el.end.hidden = false;
+    if (g) g.from(el.end, { y: 20, opacity: 0, duration: 0.5 });
+  }
+  el.btns.forEach(function (b) { b.addEventListener("click", function () { pick(b); }); });
+  el.again.addEventListener("click", function () {
+    i = 0; score = 0; el.score.textContent = 0;
+    el.end.hidden = true; el.stage.hidden = false; el.acts.hidden = false; el.top.hidden = false;
+    show();
+  });
+})();

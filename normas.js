@@ -126,7 +126,7 @@
   }
 
   /* ---------- Pestañas (manual: tipos de batalla) ---------- */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".m-tabs .tab"));
   function selectTab(tab) {
     tabs.forEach(function (t) {
       var on = t === tab;
@@ -259,6 +259,8 @@
   cascade(".quick-check", null, { y: 30 });
   cascade(".qc-item", ".qc-items", { y: 14, scale: 0.8, stagger: 0.06, duration: 0.5, ease: "back.out(2)" });
   cascade(".m-tiles li", ".m-tiles", { y: 30, stagger: 0.08 });
+  cascade(".ms-step", ".mod-steps", { y: 30, stagger: 0.1 });
+  cascade(".mod-game", null, { y: 40, scale: 0.97 });
   document.querySelectorAll(".gl-phone").forEach(function (ph) {
     if (ph.closest("#inicio")) return;
     gsap.from(ph, { y: 80, rotate: 4, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ph, start: "top 85%" } });
