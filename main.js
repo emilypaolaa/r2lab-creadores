@@ -65,7 +65,7 @@
     var m;
     if ((m = url.match(/youtube\.com\/shorts\/([\w-]{6,})/))) return { src: "https://www.youtube.com/embed/" + m[1] + "?autoplay=1&rel=0&playsinline=1", vertical: true };
     if ((m = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|live\/)|youtu\.be\/)([\w-]{6,})/))) return { src: "https://www.youtube.com/embed/" + m[1] + "?autoplay=1&rel=0&playsinline=1" };
-    if ((m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]{10,})/))) return { src: "https://drive.google.com/file/d/" + m[1] + "/preview" };
+    if ((m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]{10,})/))) return { src: "https://drive.google.com/file/d/" + m[1] + "/preview", vertical: /vertical/.test(url) };
     if ((m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/))) return { src: "https://player.vimeo.com/video/" + m[1] + "?autoplay=1" };
     if ((m = url.match(/tiktok\.com\/.*\/video\/(\d+)/))) return { src: "https://www.tiktok.com/embed/v2/" + m[1], vertical: true };
     return null;
@@ -99,7 +99,7 @@
   }
   if (modal) {
     document.querySelectorAll(".js-video").forEach(function (a) {
-      a.addEventListener("click", function (e) { e.preventDefault(); openVideo((a.dataset.video || "").trim(), a.dataset.title); });
+      a.addEventListener("click", function (e) { e.preventDefault(); openVideo((a.dataset.video || "").trim() + (a.dataset.vertical ? "#vertical" : ""), a.dataset.title); });
     });
     modal.querySelector(".vm-backdrop").addEventListener("touchmove", blockTouch, { passive: false });
     modal.querySelectorAll("[data-close]").forEach(function (el) { el.addEventListener("click", closeVideo); });

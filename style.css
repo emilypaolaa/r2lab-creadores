@@ -502,3 +502,5 @@ html.pc-arrive::after {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+.vm-frame.vertical { width: min(100%, calc(78vh * 9 / 16)); }
+.vm-box:has(.vm-frame.vertical) { width: min(460px, 100%); }
