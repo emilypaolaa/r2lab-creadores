@@ -1,6 +1,21 @@
 /* R2LAB · Manual: tutorial animado "Cómo iniciar un LIVE" */
 (function () {
   "use strict";
+  /* ---------- Checklist rápido ---------- */
+  var qcItems = Array.prototype.slice.call(document.querySelectorAll(".qc-item"));
+  if (qcItems.length) {
+    var qcN = document.querySelector(".qc-n"), qcBar = document.querySelector(".qc-bar"), qcDone = document.querySelector(".qc-done");
+    var qcUpdate = function () {
+      var n = qcItems.filter(function (b) { return b.getAttribute("aria-pressed") === "true"; }).length;
+      qcN.textContent = n + "/" + qcItems.length;
+      qcBar.style.strokeDashoffset = 100.53 * (1 - n / qcItems.length);
+      qcDone.textContent = n === qcItems.length ? "¡Listo para salir en vivo!" : "";
+    };
+    qcItems.forEach(function (b) {
+      b.addEventListener("click", function () { b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); qcUpdate(); });
+    });
+  }
+
   var screen = document.querySelector(".gl-screen");
   if (!screen) return;
   var g = window.gsap;

@@ -256,6 +256,8 @@
     gsap.from(".gl-phone", { y: 80, rotate: -4, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".golive", start: "top 82%" } });
     cascade(".gl-steps li", ".gl-steps", { x: 30, y: 0, stagger: 0.06, duration: 0.7 });
   }
+  cascade(".quick-check", null, { y: 30 });
+  cascade(".qc-item", ".qc-items", { y: 14, scale: 0.8, stagger: 0.06, duration: 0.5, ease: "back.out(2)" });
   cascade(".m-tiles li", ".m-tiles", { y: 30, stagger: 0.08 });
   cascade(".m-quote", null, { y: 30 });
   cascade(".power", ".powers", { y: 40, rotate: function (i) { return [-4, 2, -2, 3, -3][i % 5]; }, stagger: 0.08 });
