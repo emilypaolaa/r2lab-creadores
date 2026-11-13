@@ -16,7 +16,7 @@
     });
   }
 
-  var screen = document.querySelector(".gl-screen");
+  var screen = document.querySelector("#inicio .gl-screen");
   if (!screen) return;
   var g = window.gsap;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -197,6 +197,127 @@
       visible = en[0].isIntersecting;
       if (tl) { if (visible) tl.play(); else tl.pause(); }
     }, { threshold: 0.35 }).observe(screen);
+  }
+  play(1);
+})();
+
+/* R2LAB · Manual: comunidad en un LIVE (Quiéreme, Campanita, Bienvenida, Rutina) */
+(function () {
+  "use strict";
+  var scr = document.querySelector(".cm-screen");
+  var g = window.gsap;
+  if (!scr || !g || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  function q(x) { return scr.querySelector(x); }
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".cm-tiles button"));
+  var cap = document.querySelector(".cm-cap");
+  var CAPS = {
+    1: "Invita con naturalidad a dejar su Quiéreme y agradece cada apoyo.",
+    2: "Pide que te sigan y activen la campanita para enterarse de tu próximo LIVE.",
+    3: "Saluda a quien llega y pregunta desde dónde se conecta.",
+    4: "Fija tu horario y cúmplelo: así tu comunidad sabe cuándo volver."
+  };
+  var el = {
+    chat: q(".cm-chat"), bar: q(".cg-bar i"), n: q(".cg-n"), goal: q(".cm-goal"), pop: q(".cm-pop"),
+    follow: q(".cm-follow"), fbtn: q(".cf-btn"), bell: q(".cf-bell"), fsub: q(".cf-sub"), pin: q(".cm-pin"),
+    hearts: scr.querySelectorAll(".rm-hearts svg"), finger: q(".gl-finger"), like: q(".rm-bar .lk")
+  };
+  var AV = ["a1", "a2", "a3"];
+  function msg(tl, who, text, opt) {
+    opt = opt || {};
+    tl.add(function () {
+      var sp = document.createElement("span");
+      if (opt.host) sp.className = "host";
+      sp.innerHTML = '<i class="av ' + (opt.host ? "a0" : AV[who.length % 3]) + '"></i>' + (opt.host ? "<em>HOST</em>" : "") + "<b></b> ";
+      sp.querySelector("b").textContent = who;
+      sp.appendChild(document.createTextNode(text));
+      el.chat.appendChild(sp);
+      while (el.chat.children.length > 4) el.chat.removeChild(el.chat.firstChild);
+      g.from(sp, { opacity: 0, y: 12, duration: 0.35 });
+    });
+    tl.to({}, { duration: opt.wait || 0.8 });
+  }
+  function pos(t) { var r = t.getBoundingClientRect(), s = scr.getBoundingClientRect(); return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2 }; }
+  function tap(tl, t) {
+    tl.to(el.finger, { x: function () { return pos(t).x; }, y: function () { return pos(t).y; }, opacity: 1, duration: 0.55, ease: "power2.inOut" })
+      .to(el.finger, { scale: 0.7, duration: 0.12 }).to(el.finger, { scale: 1, duration: 0.2, ease: "back.out(3)" });
+  }
+  function hearts(tl, at) {
+    Array.prototype.forEach.call(el.hearts, function (h, i) {
+      tl.fromTo(h, { opacity: 0, y: 0, x: 0, scale: 0.6 }, { keyframes: [{ opacity: 1, scale: 1, duration: 0.2 }, { y: -170 - Math.random() * 60, x: (Math.random() - 0.5) * 50, rotate: (Math.random() - 0.5) * 40, opacity: 0, duration: 1.5, ease: "power1.out" }] }, i === 0 ? at : "<0.15");
+    });
+  }
+  function setGoal(v) { el.bar.style.width = (v / 50 * 100) + "%"; el.n.textContent = Math.round(v) + "/50"; }
+  function base() {
+    el.chat.innerHTML = "";
+    setGoal(32);
+    el.fbtn.textContent = "Seguir"; el.fbtn.classList.remove("done");
+    el.bell.classList.remove("on"); el.fsub.textContent = "Síguenos para no perderte nada";
+    g.set([el.pop, el.follow, el.pin, el.finger, el.hearts], { opacity: 0 });
+    g.set(el.goal, { scale: 1 });
+  }
+  function mark(k) {
+    btns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.k == k); });
+    if (cap) cap.textContent = CAPS[k];
+  }
+  var STEPS = {
+    1: function (tl) {
+      msg(tl, "sofi.rx", "¡Hola a todos!", { wait: 0.5 });
+      msg(tl, "tu.usuario", "Si te gusta el LIVE, deja tu Quiéreme", { host: true, wait: 0.6 });
+      tap(tl, el.like);
+      tl.to(el.finger, { opacity: 0, duration: 0.2 });
+      tl.fromTo(el.pop, { opacity: 0, y: 20, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(2)" });
+      hearts(tl, "<");
+      var o = { v: 32 };
+      tl.to(o, { v: 50, duration: 1.4, ease: "power2.out", onUpdate: function () { setGoal(o.v); } }, "<");
+      tl.to(el.goal, { scale: 1.06, duration: 0.2, yoyo: true, repeat: 1 });
+      tl.to(el.pop, { opacity: 0, y: -20, duration: 0.4 }, "-=0.2");
+      msg(tl, "tu.usuario", "¡Meta cumplida! Gracias, sofi", { host: true, wait: 1.2 });
+    },
+    2: function (tl) {
+      msg(tl, "tu.usuario", "Síguenos y activa la campanita", { host: true, wait: 0.5 });
+      tl.fromTo(el.follow, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" });
+      tap(tl, el.fbtn);
+      tl.add(function () { el.fbtn.textContent = "Siguiendo"; el.fbtn.classList.add("done"); });
+      tl.to({}, { duration: 0.3 });
+      tap(tl, el.bell);
+      tl.add(function () { el.bell.classList.add("on"); el.fsub.textContent = "Notificaciones activadas"; });
+      tl.fromTo(el.bell, { rotate: -18 }, { rotate: 0, duration: 0.6, ease: "elastic.out(1.2, .3)" });
+      tl.to(el.finger, { opacity: 0, duration: 0.2 });
+      msg(tl, "marco_22", "¡Listo, campanita activada!", { wait: 1.2 });
+      tl.to(el.follow, { opacity: 0, y: 20, duration: 0.35 });
+    },
+    3: function (tl) {
+      msg(tl, "ana.live", "se unió", { wait: 0.6 });
+      msg(tl, "tu.usuario", "¡Bienvenida, ana! ¿Desde dónde te conectas?", { host: true, wait: 1 });
+      msg(tl, "ana.live", "Desde Quito", { wait: 0.7 });
+      msg(tl, "marco_22", "Yo desde Lima", { wait: 0.7 });
+      msg(tl, "tu.usuario", "¡Qué bonito! Saludos a Quito y Lima", { host: true, wait: 1.2 });
+    },
+    4: function (tl) {
+      msg(tl, "tu.usuario", "Mañana a la misma hora, ¡no falten!", { host: true, wait: 0.5 });
+      tl.fromTo(el.pin, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "back.out(1.6)" });
+      msg(tl, "sofi.rx", "¡Aquí estaré!", { wait: 0.7 });
+      msg(tl, "ana.live", "Ya lo tengo en mi agenda", { wait: 1.4 });
+    }
+  };
+  var tl = null, next = null, run = 0, visible = true;
+  function play(k) {
+    if (tl) tl.kill(); if (next) next.kill();
+    var id = ++run;
+    base(); mark(k);
+    tl = g.timeline({ delay: 0.3, paused: !visible, onComplete: function () { next = g.delayedCall(1.2, function () { if (id === run) play(k % 4 + 1); }); } });
+    STEPS[k](tl);
+  }
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      play(+b.dataset.k);
+      var r = scr.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > window.innerHeight) scr.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+  if ("IntersectionObserver" in window) {
+    visible = false;
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (tl) { if (visible) tl.play(); else tl.pause(); } }, { threshold: 0.35 }).observe(scr);
   }
   play(1);
 })();
