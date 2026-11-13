@@ -490,22 +490,33 @@
     martillo: [["ana.live", "activó Martillo 🔨"], ["sofi.rx", "¡le quitamos el ×2!"], ["marco_22", "envió Rosa", "×3"]],
     cronometro: [["luz.v", "activó Cronómetro ⏱️"], ["ana.live", "¡+10 segundos!"], ["sofi.rx", "envió Corona", "×2"]]
   };
+  var TT = '<i class="rl-tt"><svg viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46V8a6.5 6.5 0 1 0 6 6.48V8.6A7 7 0 0 0 21 10V7a4 4 0 0 1-4-4z" fill="#fff"/></svg></i>';
+  var NAMES = { guante: "Guante", rayo: "Rayo", neblina: "Neblina", martillo: "Martillo", cronometro: "Cronómetro" };
+  function line(html, cls) {
+    var chat = rl.querySelector(".rl-chat"), sp = document.createElement("span");
+    if (cls) sp.className = cls;
+    sp.innerHTML = html;
+    chat.appendChild(sp);
+    while (chat.children.length > 6) chat.removeChild(chat.firstElementChild);
+    g.fromTo(sp, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
+  }
+  function msg(i, m) {
+    return '<i class="av a' + (i % 3 + 1) + '"></i><span><b>' + m[0] + "</b>" + m[1] + (m[2] ? ' <em>' + m[2] + "</em>" : "") + "</span>";
+  }
   function captions(p) {
     if (!rl) return;
     capT.forEach(clearTimeout); capT = [];
-    var boost = rl.querySelector(".rl-boost"), chat = rl.querySelector(".rl-chat");
-    boost.querySelector("img").src = "img/manual/" + p + ".jpg";
-    boost.querySelector(".rl-bd").textContent = BOOST[p][0];
-    var bs = boost.querySelector(".rl-bs"); bs.textContent = BOOST[p][1]; bs.hidden = !BOOST[p][1];
-    g.fromTo(boost, { opacity: 0, y: 10, scale: .8 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: "back.out(2)", delay: .5 });
-    chat.innerHTML = "";
+    var chat = rl.querySelector(".rl-chat");
+    if (!chat.children.length) {
+      chat.innerHTML = '<span class="rl-sys">' + TT + '<span>¡La partida LIVE empezó! Anima a tu creador, dale me gusta y envíale Regalos.</span></span>' +
+        '<span class="rl-host-msg"><i class="av rl-me"></i><span><b>tu.usuario <small>Anfitrión</small></b>¡Bienvenidos! Deja tu Quiéreme y comparte 🔥</span></span>' +
+        '<span class="rl-join"><i class="rl-wave">👋</i><span><b>cruz</b> se unió</span></span>';
+    }
+    capT.push(setTimeout(function () {
+      line(TT + "<span><strong>" + NAMES[p] + " activado:</strong> " + BOOST[p][0] + (BOOST[p][1] ? " por " + BOOST[p][1] : "") + "</span>", "rl-sys");
+    }, 600));
     CHAT[p].forEach(function (m, i) {
-      capT.push(setTimeout(function () {
-        var sp = document.createElement("span");
-        sp.innerHTML = '<i class="av a' + (i % 3 + 1) + '"></i><b>' + m[0] + "</b> " + m[1] + (m[2] ? ' <em>' + m[2] + "</em>" : "");
-        chat.appendChild(sp);
-        g.fromTo(sp, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
-      }, 700 + i * 1300));
+      capT.push(setTimeout(function () { line(msg(i, m)); }, 1800 + i * 1400));
     });
   }
   function run(p) { reset(); info(p); FX[p](); captions(p); idx = order.indexOf(p); }

@@ -3,7 +3,8 @@
    persona hablando a cámara, como en un LIVE. Videos gratuitos de Pexels. */
 (function () {
   "use strict";
-  var CLIPS = ["host", "sofi", "marco", "ana", "rival", "estudio"];
+  var CLIPS = ["host", "sofi", "marco", "ana", "rival", "estudio", "pro"];
+  var POS = { pro: "63% 30%" };
   var FX = ["sparkle", "hearts", "stars", "flowers"];
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -31,7 +32,8 @@
     var tile = el.closest(".bm-tile");
     if (tile) { var n = +(tile.className.match(/\bt(\d)/) || [0, 1])[1]; return { v: n - 1, fx: FX[n - 1] }; }
     if (el.closest(".pk-r, .bb-r")) return { v: 4 };
-    if (el.closest(".bt, .pk-l")) return { v: 5 };
+    if (el.closest(".pk-l")) return { v: 6 };
+    if (el.closest(".bt")) return { v: 5 };
     return { v: 0 };
   }
 
@@ -46,6 +48,7 @@
     v.preload = "none";
     v.poster = "img/live/" + name + ".jpg";
     v.src = "img/live/" + name + ".mp4";
+    if (POS[name]) v.style.objectPosition = POS[name];
     el.appendChild(v);
     if (p.fx) el.appendChild(effect(p.fx));
     videos.push(v);
