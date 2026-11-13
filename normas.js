@@ -147,6 +147,24 @@
     });
   });
 
+  /* ---------- Celular: pasos para iniciar un LIVE (manual) ---------- */
+  var glBtns = Array.prototype.slice.call(document.querySelectorAll(".gl-steps button"));
+  if (glBtns.length) {
+    var glCur = 1, glAuto = true;
+    var setStep = function (n) {
+      glCur = n;
+      glBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.step == n); });
+      document.querySelectorAll(".gl-screen [data-s]").forEach(function (el) { el.classList.toggle("on", el.dataset.s == n); });
+    };
+    glBtns.forEach(function (b) { b.addEventListener("click", function () { glAuto = false; setStep(+b.dataset.step); }); });
+    setStep(1);
+    if (!reduce) {
+      var tick = function () { if (glAuto && !document.hidden) setStep(glCur % glBtns.length + 1); };
+      if (hasGsap) (function loop() { gsap.delayedCall(2.4, function () { tick(); if (glAuto) loop(); }); })();
+      else setInterval(tick, 2400);
+    }
+  }
+
   /* ---------- Sin GSAP: mostrar todo en su estado final ---------- */
   if (!hasGsap) {
     root.classList.remove("js");
@@ -252,6 +270,10 @@
   cascade(".cl-item", ".cl-cols", { y: 14, stagger: 0.04, duration: 0.6 });
   cascade(".cl-tip", null);
   cascade(".severity");
+  if (document.querySelector(".gl-phone")) {
+    gsap.from(".gl-phone", { y: 80, rotate: -4, autoAlpha: 0, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: ".golive", start: "top 82%" } });
+    cascade(".gl-steps li", ".gl-steps", { x: 30, y: 0, stagger: 0.06, duration: 0.7 });
+  }
   cascade(".m-tiles li", ".m-tiles", { y: 30, stagger: 0.08 });
   cascade(".m-quote", null, { y: 30 });
   cascade(".power", ".powers", { y: 40, rotate: function (i) { return [-4, 2, -2, 3, -3][i % 5]; }, stagger: 0.08 });

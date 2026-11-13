@@ -46,3 +46,53 @@
   .tab-panel .checks { grid-template-columns: 1fr 1fr; }
 }
 
+
+/* 01 · Celular: cómo iniciar un LIVE */
+.golive { display: grid; gap: 22px; justify-items: center; }
+.gl-phone { width: min(290px, 78vw); aspect-ratio: 9 / 19; padding: 10px; border-radius: 46px; background: linear-gradient(145deg, #2a2a33, #0e0e12); box-shadow: 0 40px 70px -30px rgba(21, 21, 27, .55), inset 0 0 0 1.5px rgba(255, 255, 255, .08); position: relative; }
+.gl-phone::before { content: ""; position: absolute; top: 18px; left: 50%; width: 76px; height: 20px; margin-left: -38px; border-radius: 20px; background: #0e0e12; z-index: 5; }
+.gl-screen { position: relative; height: 100%; border-radius: 37px; overflow: hidden; color: #fff; font-size: 11px; }
+.gl-cam { position: absolute; inset: 0; background: linear-gradient(180deg, #b9a6d9 0%, #e4c3d3 50%, #f4d6c4 100%); }
+.gl-cam::before { content: ""; position: absolute; left: 12%; top: 30%; width: 34%; height: 22%; border-radius: 10px; background: rgba(255, 255, 255, .28); } /* cuadro en la pared */
+.gl-cam::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .35), transparent 26%, transparent 66%, rgba(0, 0, 0, .5)); }
+.gl-person { position: absolute; left: 50%; bottom: 0; width: 74%; height: 62%; translate: -50% 0; }
+.gl-person::before { content: ""; position: absolute; z-index: 1; left: 50%; top: 29%; width: 40%; aspect-ratio: .8; translate: -50% 0; border-radius: 50% 50% 46% 46%; background: radial-gradient(ellipse 78% 46% at 50% 4%, #3a2a2a 0 70%, transparent 72%), linear-gradient(#ebbb9d, #d9a283); box-shadow: inset 0 -8px 14px rgba(0, 0, 0, .1); }
+.gl-person::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: 0; height: 44%; border-radius: 50% 50% 0 0 / 34% 34% 0 0; background: linear-gradient(180deg, #2fc4a4, #22a589); }
+.gl-top { position: absolute; z-index: 2; top: 48px; left: 12px; right: 12px; display: flex; gap: 8px; align-items: flex-start; padding: 8px; border-radius: 14px; background: rgba(0, 0, 0, .35); backdrop-filter: blur(6px); }
+.gl-cover { flex: none; width: 42px; height: 52px; border-radius: 8px; background: linear-gradient(160deg, var(--pink), var(--lavender)); display: grid; place-items: center; }
+.gl-cover span { width: 18px; height: 18px; border-radius: 50%; background: rgba(21, 21, 27, .25); }
+.gl-title { flex: 1; min-width: 0; padding: 2px 2px; border-radius: 6px; }
+.gl-title b { display: block; font-size: 11.5px; font-weight: 700; line-height: 1.25; }
+.gl-title small { display: block; font-size: 10px; opacity: .7; margin-top: 4px; }
+.gl-x { font-style: normal; opacity: .8; font-size: 12px; }
+.gl-side { position: absolute; z-index: 2; right: 10px; top: 130px; display: grid; gap: 12px; }
+.gl-side span { display: grid; justify-items: center; gap: 3px; font-size: 9.5px; font-weight: 600; padding: 4px; border-radius: 10px; }
+.gl-side svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4)); }
+.gl-bottom { position: absolute; z-index: 2; left: 0; right: 0; bottom: 16px; display: grid; justify-items: center; gap: 12px; }
+.gl-go { display: block; width: calc(100% - 40px); text-align: center; font-size: 13px; font-weight: 700; padding: 11px 0; border-radius: 10px; background: #ff2d55; }
+.gl-tabs { display: flex; gap: 14px; font-size: 11px; font-weight: 600; opacity: .9; }
+.gl-tabs span { opacity: .6; }
+
+/* paso activo: anillo y número sobre el elemento */
+.gl-screen [data-s]:not(.gl-cam) { position: relative; }
+.gl-screen [data-s] { transition: box-shadow .35s var(--ease), background .35s; }
+.gl-screen [data-s].on { box-shadow: 0 0 0 2.5px #A3B8F3, 0 0 0 7px rgba(163, 184, 243, .35); }
+.gl-cam[data-s].on { box-shadow: inset 0 0 0 4px #A3B8F3; }
+.gl-screen [data-s]::after { content: attr(data-s); position: absolute; top: -9px; right: -9px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: #A3B8F3; color: var(--text); font-size: 11px; font-weight: 800; opacity: 0; scale: .4; transition: opacity .3s, scale .4s cubic-bezier(.3, 1.6, .5, 1); z-index: 3; }
+.gl-cam[data-s]::after { top: auto; bottom: 100px; right: auto; left: 50%; margin-left: -10px; }
+.gl-screen [data-s].on::after { opacity: 1; scale: 1; }
+
+.gl-steps { list-style: none; display: grid; gap: 8px; width: 100%; }
+.gl-steps button { display: flex; gap: 14px; align-items: center; width: 100%; text-align: left; font: inherit; color: var(--text); background: rgba(255, 255, 255, .7); border: 1.5px solid rgba(21, 21, 27, .08); border-radius: 18px; padding: 12px 14px; cursor: pointer; transition: background .3s, border-color .3s, translate .35s var(--ease); }
+.gl-steps button:hover { translate: 3px 0; }
+.gl-steps b { flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--bg); font-size: 14px; font-weight: 800; transition: background .3s, color .3s; }
+.gl-steps span { font-size: 14px; color: var(--muted); line-height: 1.35; }
+.gl-steps strong { display: block; font-size: 16px; color: var(--text); font-weight: 700; }
+.gl-steps button[aria-pressed="true"] { background: var(--white); border-color: #A3B8F3; }
+.gl-steps button[aria-pressed="true"] b { background: #A3B8F3; color: var(--text); }
+
+@media (min-width: 860px) {
+  .golive { grid-template-columns: auto 1fr; gap: 56px; align-items: center; justify-items: stretch; }
+  .gl-phone { width: 300px; }
+  .gl-steps { grid-template-columns: 1fr 1fr; }
+}

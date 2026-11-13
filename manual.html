@@ -61,7 +61,7 @@
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <nav aria-label="Menú">
       <a href="index.html"><small>←</small>Volver al portal</a>
-      <a href="#inicio"><small>01</small>Inicio de LIVE</a>
+      <a href="#inicio"><small>01</small>Iniciar un LIVE</a>
       <a href="#comunidad"><small>02</small>Comunidad</a>
       <a href="#moderacion"><small>03</small>Moderación</a>
       <a href="#potenciadores"><small>04</small>Potenciadores</a>
@@ -92,48 +92,40 @@
         <span class="ch-num">01</span>
         <div>
           <span class="label">Inicio de LIVE</span>
-          <h2 class="split">Antes de pulsar <em>Emitir</em></h2>
-          <p class="ch-lead">Una entrada clara le dice a tu audiencia qué va a encontrar.</p>
+          <h2 class="split">Cómo iniciar un <em>LIVE</em></h2>
+          <p class="ch-lead">Toca cada paso y míralo en la pantalla.</p>
         </div>
       </div>
-      <ol class="rk-list light">
-        <li class="rk">
-          <span class="rk-n">01</span>
-          <span class="rk-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>
-          <h3>Título</h3>
-          <p>Explica el tema o la dinámica.</p>
-        </li>
-        <li class="rk">
-          <span class="rk-n">02</span>
-          <span class="rk-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9.5" cy="9.5" r="1.8"/><path d="M20 15l-4.5-4.5L6 20"/></svg></span>
-          <h3>Portada</h3>
-          <p>Una foto nítida si no sales en cámara.</p>
-        </li>
-        <li class="rk">
-          <span class="rk-n">03</span>
-          <span class="rk-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2.5"/><path d="M16 11l5-3v8l-5-3"/></svg></span>
-          <h3>Cámara</h3>
-          <p>Lente limpio, a la altura de tus ojos.</p>
-        </li>
-        <li class="rk">
-          <span class="rk-n">04</span>
-          <span class="rk-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg></span>
-          <h3>Filtro</h3>
-          <p>Natural, o mejor apagado.</p>
-        </li>
-        <li class="rk">
-          <span class="rk-n">05</span>
-          <span class="rk-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></span>
-          <h3>Ajustes</h3>
-          <p>Revisa audio, comentarios e invitados.</p>
-        </li>
-        <li class="rk">
-          <span class="rk-n">06</span>
-          <span class="rk-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5-6-3.5z"/></svg></span>
-          <h3>Emitir</h3>
-          <p>Empieza siempre con un saludo.</p>
-        </li>
-      </ol>
+      <div class="golive">
+        <div class="gl-phone" aria-hidden="true">
+          <div class="gl-screen">
+            <div class="gl-cam" data-s="3"><span class="gl-person"></span></div>
+            <div class="gl-top">
+              <div class="gl-cover" data-s="2"><span></span></div>
+              <div class="gl-title" data-s="1"><b>Hoy respondemos tus preguntas</b><small>Añade un tema</small></div>
+              <i class="gl-x">✕</i>
+            </div>
+            <div class="gl-side">
+              <span><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M6 21v-4h4"/></svg>Voltear</span>
+              <span data-s="4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg>Filtros</span>
+              <span><svg viewBox="0 0 24 24"><path d="M12 3l2.2 5.2L20 9l-4.4 3.8L17 18.5 12 15.6 7 18.5l1.4-5.7L4 9l5.8-.8L12 3z"/></svg>Efectos</span>
+              <span data-s="5"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Ajustes</span>
+            </div>
+            <div class="gl-bottom">
+              <span class="gl-go" data-s="6">Emitir LIVE</span>
+              <div class="gl-tabs"><span>Publicar</span><b>LIVE</b><span>Plantillas</span></div>
+            </div>
+          </div>
+        </div>
+        <ol class="gl-steps">
+          <li><button type="button" data-step="1" aria-pressed="true"><b>1</b><span><strong>Título</strong>Explica el tema o la dinámica.</span></button></li>
+          <li><button type="button" data-step="2" aria-pressed="false"><b>2</b><span><strong>Portada</strong>Una foto nítida si no sales en cámara.</span></button></li>
+          <li><button type="button" data-step="3" aria-pressed="false"><b>3</b><span><strong>Cámara</strong>Lente limpio y a la altura de tus ojos.</span></button></li>
+          <li><button type="button" data-step="4" aria-pressed="false"><b>4</b><span><strong>Filtro</strong>Natural, o mejor apagado.</span></button></li>
+          <li><button type="button" data-step="5" aria-pressed="false"><b>5</b><span><strong>Ajustes</strong>Revisa audio, comentarios e invitados.</span></button></li>
+          <li><button type="button" data-step="6" aria-pressed="false"><b>6</b><span><strong>Emitir</strong>Pulsa “Emitir LIVE” y saluda.</span></button></li>
+        </ol>
+      </div>
       <div class="callout teal-c">
         <b>Checklist rápido</b>
         <p>Luz frontal · Audio probado · Batería · Conexión · Tema definido</p>
