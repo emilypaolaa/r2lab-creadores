@@ -327,3 +327,7 @@
   .mg-actions { grid-template-columns: repeat(4, 1fr); }
   .mg-actions button { justify-content: center; }
 }
+@media (min-width: 860px) {
+  .golive.comm { grid-template-columns: 1fr auto; }
+  .golive.comm .gl-phone { order: 2; }
+}
