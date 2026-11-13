@@ -593,7 +593,7 @@
   play(1);
 })();
 
-/* R2LAB · Manual: tipos de batalla (1 vs 1, 3, cuarteto, 4 individual) */
+/* R2LAB · Manual: tutorial de tipos de batalla (1 vs 1, 3, cuarteto, 4 individual) */
 (function () {
   "use strict";
   var scr = document.querySelector(".bm-screen");
@@ -601,69 +601,169 @@
   var g = window.gsap;
   var tabs = Array.prototype.slice.call(document.querySelectorAll(".bm-tabs .tab"));
   var panels = Array.prototype.slice.call(document.querySelectorAll(".bm-panel"));
-  var grid = scr.querySelector(".bm-grid"), tiles = Array.prototype.slice.call(scr.querySelectorAll(".bm-tile"));
-  var barA = scr.querySelector(".bb-a"), barB = scr.querySelector(".bb-b"), timer = scr.querySelector(".bm-t"), result = scr.querySelector(".bm-result"), resB = result.querySelector("b");
+  var cap = document.querySelector(".bm-cap");
+  function q(x) { return scr.querySelector(x); }
+  function qa(x) { return Array.prototype.slice.call(scr.querySelectorAll(x)); }
+  var grid = q(".bm-grid"), tiles = qa(".bm-tile");
+  var el = { barA: q(".bb-a"), barB: q(".bb-b"), timer: q(".bm-t"), result: q(".bm-result"), resB: q(".bm-result b"),
+    multi: q(".bm-multi"), sheet: q(".bm-sheet"), start: q(".bm-start"), modes: q(".bm-modes"), ind: q(".md-ind"), team: q(".md-team"),
+    finger: q(".gl-finger"), lbMe: q(".lb-me"), lbTime: q(".lb-time"), lbBar: q(".lb-bar"),
+    spark: q(".bb-spark"), boost: q(".bm-boost"), feed: q(".bm-feed"), hearts: qa(".bm-hearts i") };
+  var GIFTS = [["sofi.rx", "a1", "envió Rosa", "×5"], ["marco_22", "a2", "envió Rosa", "×10"], ["ana.live", "a3", "se unió", ""], ["luz.v", "a1", "envió Corona", "×1"], ["kev_77", "a2", "envió Rosa", "×20"]];
+  function feedMsg(k) {
+    var gi = GIFTS[k % GIFTS.length], sp = document.createElement("span");
+    sp.className = gi[2] === "se unió" ? "join" : "";
+    sp.innerHTML = '<i class="av ' + gi[1] + '"></i><b></b> ' + gi[2] + (gi[3] ? ' <i class="rose"></i> ' + gi[3] : "");
+    sp.querySelector("b").textContent = gi[0];
+    el.feed.appendChild(sp);
+    while (el.feed.children.length > 3) el.feed.removeChild(el.feed.firstChild);
+    g.from(sp, { opacity: 0, x: -16, duration: 0.35 });
+  }
+  function heartsUp(tl, at) {
+    el.hearts.forEach(function (h, i) {
+      tl.fromTo(h, { opacity: 0, y: 0, x: 0, scale: 0.6 }, { keyframes: [{ opacity: 1, scale: 1, duration: 0.2 }, { y: -150 - Math.random() * 50, x: (Math.random() - 0.5) * 40, opacity: 0, duration: 1.4, ease: "power1.out" }] }, i === 0 ? at : "<0.22");
+    });
+  }
   var MODES = ["1", "3", "q", "4"];
+  var N = { "1": 2, "3": 3, "q": 4, "4": 4 };
+  var LAYOUT = { "1": "1", "3": "3", "q": "4", "4": "4" };
+  var FINAL = { "1": [820, 610], "3": [540, 910, 380], "q": [520, 430, 380, 300], "4": [260, 720, 450, 590] };
+  var CAPS = {
+    "1": ["Abre Multi-invitado y elige el diseño de 2.", "Invita a un creador. Espera a que acepte.", "Toca “Iniciar batalla”.", "Rojo eres tú, azul el rival. El reloj marca el tiempo.", "Cuando termina el tiempo, gana quien sumó más."],
+    "3": ["Abre Multi-invitado y elige el diseño de 3.", "Invita a 2 creadores. Cada uno debe aceptar.", "Toca “Iniciar batalla” y elige “Individual”.", "Cada recuadro suma solo los regalos que recibe.", "Al final se ordenan del 1.º al 3.º lugar."],
+    "q": ["Abre Multi-invitado y elige el diseño de 4.", "Invita a 3 creadores. Cada uno debe aceptar.", "Toca “Iniciar batalla” y elige “Por equipos”.", "Los de arriba son el equipo rojo y los de abajo el azul: la barra suma a cada equipo.", "Gana el equipo que sumó más puntos."],
+    "4": ["Abre Multi-invitado y elige el diseño de 4.", "Invita a 3 creadores. Cada uno debe aceptar.", "Toca “Iniciar batalla” y elige “Individual”.", "No hay equipos: cada uno suma sus propios regalos.", "Al final se ordenan del 1.º al 4.º lugar."]
+  };
   function select(m) {
     tabs.forEach(function (t) { var on = t.dataset.mode === m; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
     panels.forEach(function (p) { p.hidden = p.dataset.mode !== m; });
-    grid.dataset.mode = m;
-    scr.classList.toggle("no-bar", m === "3" || m === "4");
   }
-  function steps(m) { return Array.prototype.slice.call(document.querySelectorAll('.bm-panel[data-mode="' + m + '"] .bm-steps li')); }
+  function lis(m) { return Array.prototype.slice.call(document.querySelectorAll('.bm-panel[data-mode="' + m + '"] .bm-steps li')); }
   if (!g || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    tabs.forEach(function (t) { t.addEventListener("click", function () { select(t.dataset.mode); }); });
-    return;
+    tabs.forEach(function (t) { t.addEventListener("click", function () { select(t.dataset.mode); grid.dataset.mode = t.dataset.mode; }); });
+    grid.dataset.mode = "1"; return;
   }
-  var FINAL = { "1": [820, 610], "3": [540, 910, 380], "q": [520, 430, 380, 300], "4": [260, 720, 450, 590] };
-  var tl = null, next = null, run = 0, visible = true;
   function fmt(n) { return Math.round(n).toLocaleString("es"); }
+  function pos(t) { var r = t.getBoundingClientRect(), s = scr.getBoundingClientRect(); return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2 }; }
+  function tap(tl, t) {
+    tl.to(el.finger, { x: function () { return pos(t).x; }, y: function () { return pos(t).y; }, opacity: 1, duration: 0.55, ease: "power2.inOut" })
+      .to(el.finger, { scale: 0.7, duration: 0.12 }).to(el.finger, { scale: 1, duration: 0.2, ease: "back.out(3)" });
+  }
+  function hideFinger(tl) { tl.to(el.finger, { opacity: 0, duration: 0.2 }); }
+  var cur = "1";
+  function step(tl, i) {
+    tl.add(function () {
+      lis(cur).forEach(function (li, k) { li.classList.toggle("on", k === i); li.classList.toggle("done", k < i); });
+      if (cap) cap.textContent = CAPS[cur][i];
+    });
+  }
+  function reset(m) {
+    cur = m; select(m);
+    grid.dataset.mode = "solo"; scr.classList.add("pre"); scr.classList.remove("no-bar");
+    tiles.forEach(function (t) { t.classList.remove("waiting"); t.querySelector(".bm-sc").textContent = "0"; t.querySelector(".bm-rank").textContent = ""; });
+    qa(".bs-layouts .lo").forEach(function (x) { x.classList.remove("sel"); });
+    qa(".bs-row").forEach(function (r) { var em = r.querySelector("em"); em.textContent = "Invitar"; em.classList.remove("done"); r.classList.toggle("off", +r.dataset.k > N[m]); });
+    el.ind.classList.remove("sel"); el.team.classList.remove("sel"); el.multi.classList.remove("on");
+    g.set(el.sheet, { yPercent: 105, visibility: "hidden" });
+    g.set([el.start, el.modes], { opacity: 0, visibility: "hidden" });
+    g.set([el.result, el.finger, el.lbMe, el.lbTime, el.lbBar, el.boost].concat(qa(".bm-rank, .bm-crown"), el.hearts), { opacity: 0 });
+    el.feed.innerHTML = ""; el.spark.style.left = "50%";
+    g.set(tiles, { opacity: 1, scale: 1 });
+    el.barA.textContent = "0"; el.barB.textContent = "0"; el.barA.style.width = "50%"; el.timer.textContent = "1:00";
+    lis(m).forEach(function (li) { li.classList.remove("on", "done"); });
+  }
+  var tl = null, next = null, run = 0, visible = true;
   function play(m) {
     if (tl) tl.kill(); if (next) next.kill();
     var id = ++run;
-    select(m);
-    var lis = steps(m), n = m === "1" ? 2 : m === "3" ? 3 : 4, fin = FINAL[m];
-    lis.forEach(function (li) { li.classList.remove("on", "done"); });
-    tiles.forEach(function (t) { t.querySelector(".bm-sc").textContent = "0"; t.querySelector(".bm-rank").textContent = ""; });
-    g.set(scr.querySelectorAll(".bm-rank, .bm-crown"), { opacity: 0 });
-    g.set(result, { opacity: 0 });
-    barA.textContent = "0"; barB.textContent = "0"; barA.style.width = "50%"; timer.textContent = "1:00";
-    tl = g.timeline({ delay: 0.2, paused: !visible, onComplete: function () { next = g.delayedCall(2.2, function () { if (id === run) play(MODES[(MODES.indexOf(m) + 1) % MODES.length]); }); } });
-    tl.fromTo(tiles.slice(0, n), { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.45, stagger: 0.1, ease: "back.out(1.6)" });
-    // los pasos se van marcando mientras sube el marcador
-    var o = { p: 0 };
-    tl.to(o, { p: 1, duration: 4.2, ease: "power1.inOut", onUpdate: function () {
-      var k = Math.min(lis.length - 1, Math.floor(o.p * lis.length));
-      lis.forEach(function (li, i) { li.classList.toggle("on", i === k); li.classList.toggle("done", i < k); });
+    reset(m);
+    var n = N[m], fin = FINAL[m];
+    tl = g.timeline({ delay: 0.3, paused: !visible, onComplete: function () { next = g.delayedCall(2.4, function () { if (id === run) play(MODES[(MODES.indexOf(m) + 1) % MODES.length]); }); } });
+    // 1 · Multi-invitado y diseño
+    step(tl, 0);
+    tap(tl, el.multi);
+    tl.add(function () { el.multi.classList.add("on"); })
+      .to(el.sheet, { yPercent: 0, visibility: "visible", duration: 0.45, ease: "expo.out" });
+    var lo = q('.bs-layouts .lo[data-n="' + LAYOUT[m] + '"]');
+    tap(tl, lo);
+    tl.add(function () { lo.classList.add("sel"); }).to({}, { duration: 0.6 });
+    // 2 · invitar
+    step(tl, 1);
+    for (var k = 2; k <= n; k++) {
+      (function (k) {
+        var em = q('.bs-row[data-k="' + k + '"] em');
+        tap(tl, em);
+        tl.add(function () { em.textContent = "Invitado"; em.classList.add("done"); });
+      })(k);
+    }
+    hideFinger(tl);
+    tl.to(el.sheet, { yPercent: 105, duration: 0.35, ease: "power2.in" }).set(el.sheet, { visibility: "hidden" })
+      .add(function () {
+        grid.dataset.mode = m;
+        tiles.forEach(function (t, i) { if (i > 0 && i < n) t.classList.add("waiting"); });
+      })
+      .to({}, { duration: 0.7 });
+    for (var j = 1; j < n; j++) {
+      (function (j) {
+        tl.add(function () { tiles[j].classList.remove("waiting"); })
+          .fromTo(tiles[j], { opacity: 0.4, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" })
+          .to({}, { duration: 0.25 });
+      })(j);
+    }
+    // 3 · iniciar batalla
+    step(tl, 2);
+    tl.fromTo(el.start, { opacity: 0, visibility: "visible", y: 10 }, { opacity: 1, y: 0, duration: 0.35 });
+    tap(tl, el.start);
+    tl.to(el.start, { opacity: 0, duration: 0.2 }).set(el.start, { visibility: "hidden" });
+    if (m !== "1") {
+      var opt = m === "q" ? el.team : el.ind;
+      tl.fromTo(el.modes, { opacity: 0, scale: 0.85, visibility: "visible" }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }).to({}, { duration: 0.4 });
+      tap(tl, opt);
+      tl.add(function () { opt.classList.add("sel"); }).to({}, { duration: 0.4 })
+        .to(el.modes, { opacity: 0, duration: 0.25 }).set(el.modes, { visibility: "hidden" });
+    }
+    hideFinger(tl);
+    tl.add(function () { scr.classList.remove("pre"); scr.classList.toggle("no-bar", m === "3" || m === "4"); });
+    // 4 · cómo leer el marcador
+    step(tl, 3);
+    var o = { p: 0 }, lastFeed = -1;
+    tl.to(o, { p: 1, duration: 3.6, ease: "power1.inOut", onUpdate: function () {
       var vals = fin.slice(0, n).map(function (v) { return v * o.p; });
       tiles.forEach(function (t, i) { if (i < n) t.querySelector(".bm-sc").textContent = fmt(vals[i]); });
-      var a, b;
-      if (m === "q") { a = vals[0] + vals[1]; b = vals[2] + vals[3]; } else { a = vals[0]; b = vals[1] || 0; }
-      barA.textContent = fmt(a); barB.textContent = fmt(b);
-      barA.style.width = (a + b ? Math.max(20, Math.min(80, a / (a + b) * 100)) : 50) + "%";
-      var sec = Math.round(60 - 58 * o.p); timer.textContent = "0:" + (sec < 10 ? "0" : "") + sec;
-      if (sec === 60) timer.textContent = "1:00";
+      var a = m === "q" ? vals[0] + vals[1] : vals[0], b = m === "q" ? vals[2] + vals[3] : (vals[1] || 0);
+      el.barA.textContent = fmt(a); el.barB.textContent = fmt(b);
+      var pct = (a + b ? Math.max(20, Math.min(80, a / (a + b) * 100)) : 50);
+      el.barA.style.width = pct + "%"; el.spark.style.left = pct + "%";
+      var sec = Math.round(60 - 58 * o.p); el.timer.textContent = sec >= 60 ? "1:00" : "0:" + (sec < 10 ? "0" : "") + sec;
+      var f = Math.floor(o.p * 5); if (f !== lastFeed) { lastFeed = f; if (f < 5) feedMsg(f); }
     } });
+    tl.fromTo(el.boost, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35 }, "<1.2").to(el.boost, { opacity: 0, duration: 0.3 }, "<1.6");
+    heartsUp(tl, "<-0.8");
+    tl.fromTo(el.lbMe, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3 }, "<0.3")
+      .fromTo(el.lbTime, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3 }, "<0.6");
+    if (m === "1" || m === "q") tl.fromTo(el.lbBar, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3 }, "<0.6");
+    tl.to([el.lbMe, el.lbTime, el.lbBar], { opacity: 0, duration: 0.3 }, ">0.6");
+    // 5 · resultado
+    step(tl, 4);
     tl.add(function () {
-      lis.forEach(function (li) { li.classList.remove("on"); li.classList.add("done"); });
+      lis(m).forEach(function (li) { li.classList.remove("on"); li.classList.add("done"); });
       var order = fin.slice(0, n).map(function (v, i) { return { v: v, i: i }; }).sort(function (x, y) { return y.v - x.v; });
-      if (m === "q") {
-        resB.textContent = "¡Gana el equipo rojo!";
-      } else {
-        order.forEach(function (o2, pos) {
+      if (m === "q") el.resB.textContent = "¡Gana el equipo rojo!";
+      else {
+        order.forEach(function (o2, p2) {
           var r = tiles[o2.i].querySelector(".bm-rank");
-          r.textContent = n === 2 ? (pos === 0 ? "WIN" : "") : (pos + 1) + ".º";
-          r.className = "bm-rank" + (pos === 0 ? " r1" : "");
+          r.textContent = n === 2 ? (p2 === 0 ? "WIN" : "") : (p2 + 1) + ".º";
+          r.className = "bm-rank" + (p2 === 0 ? " r1" : "");
         });
-        resB.textContent = n === 2 ? "¡Ganaste la batalla!" : "Gana el 1.º lugar";
+        el.resB.textContent = n === 2 ? "¡Ganaste la batalla!" : "Gana el 1.º lugar";
+        g.to(qa(".bm-rank"), { opacity: function (i, x) { return x.textContent ? 1 : 0; }, duration: 0.4, stagger: 0.08 });
       }
       var w = m === "q" ? [tiles[0], tiles[1]] : [tiles[order[0].i]];
       w.forEach(function (t) { g.fromTo(t.querySelector(".bm-crown"), { opacity: 0, y: -10, scale: 0.5 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(2)" }); });
-      if (m !== "q") g.to(scr.querySelectorAll(".bm-rank"), { opacity: function (i, el) { return el.textContent ? 1 : 0; }, duration: 0.4, stagger: 0.08 });
     });
-    tl.fromTo(result, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, "+=0.3")
-      .to({}, { duration: 1.4 })
-      .to(result, { opacity: 0, duration: 0.3 });
+    tl.fromTo(el.result, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, "+=0.3")
+      .to({}, { duration: 1.6 })
+      .to(el.result, { opacity: 0, duration: 0.3 });
   }
   tabs.forEach(function (t) {
     t.addEventListener("click", function () {
@@ -678,4 +778,3 @@
   }
   play("1");
 })();
-
