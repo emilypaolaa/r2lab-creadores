@@ -623,3 +623,15 @@
 .bm-sheet .bs-layouts em { background: rgba(255, 255, 255, .35); }
 .bm-sheet .bs-row em.done { background: rgba(255, 255, 255, .15); color: #fff; }
 .bm-sheet .bs-row .av { border-color: #1f1f26; }
+
+/* ---------- Creadores ilustrados (people.js) ---------- */
+.gl-person.pp { position: absolute !important; inset: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; translate: none !important; z-index: 0; }
+.gl-person.pp::before, .gl-person.pp::after { content: none !important; display: none !important; }
+.pp-scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.gl-cam::before { content: none; }
+.bm-tile .fx { display: none; }
+.bm-tile::before { z-index: 1; }
+.pp-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+.pp-fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.gl-person.pp { overflow: hidden; }
+.bm-tile::before { z-index: 2; }
