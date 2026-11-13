@@ -31,6 +31,7 @@
     var tile = el.closest(".bm-tile");
     if (tile) { var n = +(tile.className.match(/\bt(\d)/) || [0, 1])[1]; return { v: n - 1, fx: FX[n - 1] }; }
     if (el.closest(".pk-r, .bb-r")) return { v: 4 };
+    if (el.closest(".rl-host")) return { v: 1 };
     return { v: 0 };
   }
 

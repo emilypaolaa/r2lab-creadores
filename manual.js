@@ -480,7 +480,42 @@
     }
   };
   var order = ["guante", "rayo", "neblina", "martillo", "cronometro"], idx = 0, auto = null;
-  function run(p) { reset(); info(p); FX[p](); idx = order.indexOf(p); }
+  // video vertical: títulos, subtítulos palabra por palabra y barra de progreso
+  var rl = document.querySelector(".rl"), capT = [];
+  var CAP = {
+    guante: ["Guante", "tus regalos valen *×5*", "solo por *30 segundos*"],
+    rayo: ["Rayo", "duplica tus puntos *×2*", "guárdalo para *el final*"],
+    neblina: ["Neblina", "el rival *no ve* tu puntaje", "úsala si ganas *por poco*"],
+    martillo: ["Martillo", "*bloquea* el potenciador del rival", "ideal contra un *×2*"],
+    cronometro: ["Cronómetro", "suma *tiempo extra*", "para *remontar* al final"]
+  };
+  function words(line) {
+    return line.split(/(\*[^*]+\*)/).filter(Boolean).map(function (part) {
+      if (part.charAt(0) === "*") return '<span><mark>' + part.slice(1, -1) + '</mark></span>';
+      return part.trim().split(/\s+/).map(function (w) { return "<span>" + w + "</span>"; }).join("");
+    }).join("");
+  }
+  function captions(p) {
+    if (!rl) return;
+    capT.forEach(clearTimeout); capT = [];
+    var c = CAP[p], sub = rl.querySelector(".rl-sub"), l2 = rl.querySelector(".rl-l2"), l1 = rl.querySelector(".rl-l1");
+    l1.textContent = p === "neblina" ? "Así funciona la" : "Así funciona el";
+    l2.textContent = c[0];
+    g.fromTo(rl.querySelector(".rl-cap"), { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: "power3.out" });
+    g.fromTo(l2, { scale: .4, rotate: -14 }, { scale: 1, rotate: -2, duration: .6, ease: "back.out(2.4)", delay: .1 });
+    g.fromTo(rl.querySelector(".pk"), { y: 40, opacity: .2 }, { y: 0, opacity: 1, duration: .5, ease: "power3.out" });
+    sub.innerHTML = "";
+    [1, 2].forEach(function (n, i) {
+      capT.push(setTimeout(function () {
+        sub.innerHTML = words(c[n]);
+        g.fromTo(sub.children, { opacity: 0, y: 8, scale: .7 }, { opacity: 1, y: 0, scale: 1, duration: .25, stagger: .16, ease: "back.out(2)" });
+      }, 900 + i * 2600));
+    });
+    var bar = rl.querySelector(".rl-prog b");
+    g.killTweensOf(bar);
+    g.fromTo(bar, { width: "0%" }, { width: "100%", duration: 6.5, ease: "none" });
+  }
+  function run(p) { reset(); info(p); FX[p](); captions(p); idx = order.indexOf(p); }
   function cycle() { clearTimeout(auto); auto = setTimeout(function () { if (visible) run(order[(idx + 1) % order.length]); cycle(); }, 6500); }
   chips.forEach(function (c) { c.addEventListener("click", function () { run(c.dataset.p); cycle(); }); });
   if ("IntersectionObserver" in window) {
