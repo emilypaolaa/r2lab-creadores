@@ -147,6 +147,12 @@
     });
   });
 
+  /* ---------- Regalos: tarjetas "dilo así" que se voltean ---------- */
+  var gfCards = Array.prototype.slice.call(document.querySelectorAll(".gf-inner"));
+  gfCards.forEach(function (c) {
+    c.addEventListener("click", function () { c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true"); });
+  });
+
   /* ---------- Sin GSAP: mostrar todo en su estado final ---------- */
   if (!hasGsap) {
     root.classList.remove("js");
@@ -259,6 +265,14 @@
   cascade(".quick-check", null, { y: 30 });
   cascade(".qc-item", ".qc-items", { y: 14, scale: 0.8, stagger: 0.06, duration: 0.5, ease: "back.out(2)" });
   cascade(".m-tiles li", ".m-tiles", { y: 30, stagger: 0.08 });
+  cascade(".gf-card", ".gf-grid", { y: 40, stagger: 0.1 });
+  cascade(".gf-tip", ".gf-tips", { y: 24, stagger: 0.1 });
+  // una tarjeta se voltea sola para enseñar el gesto
+  if (gfCards.length) ScrollTrigger.create({ trigger: ".gf-grid", start: "top 65%", once: true, onEnter: function () {
+    var c = gfCards[0];
+    gsap.delayedCall(1, function () { c.setAttribute("aria-pressed", "true"); });
+    gsap.delayedCall(3.2, function () { c.setAttribute("aria-pressed", "false"); });
+  } });
   cascade(".ms-step", ".mod-steps", { y: 30, stagger: 0.1 });
   cascade(".mod-game", null, { y: 40, scale: 0.97 });
   document.querySelectorAll(".gl-phone").forEach(function (ph) {
